@@ -7,6 +7,7 @@ import '@testing-library/jest-dom'; // gives you .toBeInTheDocument() and other 
 import App from '../src/App';
 
 describe('App component', () => {
+  
   test('renders welcome text', () => {
     
     render(<App />);
