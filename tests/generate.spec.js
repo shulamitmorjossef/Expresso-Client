@@ -17,8 +17,10 @@ describe('App component', () => {
     const button = screen.getByRole('button', { name: /count is 0/i });
     // Use userEvent to simulate a click
     await userEvent.click(button);
-    
+
     // After one click, it should read "count is 1"
     expect(screen.getByText(/count is 1/i)).toBeInTheDocument();
+
   });
+  
 });
