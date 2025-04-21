@@ -16,7 +16,8 @@ describe('App component', () => {
   test('increments count when button is clicked', async () => {
     render(<App />);
     const button = screen.getByRole('button', { name: /count is 0/i });
-    // Use userEvent to simulate a click
+
+    // Use userEvent to simulate a clickk
     await userEvent.click(button);
     // After one click, it should read "count is 1"
     expect(screen.getByText(/count is 1/i)).toBeInTheDocument();
