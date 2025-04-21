@@ -8,11 +8,28 @@ orbs:
   # See the Node orb documentation here: https://circleci.com/developer/orbs/orb/circleci/node
   node: circleci/node@5.2
 
+
+jobs:
+  ci-build-test-lint:
+    docker:
+      - image: circleci/node:14
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm test
+
 workflows:
-  CICD_build_test_wokflow: 
-    jobs:  
+  version: 2
+  build_and_test:
+    jobs:
       - ci-build-test-lint
 
+# 
+# workflows:
+  # CICD_build_test_wokflow: 
+    # jobs:  
+      # - ci-build-test-lint
+# 
 jobs: 
   ci-build-test-lint:
     executor: 
