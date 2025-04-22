@@ -23,8 +23,8 @@ function App() {
 
     <div className='card'>
       <form id = 'login-form' onSubmit={submitLogin}>
-        <input type="text" id = 'userName'> enter your user name </input>
-        <input type="password" id = 'password'> enter your password </input>
+        <input type="text" id = 'userName' />
+        <input type="password" id = 'password'/>
         <button type='submit'> Submit </button>
       </form>
     </div>
