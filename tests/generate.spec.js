@@ -23,3 +23,12 @@ import App from '../src/App';
     // expect(screen.getByText(/count is 1/i)).toBeInTheDocument();
   // });
 // });
+
+import { render, screen } from '@testing-library/react';
+import App from '../src/App';
+
+test('app renders and contains Submit button', () => {
+  render(<App />);
+  const button = screen.getByRole('button', { name: /submit/i });
+  expect(button).toBeInTheDocument();
+});
