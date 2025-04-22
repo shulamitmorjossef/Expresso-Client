@@ -7,14 +7,6 @@ function App() {
   const [useName, setUseName] = useState('');
   const [password, setPassword] = useState('');
 
-
-  // function submitLogin(event) {
-    // const userName = event.formData.get('useName');
-    // const password = event.formData.get('password');
-    // setUseName(userName);
-    // setPassword(password);
-    // setShouldSubmit(true);
-
     function submitLogin(event) {
       event.preventDefault(); // חובה כדי למנוע רענון
       const formData = new FormData(event.target);
@@ -24,9 +16,6 @@ function App() {
       setPassword(password);
     }
     
-
-  // }
-
 
   return (
     <>
