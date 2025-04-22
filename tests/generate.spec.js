@@ -1,11 +1,11 @@
 // App.test.jsx
 
-import { render, screen } from '@testing-library/react';
-import React from 'react';
-import userEvent from '@testing-library/user-event';
-import '@testing-library/jest-dom'; // gives you .toBeInTheDocument() and other matchers
-import App from '../src/App';
-
+// import { render, screen } from '@testing-library/react';
+// import React from 'react';
+// import userEvent from '@testing-library/user-event';
+// import '@testing-library/jest-dom'; // gives you .toBeInTheDocument() and other matchers
+// import App from '../src/App';
+// 
 // describe('App component', () => {
   // test('renders welcome text', () => {    
     // render(<App />);
