@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+const baseUrl = import.meta.env.VITE_BASE_URL;
+
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -8,7 +10,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('https://exspresso-server.onrender.com/users', {
+      const res = await axios.post(`${baseUrl}/users`, {
         username,
         password
       });
@@ -46,6 +48,6 @@ export default function Login() {
         <button type="submit">הירשם</button>
       </form>
     </div>
-
+    
   );
 }
