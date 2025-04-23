@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 
 // login.jsx
-// const baseUrl = process.env.VITE_BASE_URL;
+const baseUrl = process.env.VITE_BASE_URL;
 // const baseUrl = process.env.VITE_BASE_URL || 'http://localhost:3000';
-const baseUrl = import.meta.env.VITE_BASE_URL;
+// const baseUrl = import.meta.env.VITE_BASE_URL;
 
 
 export default function Login() {
@@ -15,7 +15,7 @@ export default function Login() {
     e.preventDefault();
     try {
       const res = await axios.post(`${baseUrl}/users`,
- {
+{
         username,
         password
       });
