@@ -1,14 +1,14 @@
-import React,{Fragment} from 'react';
-import './App.css';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import EntryPage from './components/entryPage.jsx';
 import Login from './components/login.jsx';
 
 function App() {
-  return (  
-    <Fragment>
-
-      <Login/>
-
-    </Fragment>   
+  return (
+    <Routes>
+      <Route path="/" element={<EntryPage />} />
+      <Route path="/login" element={<Login />} />
+    </Routes>
   );
 }
 
