@@ -8,7 +8,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:3000/users', {
+      const res = await axios.post('https://exspresso-server.onrender.com/users', {
         username,
         password
       });
@@ -46,6 +46,6 @@ export default function Login() {
         <button type="submit">הירשם</button>
       </form>
     </div>
-    
+
   );
 }
