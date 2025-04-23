@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const baseUrl = import.meta.env.VITE_BASE_URL;
+const baseUrl = process.env.VITE_BASE_URL;
 
 export default function Login() {
   const [username, setUsername] = useState('');
