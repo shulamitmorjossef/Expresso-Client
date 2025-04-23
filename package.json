@@ -9,7 +9,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "jest"
+    "test": "set VITE_BASE_URL=http://localhost:3000 && jest"
   },
   "jest": {
     "testEnvironment": "jest-environment-jsdom",
