@@ -6,56 +6,56 @@ const baseUrl = 'https://exspresso-server.onrender.com';
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
     try {
-      const res = await axios.post(`${baseUrl}/users`, {
+      const res = await axios.post(`${baseUrl}/login`, {
         username,
         password
       });
-      alert('✅ משתמש נוצר בהצלחה!');
+      if (res.data.token) {
+        localStorage.setItem('token', res.data.token);
+        alert('Login successful!');
+        // אפשר לנתב לעמוד אחר אם רוצים:
+        // window.location.href = '/home';
+      } else {
+        setError('Login failed: No token received.');
+      }
     } catch (err) {
-      console.error('❌ שגיאה ביצירת המשתמש:', err);
-      alert('🚫 יצירת המשתמש נכשלה!');
+      setError('Invalid username or password.');
     }
   };
 
   return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'flex-start',
-      alignItems: 'center',
-      height: '100vh',
-      paddingLeft: '500px',
-      textAlign: 'center'
-    }}>
-      <div>
-        <h1>Login Page</h1>
-        <form onSubmit={handleSubmit}>
-          <label>
-            שם משתמש:
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-          </label>
-          <br />
-          <label>
-            סיסמה:
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </label>
-          <br />
-          <button type="submit">הירשם</button>
-        </form>
-      </div>
+    <div>
+      <h1>Login Page</h1>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Username:
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </label>
+        <br />
+        <label>
+          Password:
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </label>
+        <br />
+        <button type="submit">Login</button>
+      </form>
+      {error && <div style={{color: 'red', marginTop: '10px'}}>{error}</div>}
     </div>
   );
 }
