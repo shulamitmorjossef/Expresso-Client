@@ -14,7 +14,7 @@ export default function EntryPage() {
   };
 
   const handleGuestClick = () => {
-    alert('Continuing as guest...');
+    navigate('/guest-home'); // <-- שינוי כאן!
   };
 
   return (
