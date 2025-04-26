@@ -56,6 +56,7 @@ export default function GuestHome() {
         {/* Footer */}
         <footer style={footerStyle}>
           <a href="#" style={footerLinkStyle}>Terms & Conditions</a>
+          <a href="#" style={{...footerLinkStyle, marginLeft: '20px'}}>About</a> {/* כפתור אודות */}
         </footer>
       </div>
     </div>

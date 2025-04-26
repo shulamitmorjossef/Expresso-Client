@@ -6,7 +6,7 @@ export default function EntryPage() {
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
-    navigate('/AdminHome');
+    navigate('/login');
   };
 
   const handleRegisterClick = () => {
@@ -14,7 +14,7 @@ export default function EntryPage() {
   };
 
   const handleGuestClick = () => {
-    navigate('/guest-home'); // <-- שינוי כאן!
+    alert('Continuing as guest...');
   };
 
   return (
