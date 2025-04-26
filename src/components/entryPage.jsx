@@ -1,4 +1,3 @@
-// entryPage.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,7 +13,8 @@ export default function EntryPage() {
   };
 
   const handleGuestClick = () => {
-    alert('Continuing as guest...');
+    // כאן אנחנו מבצעים ניתוב לדף GuestHome
+    navigate('/guest-home');
   };
 
   return (
