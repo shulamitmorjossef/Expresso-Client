@@ -55,7 +55,7 @@ export default function Login() {
         <br />
         <button type="submit">Login</button>
       </form>
-      {error && <div style={{color: 'red', marginTop: '10px'}}>{error}</div>}
+      {error && <div style={{ color: 'red', marginTop: '10px' }}>{error}</div>}
     </div>
   );
 }

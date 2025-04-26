@@ -13,7 +13,7 @@
   },
   "jest": {
     "testEnvironment": "jest-environment-jsdom",
-    "setupFiles": [
+    "setupFilesAfterEnv": [
       "./src/setupTests.js"
     ],
     "transform": {
