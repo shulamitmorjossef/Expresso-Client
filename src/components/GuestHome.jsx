@@ -9,50 +9,55 @@ export default function GuestHome() {
   };
 
   return (
-    <div style={containerStyle}>
-      
-      {/* Header */}
-      <header style={headerStyle}>
-        <button onClick={toggleMenu} style={menuButtonStyle}>
-          <FaBars />
-        </button>
+    <div style={outerContainerStyle}>
+      {/* Overlay */}
+      <div style={overlayStyle}></div>
 
-        {menuOpen && (
-          <nav style={dropdownMenuStyle}>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              <li><button style={dropdownItemStyle}>Login</button></li>
-              <li><button style={dropdownItemStyle}>Register</button></li>
-              <li><button style={dropdownItemStyle}>Reviews</button></li>
-            </ul>
-          </nav>
-        )}
-      </header>
+      {/* Content Container */}
+      <div style={contentWrapperStyle}>
+        {/* Header */}
+        <header style={headerStyle}>
+          <button onClick={toggleMenu} style={menuButtonStyle}>
+            <FaBars color="white" />
+          </button>
 
-      {/* Main */}
-      <main style={mainStyle}>
-        {/* Search Bar */}
-        <div style={searchContainerStyle}>
-          <input
-            type="text"
-            placeholder="Search..."
-            style={searchInputStyle}
-          />
-          <FaSearch style={searchIconStyle} />
-        </div>
+          {menuOpen && (
+            <nav style={dropdownMenuStyle}>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                <li><a href="/login" style={dropdownLinkStyle}>Login</a></li>
+                <li><a href="/register" style={dropdownLinkStyle}>Register</a></li>
+                <li><a href="/reviews" style={dropdownLinkStyle}>Reviews</a></li>
+              </ul>
+            </nav>
+          )}
+        </header>
 
-        {/* Categories */}
-        <h2 style={categoriesTitleStyle}>Categories</h2>
-        <div style={categoriesContainerStyle}>
-          <CategoryCard src="/images/coffee.png" label="Coffee Machines" />
-          <CategoryCard src="/images/capsules.png" label="Capsules" />
-          <CategoryCard src="/images/accessories.png" label="Accessories" />
-        </div>
-      </main>
+        {/* Main */}
+        <main style={mainStyle}>
+          {/* Search Bar */}
+          <div style={searchContainerStyle}>
+            <input
+              type="text"
+              placeholder="Search..."
+              style={searchInputStyle}
+            />
+            <FaSearch style={searchIconStyle} />
+          </div>
 
-      {/* Footer */}
-      <footer style={footerStyle}>
-        <a href="#" style={{ textDecoration: 'none', color: '#5c4033' }}>Terms & Conditions</a>
-      </footer>
+          {/* Categories */}
+          <h2 style={categoriesTitleStyle}>Categories</h2>
+          <div style={categoriesContainerStyle}>
+            <CategoryCard src="/images/coffee.png" label="Coffee Machines" />
+            <CategoryCard src="/images/capsules.png" label="Capsules" />
+            <CategoryCard src="/images/accessories.png" label="Accessories" />
+          </div>
+        </main>
+
+        {/* Footer */}
+        <footer style={footerStyle}>
+          <a href="#" style={footerLinkStyle}>Terms & Conditions</a>
+        </footer>
+      </div>
     </div>
   );
 }
@@ -60,39 +65,64 @@ export default function GuestHome() {
 function CategoryCard({ src, label }) {
   return (
     <div style={categoryCardStyle}
-      onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.05)'; e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)'; }}
-      onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = 'none'; }}
+      onMouseEnter={e => {
+        e.currentTarget.style.transform = 'scale(1.05)';
+        e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.transform = 'scale(1)';
+        e.currentTarget.style.boxShadow = 'none';
+      }}
     >
       <img src={src} alt={label} width="150" style={{ borderRadius: '10px' }} />
-      <p style={{ marginTop: '10px', fontWeight: 'bold', color: '#4b2e2e' }}>{label}</p>
+      <p style={{ marginTop: '10px', fontWeight: 'bold', color: 'white' }}>{label}</p>
     </div>
   );
 }
 
 // Styles
-const containerStyle = {
+const outerContainerStyle = {
+  position: 'relative',
   fontFamily: 'Poppins, Arial, sans-serif',
-  display: 'flex',
-  flexDirection: 'column',
+  minHeight: '100vh',
   backgroundImage: 'url("/images/coffee_background.jpg")',
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   backgroundAttachment: 'fixed',
   overflow: 'hidden',
-  height: '100vh', // וודא שהדף ממלא את כל הגובה של החלון
-  width: '100%', // וודא שהדף ממלא את כל הרוחב של החלון
+  width: '100%',
+};
+
+const overlayStyle = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: 'rgba(0, 0, 0, 0.4)',
+  zIndex: 0,
+};
+
+const contentWrapperStyle = {
+  position: 'relative',
+  zIndex: 2,
+  maxWidth: '1200px',
+  margin: '0 auto',
+  padding: '20px',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
 };
 
 const headerStyle = {
-  display: 'flex',
-  justifyContent: 'space-between',  // משנה את המיקום של הכפתור ימינה
-  alignItems: 'center',
-  padding: '20px',
-  backgroundColor: 'rgba(255, 255, 255, 0.7)', // חצי שקוף
-  boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-  position: 'relative',
-  zIndex: 100,
   width: '100%',
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  padding: '20px',
+  borderRadius: '10px',
+  marginBottom: '30px',
 };
 
 const menuButtonStyle = {
@@ -104,39 +134,42 @@ const menuButtonStyle = {
 
 const dropdownMenuStyle = {
   position: 'absolute',
-  top: '70px',
+  top: '80px',
   right: '20px',
-  backgroundColor: '#fff',
-  boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+  backgroundColor: 'rgba(0, 0, 0, 0.8)',
+  boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
   borderRadius: '8px',
   overflow: 'hidden',
-  zIndex: 10,
+  zIndex: 5,
 };
 
-const dropdownItemStyle = {
-  backgroundColor: 'transparent',
-  border: 'none',
+const dropdownLinkStyle = {
+  display: 'block',
   padding: '15px 30px',
-  width: '100%',
-  textAlign: 'left',
+  textDecoration: 'none',
+  color: 'white',
   fontSize: '16px',
-  cursor: 'pointer',
-  color: '#333',
+};
+
+const mainStyle = {
+  width: '100%',
+  textAlign: 'center',
+  padding: '40px 20px',
 };
 
 const searchContainerStyle = {
   position: 'relative',
-  display: 'inline-block',
-  marginBottom: '50px',
-  textAlign: 'center', // ממרכז את האלמנט
+  width: '100%',
+  maxWidth: '400px',
+  margin: '0 auto 40px',
 };
 
 const searchInputStyle = {
+  width: '100%',
   padding: '10px 40px 10px 15px',
-  width: '300px',
   borderRadius: '25px',
   border: '1px solid #ccc',
-  boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
+  boxShadow: '0 2px 5px rgba(0,0,0,0.2)',
 };
 
 const searchIconStyle = {
@@ -148,17 +181,16 @@ const searchIconStyle = {
 };
 
 const categoriesTitleStyle = {
-  marginBottom: '20px',
-  color: '#5c4033',
-  fontSize: '28px',
-  fontWeight: 'bold',
+  color: 'white',
+  fontSize: '32px',
+  marginBottom: '30px',
 };
 
 const categoriesContainerStyle = {
   display: 'flex',
   justifyContent: 'center',
-  gap: '40px',
   flexWrap: 'wrap',
+  gap: '40px',
 };
 
 const categoryCardStyle = {
@@ -168,29 +200,16 @@ const categoryCardStyle = {
 };
 
 const footerStyle = {
+  width: '100%',
   textAlign: 'center',
   padding: '20px',
-  backgroundColor: 'rgba(255, 255, 255, 0.8)',
-  boxShadow: '0 -2px 5px rgba(0,0,0,0.1)',
-  position: 'relative',
-  zIndex: 100,
+  marginTop: '40px',
+  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  borderRadius: '10px',
 };
 
-const mainStyle = {
-  flex: 1,
-  textAlign: 'center',
-  padding: '40px',
-  width: '100%',
-};
-
-const bodyStyle = {
-  height: '100%', // וודא שהגוף ממלא את כל הגובה
-  margin: 0,      // לא להשאיר רווחים
-  padding: 0,     // לא להשאיר רווחים
-};
-
-const htmlStyle = {
-  height: '100%', // וודא שה-HTML ממלא את כל הגובה
-  margin: 0,      // לא להשאיר רווחים
-  padding: 0,     // לא להשאיר רווחים
+const footerLinkStyle = {
+  textDecoration: 'none',
+  color: 'white',
+  fontSize: '14px',
 };

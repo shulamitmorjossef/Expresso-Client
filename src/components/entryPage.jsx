@@ -6,7 +6,7 @@ export default function EntryPage() {
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
-    navigate('/login');
+    navigate('/AdminHome');
   };
 
   const handleRegisterClick = () => {
