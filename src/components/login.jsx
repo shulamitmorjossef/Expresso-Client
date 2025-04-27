@@ -19,8 +19,7 @@ export default function Login() {
       if (res.data.token) {
         localStorage.setItem('token', res.data.token);
         alert('Login successful!');
-        // אפשר לנתב לעמוד אחר אם רוצים:
-        // window.location.href = '/home';
+       
       } else {
         setError('Login failed: No token received.');
       }
