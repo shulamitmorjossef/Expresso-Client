@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+
 // login.jsx
 // const baseUrl = process.env.VITE_BASE_URL;
 // const baseUrl = process.env.VITE_BASE_URL || 'http://localhost:3000';
@@ -14,27 +15,43 @@ export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const [error, setError] = useState('');
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+
     try {
       const res = await axios.post(`${baseUrl}/users`,
 {
         username,
         password
       });
-      alert('✅ משתמש נוצר בהצלחה!');
-    } catch (err) {
-      console.error('❌ שגיאה ביצירת המשתמש:', err);
-      alert('🚫 יצירת המשתמש נכשלה!');
-    }
-  };
 
+      if (res.data.token) {
+        localStorage.setItem('token', res.data.token);
+        alert('Login successful!');
+        
+        } else {
+        setError('Login failed: No token received.');
+        }
+      // alert('✅ משתמש נוצר בהצלחה!');
+    // } catch (err) {
+      // console.error('❌ שגיאה ביצירת המשתמש:', err);
+      // alert('🚫 יצירת המשתמש נכשלה!');
+    // }
+  // };
+} catch (err) {
+  setError('Invalid username or password.');
+  }
+  };
+  
   return (
     <div>
       <h1>Login Page</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          שם משתמש:
+          Username:
           <input
             type="text"
             value={username}
@@ -44,7 +61,7 @@ export default function Login() {
         </label>
         <br />
         <label>
-          סיסמה:
+          Password:
           <input
             type="password"
             value={password}
@@ -53,9 +70,43 @@ export default function Login() {
           />
         </label>
         <br />
-        <button type="submit">הירשם</button>
+        <button type="submit">Login</button>
       </form>
+      {error && (
+        <div style={{ color: 'red', marginTop: '10px' }}>
+          {error}
+        </div>
+      )}
     </div>
-    
   );
+ 
 }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
