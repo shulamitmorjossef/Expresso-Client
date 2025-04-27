@@ -6,7 +6,7 @@ import './About.css'; // אם יש לך עיצוב
 function About() {
   const [aboutData, setAboutData] = useState(null);
   const [error, setError] = useState(null);
-
+ 
   useEffect(() => {
     fetch('http://localhost:3000/about')  // 
       .then((response) => {
