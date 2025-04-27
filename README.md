@@ -11,7 +11,7 @@ Steps to install and run the project:
    - git clone https://github.com/shulamitmorjossef/Expresso-Client.git
 
 2. Run website:
-   - open terminal on right path: cd Expresso-Server
+   - open terminal on right path: cd Expresso-Client
    - npm install
    - npm start
 
