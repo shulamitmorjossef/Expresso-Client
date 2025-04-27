@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:3000';
-// const baseUrl = 'https://exspresso-server.onrender.com';
+// const baseUrl = 'http://localhost:3000';
+const baseUrl = 'https://exspresso-server.onrender.com';
 
 // עיצוב קבוע לקלטים וכפתורים
 const inputStyle = {
@@ -87,11 +87,11 @@ export default function Login() {
     <div style={pageStyle}>
       <form onSubmit={handleSubmit} style={formContainerStyle}>
         <h2 style={{ marginBottom: '2rem', fontSize: '2rem', color: '#333', textAlign: 'center' }}>
-          התחברות
+          login
         </h2>
 
         <label style={{ display: 'block', marginBottom: '0.5rem' }}>
-          שם משתמש:
+          user name:
           <input
             type="text"
             value={username}
@@ -102,7 +102,7 @@ export default function Login() {
         </label>
 
         <label style={{ display: 'block', marginBottom: '0.5rem' }}>
-          סיסמה:
+          password:
           <input
             type="password"
             value={password}

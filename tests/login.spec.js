@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import axios from 'axios';
-import Login from '../src/components/login'; // תקן נתיב אם צריך
+import Login from '../src/components/Login'; // תקן נתיב אם צריך
 
 jest.mock('axios');
 
@@ -19,11 +19,10 @@ describe('Login component', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByRole('heading', { name: 'התחברות' })).toBeInTheDocument();
-    expect(screen.getByLabelText('שם משתמש:')).toBeInTheDocument();
-    expect(screen.getByLabelText('סיסמה:')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'התחברות' })).toBeInTheDocument();
-
+    expect(screen.getByRole('heading', { name: /login/i })).toBeInTheDocument();
+    expect(screen.getByLabelText(/user name:/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/password:/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /התחברות/i })).toBeInTheDocument();
   });
 
   test('shows error when login fails with invalid credentials', async () => {
@@ -35,9 +34,9 @@ describe('Login component', () => {
       </MemoryRouter>
     );
 
-    fireEvent.change(screen.getByLabelText('שם משתמש:'), { target: { value: 'wronguser' } });
-    fireEvent.change(screen.getByLabelText('סיסמה:'), { target: { value: 'wrongpass' } });
-    fireEvent.click(screen.getByRole('button', { name: 'התחברות' }));
+    fireEvent.change(screen.getByLabelText(/user name:/i), { target: { value: 'wronguser' } });
+    fireEvent.change(screen.getByLabelText(/password:/i), { target: { value: 'wrongpass' } });
+    fireEvent.click(screen.getByRole('button', { name: /התחברות/i }));
 
     await waitFor(() => {
       expect(screen.getByText('❌ Invalid username or password')).toBeInTheDocument();
@@ -53,9 +52,9 @@ describe('Login component', () => {
       </MemoryRouter>
     );
 
-    fireEvent.change(screen.getByLabelText('שם משתמש:'), { target: { value: 'user' } });
-    fireEvent.change(screen.getByLabelText('סיסמה:'), { target: { value: 'pass' } });
-    fireEvent.click(screen.getByRole('button', { name: 'התחברות' }));
+    fireEvent.change(screen.getByLabelText(/user name:/i), { target: { value: 'user' } });
+    fireEvent.change(screen.getByLabelText(/password:/i), { target: { value: 'pass' } });
+    fireEvent.click(screen.getByRole('button', { name: /התחברות/i }));
 
     await waitFor(() => {
       expect(screen.getByText('❌ Server error. Please try again later.')).toBeInTheDocument();
@@ -71,9 +70,9 @@ describe('Login component', () => {
       </MemoryRouter>
     );
 
-    fireEvent.change(screen.getByLabelText('שם משתמש:'), { target: { value: 'correctuser' } });
-    fireEvent.change(screen.getByLabelText('סיסמה:'), { target: { value: 'correctpass' } });
-    fireEvent.click(screen.getByRole('button', { name: 'התחברות' }));
+    fireEvent.change(screen.getByLabelText(/user name:/i), { target: { value: 'correctuser' } });
+    fireEvent.change(screen.getByLabelText(/password:/i), { target: { value: 'correctpass' } });
+    fireEvent.click(screen.getByRole('button', { name: /התחברות/i }));
 
     await waitFor(() => {
       expect(localStorage.getItem('token')).toBe('fake_token');
