@@ -22,7 +22,7 @@ describe('Login component', () => {
     expect(screen.getByRole('heading', { name: /login/i })).toBeInTheDocument();
     expect(screen.getByLabelText(/user name:/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/password:/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /התחברות/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Login/i })).toBeInTheDocument();
   });
 
   test('shows error when login fails with invalid credentials', async () => {
@@ -36,7 +36,7 @@ describe('Login component', () => {
 
     fireEvent.change(screen.getByLabelText(/user name:/i), { target: { value: 'wronguser' } });
     fireEvent.change(screen.getByLabelText(/password:/i), { target: { value: 'wrongpass' } });
-    fireEvent.click(screen.getByRole('button', { name: /התחברות/i }));
+    fireEvent.click(screen.getByRole('button', { name: /Login/i }));
 
     await waitFor(() => {
       expect(screen.getByText('❌ Invalid username or password')).toBeInTheDocument();
@@ -54,7 +54,7 @@ describe('Login component', () => {
 
     fireEvent.change(screen.getByLabelText(/user name:/i), { target: { value: 'user' } });
     fireEvent.change(screen.getByLabelText(/password:/i), { target: { value: 'pass' } });
-    fireEvent.click(screen.getByRole('button', { name: /התחברות/i }));
+    fireEvent.click(screen.getByRole('button', { name: /Login/i }));
 
     await waitFor(() => {
       expect(screen.getByText('❌ Server error. Please try again later.')).toBeInTheDocument();
@@ -72,7 +72,7 @@ describe('Login component', () => {
 
     fireEvent.change(screen.getByLabelText(/user name:/i), { target: { value: 'correctuser' } });
     fireEvent.change(screen.getByLabelText(/password:/i), { target: { value: 'correctpass' } });
-    fireEvent.click(screen.getByRole('button', { name: /התחברות/i }));
+    fireEvent.click(screen.getByRole('button', { name: /Login/i }));
 
     await waitFor(() => {
       expect(localStorage.getItem('token')).toBe('fake_token');

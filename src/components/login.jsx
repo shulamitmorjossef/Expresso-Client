@@ -66,14 +66,14 @@ export default function Login() {
         password
       });
 
-      console.log('Login successful:', res.data);
+      // console.log('Login successful:', res.data);
 
       if (res.data.token) {
         localStorage.setItem('token', res.data.token);
       }
       navigate('/CustomerHome');
     } catch (err) {
-      console.error('Login failed:', err);
+      // console.error('Login failed:', err);
 
       if (err.response && err.response.status === 401) {
         setError('❌ Invalid username or password');
@@ -112,7 +112,7 @@ export default function Login() {
           />
         </label>
 
-        <button type="submit" style={buttonStyle}>התחברות</button>
+        <button type="submit" style={buttonStyle}>Login</button>
 
         {error && (
           <div style={{ color: 'red', marginTop: '10px', textAlign: 'center' }}>
