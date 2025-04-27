@@ -71,7 +71,7 @@ export default function Login() {
       if (res.data.token) {
         localStorage.setItem('token', res.data.token);
       }
-      navigate('/customer-home');
+      navigate('/CustomerHome');
     } catch (err) {
       console.error('Login failed:', err);
 
