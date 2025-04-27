@@ -26,7 +26,7 @@ export default function GuestHome() {
           {menuOpen && (
             <nav className="dropdown-menu">
               <ul>
-                <li><a href="/login" className="dropdown-link">Login</a></li>
+                <li><a href="/Login" className="dropdown-link">Login</a></li>
                 <li><a href="/register" className="dropdown-link">Register</a></li>
                 <li><a href="/reviews" className="dropdown-link">Reviews</a></li>
               </ul>
