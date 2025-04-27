@@ -1,60 +1,72 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const baseUrl = 'https://exspresso-server.onrender.com';
-
-export default function Login() {
+const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+
     try {
-      const res = await axios.post(`${baseUrl}/login`, {
+      const response = await axios.post('http://localhost:3000/login', {
         username,
-        password
+        password,
       });
-      if (res.data.token) {
-        localStorage.setItem('token', res.data.token);
-        alert('Login successful!');
-       
+
+      setMessage(response.data.message);
+      console.log('Login successful:', response.data.user);
+
+      // כאן אפשר להפנות לדף אחר אם רוצים
+      // למשל: navigate('/home');
+    } catch (error) {
+      console.error('Login failed:', error);
+
+      if (error.response && error.response.status === 401) {
+        setMessage('❌ Invalid username or password');
       } else {
-        setError('Login failed: No token received.');
+        setMessage('❌ Server error. Please try again later.');
       }
-    } catch (err) {
-      setError('Invalid username or password.');
     }
   };
 
   return (
-    <div>
+    <div style={{ textAlign: 'center', marginTop: '50px' }}>
       <h1>Login Page</h1>
       <form onSubmit={handleSubmit}>
-        <label>
-          Username:
+        <div>
+          <label htmlFor="username">Username: </label>
           <input
+            id="username"
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
           />
-        </label>
-        <br />
-        <label>
-          Password:
+        </div>
+
+        <div style={{ marginTop: '10px' }}>
+          <label htmlFor="password">Password: </label>
           <input
+            id="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-        </label>
-        <br />
-        <button type="submit">Login</button>
+        </div>
+
+        <button style={{ marginTop: '20px' }} type="submit">Login</button>
       </form>
-      {error && <div style={{ color: 'red', marginTop: '10px' }}>{error}</div>}
+
+      {message && (
+        <div style={{ marginTop: '20px', color: message.startsWith('✅') ? 'green' : 'red' }}>
+          {message}
+        </div>
+      )}
     </div>
   );
-}
+};
+
+export default Login;
