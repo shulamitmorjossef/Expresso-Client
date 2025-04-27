@@ -1,0 +1,24 @@
+.about-page {
+    background-color: #fff8e7; /* צבע שמנת רק לעמוד האודות */
+    min-height: 100vh; /* כל גובה המסך */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px; /* רווח פנימי */
+    text-align: center;
+}
+
+.about-page h1 {
+    color: #6f4e37;
+    font-size: 3rem;
+    margin-bottom: 30px;
+}
+
+.about-page p {
+    color: #333;
+    font-size: 20px;
+    max-width: 800px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
