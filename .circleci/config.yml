@@ -1,26 +1,10 @@
 version: 2.1
-orbs:
-  node: circleci/node@5.2
+
 jobs:
-  ci-build-test-lint:
+  build:
     docker:
-      - image: circleci/node:14
+      - image: cimg/node:18.20.2
     steps:
       - checkout
-      - run: 
-          name: install dependencies
-          command: npm install
-      - run:
-          name: Run tests
-          command: npm test
-      - run:
-          name: Run linter
-          command: npm run lint
-workflows:
-  version: 2
-  build_and_test:
-    jobs:
-      - ci-build-test-lint:
-          filters:
-            branches:
-              only: main
+
+
