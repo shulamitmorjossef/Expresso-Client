@@ -1,31 +1,31 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const baseUrl = 'https://exspresso-server.onrender.com';
+// login.jsx
+// const baseUrl = process.env.VITE_BASE_URL;
+// const baseUrl = process.env.VITE_BASE_URL || 'http://localhost:3000';
+// const baseUrl = import.meta.env.VITE_BASE_URL;
+
+// const baseUrl ='http://localhost:3000';
+const baseUrl ='https://exspresso-server.onrender.com';
+
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
     try {
-      const res = await axios.post(`${baseUrl}/login`, {
+      const res = await axios.post(`${baseUrl}/users`,
+{
         username,
         password
       });
-      if (res.data.token) {
-        localStorage.setItem('token', res.data.token);
-        alert('Login successful!');
-        // אפשר לנתב לעמוד אחר אם רוצים:
-        // window.location.href = '/home';
-      } else {
-        setError('Login failed: No token received.');
-      }
+      alert('✅ משתמש נוצר בהצלחה!');
     } catch (err) {
-      setError('Invalid username or password.');
+      console.error('❌ שגיאה ביצירת המשתמש:', err);
+      alert('🚫 יצירת המשתמש נכשלה!');
     }
   };
 
@@ -34,7 +34,7 @@ export default function Login() {
       <h1>Login Page</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          Username:
+          שם משתמש:
           <input
             type="text"
             value={username}
@@ -44,7 +44,7 @@ export default function Login() {
         </label>
         <br />
         <label>
-          Password:
+          סיסמה:
           <input
             type="password"
             value={password}
@@ -53,9 +53,9 @@ export default function Login() {
           />
         </label>
         <br />
-        <button type="submit">Login</button>
+        <button type="submit">הירשם</button>
       </form>
-      {error && <div style={{color: 'red', marginTop: '10px'}}>{error}</div>}
     </div>
+    
   );
 }
