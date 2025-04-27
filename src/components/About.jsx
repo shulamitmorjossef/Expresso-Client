@@ -9,7 +9,7 @@ function About() {
  
   useEffect(() => {
 
-    fetch('https://exspresso-server.onrender.com')  // 
+    fetch('https://exspresso-server.onrender.com/about')  // 
     // fetch('http://localhost:3000/about')  // 
       .then((response) => {
         if (!response.ok) {
