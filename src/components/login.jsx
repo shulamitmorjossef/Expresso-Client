@@ -23,14 +23,12 @@ export default function Login() {
       });
 
       console.log('Login successful:', res.data);
-
       // שמירת טוקן אם יש
       if (res.data.token) {
         localStorage.setItem('token', res.data.token);
       }
-
       // מעבר לעמוד הבית
-      navigate('/CustomerHome');
+      navigate('/customer-home');
     } catch (err) {
       console.error('Login failed:', err);
 
