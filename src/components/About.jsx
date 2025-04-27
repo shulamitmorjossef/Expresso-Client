@@ -8,7 +8,7 @@ function About() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('https://exspresso-server.onrender.com/about')  // 
+    fetch('http://localhost:3000/about')  // 
       .then((response) => {
         if (!response.ok) {
           throw new Error('Failed to fetch About content');
