@@ -1,19 +1,24 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom'; // תוסיף את זה
 import Login from '../src/components/login.jsx';
 import axios from 'axios';
 
 // ללעוג את axios
 jest.mock('axios');
 
+const renderWithRouter = (ui) => {
+    return render(<BrowserRouter>{ui}</BrowserRouter>);
+};
+
 describe('Login Component', () => {
     test('renders Login Page title', () => {
-        render(<Login />);
+        renderWithRouter(<Login />);
         expect(screen.getByText(/Login Page/i)).toBeInTheDocument();
     });
 
     test('renders username and password fields', () => {
-        render(<Login />);
+        renderWithRouter(<Login />);
         expect(screen.getByLabelText(/Username/i)).toBeInTheDocument();
         expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
     });
@@ -21,7 +26,7 @@ describe('Login Component', () => {
     test('submits form with username and password', async () => {
         axios.post.mockResolvedValue({ data: { message: 'Login successful', user: { username: 'testuser' } } });
 
-        render(<Login />);
+        renderWithRouter(<Login />);
         const usernameInput = screen.getByLabelText(/Username/i);
         const passwordInput = screen.getByLabelText(/Password/i);
         const button = screen.getByRole('button', { name: /login/i });
