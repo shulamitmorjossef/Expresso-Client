@@ -1,19 +1,62 @@
+# version: 2.1
+
+# jobs:
+#   build:
+#     docker:
+#       - image: cimg/node:18.20.2
+#     steps:
+#       - checkout
+#       - run:
+#           name: Install dependencies
+#           command: npm install
+#       - run:
+#           name: Run ESLint
+#           command: npm run lint
+# workflows:
+#   version: 2
+#   build:
+#     jobs:
+#       - build
+
+
+
 version: 2.1
 
+orbs:
+  node: circleci/node@5
+
 jobs:
-  build:
-    docker:
-      - image: cimg/node:18.20.2
+  build-and-test-vite:
+    executor: node/default
     steps:
       - checkout
+      - node/install-packages:
+          pkg-manager: npm
       - run:
           name: Install dependencies
-          command: npm install
+          command: npm install  
       - run:
-          name: Run ESLint
-          command: npm run lint
+          name: Run tests
+          command: npm test 
+      - run:
+          name: Run linter
+          command: npm run lint 
+      - run:
+          name: Build the Vite app
+          command: npm run build
+
+  deploy:
+    executor: node/default
+    steps:
+      - run: 
+          name: Deploy app to server
+          command: curl 'https://expresso-client.onrender.com'
+
 workflows:
   version: 2
-  build:
+  build-and-deploy:
     jobs:
-      - build
+      - build-and-test-vite
+      - deploy:
+          requires:
+            - build-and-test-vite
