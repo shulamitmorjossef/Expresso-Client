@@ -1,11 +1,11 @@
 .about-page {
-    background-color: #fff8e7; /* צבע שמנת רק לעמוד האודות */
-    min-height: 100vh; /* כל גובה המסך */
+    background-color: #fff8e7; 
+    min-height: 100vh; 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 50px 20px; /* רווח פנימי */
+    padding: 50px 20px; 
     text-align: center;
 }
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaSearch, FaBars } from 'react-icons/fa';
-import { Link } from 'react-router-dom'; // חשוב להוסיף את ה-import הזה
+import { Link } from 'react-router-dom'; 
 import './CustomerHome.css';
 
 export default function CustomerHome() {
@@ -53,7 +53,7 @@ export default function CustomerHome() {
 
         <footer className="footer">
           <a href="#" className="footer-link">Terms & Conditions</a>
-          <Link to="/About" className="footer-link about-link">About</Link> {/* שים לב להחליף ל-Link */}
+          <Link to="/About" className="footer-link about-link">About</Link> {/* Link */}
         </footer>
       </div>
     </div>

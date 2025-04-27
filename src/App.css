@@ -6,26 +6,26 @@ html, body, #root {
   padding: 0;
   width: 100%;
   font-family: Poppins, Arial, sans-serif;
-  background-color: #000; /* שיהיה בסיס כהה */
+  background-color: #000; 
 }
 
 * {
   box-sizing: border-box;
 }
 
-/* עיצוב לעמוד האודות */
+
 .about-page {
-  background-color: #f8f4e5; /* צבע שמנת חלבי */
+  background-color: #f8f4e5; 
   min-height: 100%;
   width: 100%;
   padding: 2rem;
-  text-align: center; /* טקסט במרכז */
+  text-align: center; 
 }
 
 .about-page h1,
 .about-page h2,
 .about-page p {
-  text-align: center; /* וידוא שכל הטקסט ממורכז */
+  text-align: center; 
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;

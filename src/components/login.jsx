@@ -5,7 +5,7 @@ import axios from 'axios';
 // const baseUrl = 'http://localhost:3000';
 const baseUrl = 'https://exspresso-server.onrender.com';
 
-// עיצוב קבוע לקלטים וכפתורים
+
 const inputStyle = {
   padding: '10px',
   borderRadius: '5px',
@@ -34,8 +34,8 @@ const formContainerStyle = {
   border: '1px solid #eee',
   borderRadius: '10px',
   boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-  backgroundColor: 'white', // חשוב להשאיר את הטופס עצמו לבן
-  opacity: 0.95, // קצת שקוף
+  backgroundColor: 'white', 
+  opacity: 0.95, 
 };
 
 const pageStyle = {

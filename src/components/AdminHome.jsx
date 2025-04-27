@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaSearch, FaBars } from 'react-icons/fa';
-import { Link } from 'react-router-dom'; // חשוב להוסיף את ה-import הזה
+import { Link } from 'react-router-dom'; 
 import './AdminHome.css';
 
 export default function AdminHome() {

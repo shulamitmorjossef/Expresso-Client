@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaSearch, FaBars } from 'react-icons/fa';
-import { Link } from 'react-router-dom'; // חשוב להוסיף את ה-import הזה
+import { Link } from 'react-router-dom'; 
 import './GuestHome.css';
 
 export default function GuestHome() {
@@ -58,7 +58,7 @@ export default function GuestHome() {
         {/* Footer */}
         <footer className="footer">
           <a href="#" className="footer-link">Terms & Conditions</a>
-          <Link to="/About" className="footer-link" style={{ marginLeft: '20px' }}>About</Link> {/* עדכון לקישור React Router */}
+          <Link to="/About" className="footer-link" style={{ marginLeft: '20px' }}>About</Link> {/* React Router */}
         </footer>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import axios from 'axios';
-import Login from '../src/components/login'; // תקן נתיב אם צריך
+import Login from '../src/components/login'; 
 
 jest.mock('axios');
 
