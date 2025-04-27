@@ -20,6 +20,7 @@ const Login = () => {
 
       // כאן אפשר להפנות לדף אחר אם רוצים
       // למשל: navigate('/home');
+      navigate('/CustomerHome');
     } catch (error) {
       console.error('Login failed:', error);
 
