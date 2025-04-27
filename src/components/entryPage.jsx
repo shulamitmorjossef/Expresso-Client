@@ -5,7 +5,7 @@ export default function EntryPage() {
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
-    navigate('/login');
+    navigate('/Login');
   };
 
   const handleRegisterClick = () => {
@@ -13,7 +13,7 @@ export default function EntryPage() {
   };
 
   const handleGuestClick = () => {
-    navigate('/guest-home');
+    navigate('/GuestHome');
   };
 
   return (

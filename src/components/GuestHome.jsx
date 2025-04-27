@@ -58,7 +58,7 @@ export default function GuestHome() {
         {/* Footer */}
         <footer className="footer">
           <a href="#" className="footer-link">Terms & Conditions</a>
-          <Link to="/about" className="footer-link" style={{ marginLeft: '20px' }}>About</Link> {/* עדכון לקישור React Router */}
+          <Link to="/About" className="footer-link" style={{ marginLeft: '20px' }}>About</Link> {/* עדכון לקישור React Router */}
         </footer>
       </div>
     </div>

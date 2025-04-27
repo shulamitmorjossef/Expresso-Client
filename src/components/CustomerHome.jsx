@@ -53,7 +53,7 @@ export default function CustomerHome() {
 
         <footer className="footer">
           <a href="#" className="footer-link">Terms & Conditions</a>
-          <Link to="/about" className="footer-link about-link">About</Link> {/* שים לב להחליף ל-Link */}
+          <Link to="/About" className="footer-link about-link">About</Link> {/* שים לב להחליף ל-Link */}
         </footer>
       </div>
     </div>

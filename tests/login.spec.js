@@ -1,45 +1,81 @@
-import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom'; // תוסיף את זה
-import Login from '../src/components/login.jsx';
+import { MemoryRouter } from 'react-router-dom';
 import axios from 'axios';
+import Login from '../src/components/login'; // תקן נתיב אם צריך
 
-// ללעוג את axios
 jest.mock('axios');
 
-const renderWithRouter = (ui) => {
-    return render(<BrowserRouter>{ui}</BrowserRouter>);
-};
+describe('Login component', () => {
 
-describe('Login Component', () => {
-    test('renders Login Page title', () => {
-        renderWithRouter(<Login />);
-        expect(screen.getByText(/Login Page/i)).toBeInTheDocument();
+  afterEach(() => {
+    jest.clearAllMocks();
+    localStorage.clear();
+  });
+
+  test('renders login form correctly', () => {
+    render(
+      <MemoryRouter>
+        <Login />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByRole('heading', { name: /login/i })).toBeInTheDocument();
+    expect(screen.getByLabelText(/user name:/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/password:/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Login/i })).toBeInTheDocument();
+  });
+
+  test('shows error when login fails with invalid credentials', async () => {
+    axios.post.mockRejectedValue({ response: { status: 401 } });
+
+    render(
+      <MemoryRouter>
+        <Login />
+      </MemoryRouter>
+    );
+
+    fireEvent.change(screen.getByLabelText(/user name:/i), { target: { value: 'wronguser' } });
+    fireEvent.change(screen.getByLabelText(/password:/i), { target: { value: 'wrongpass' } });
+    fireEvent.click(screen.getByRole('button', { name: /Login/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText('❌ Invalid username or password')).toBeInTheDocument();
     });
+  });
 
-    test('renders username and password fields', () => {
-        renderWithRouter(<Login />);
-        expect(screen.getByLabelText(/Username/i)).toBeInTheDocument();
-        expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
+  test('shows server error when server is down', async () => {
+    axios.post.mockRejectedValue({});
+
+    render(
+      <MemoryRouter>
+        <Login />
+      </MemoryRouter>
+    );
+
+    fireEvent.change(screen.getByLabelText(/user name:/i), { target: { value: 'user' } });
+    fireEvent.change(screen.getByLabelText(/password:/i), { target: { value: 'pass' } });
+    fireEvent.click(screen.getByRole('button', { name: /Login/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText('❌ Server error. Please try again later.')).toBeInTheDocument();
     });
+  });
 
-    test('submits form with username and password', async () => {
-        axios.post.mockResolvedValue({ data: { message: 'Login successful', user: { username: 'testuser' } } });
+  test('redirects to /customer-home on successful login', async () => {
+    axios.post.mockResolvedValue({ data: { token: 'fake_token' } });
 
-        renderWithRouter(<Login />);
-        const usernameInput = screen.getByLabelText(/Username/i);
-        const passwordInput = screen.getByLabelText(/Password/i);
-        const button = screen.getByRole('button', { name: /login/i });
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <Login />
+      </MemoryRouter>
+    );
 
-        fireEvent.change(usernameInput, { target: { value: 'testuser' } });
-        fireEvent.change(passwordInput, { target: { value: 'testpass' } });
-        fireEvent.click(button);
+    fireEvent.change(screen.getByLabelText(/user name:/i), { target: { value: 'correctuser' } });
+    fireEvent.change(screen.getByLabelText(/password:/i), { target: { value: 'correctpass' } });
+    fireEvent.click(screen.getByRole('button', { name: /Login/i }));
 
-        await waitFor(() => {
-            expect(axios.post).toHaveBeenCalledWith(
-                'http://localhost:3000/login',
-                { username: 'testuser', password: 'testpass' }
-            );
-        });
+    await waitFor(() => {
+      expect(localStorage.getItem('token')).toBe('fake_token');
     });
+  });
 });
