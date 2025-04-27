@@ -9,6 +9,7 @@ function About() {
  
   useEffect(() => {
     fetch('http://localhost:3000/about')  // 
+    fetch('https://exspresso-server.onrender.com')
       .then((response) => {
         if (!response.ok) {
           throw new Error('Failed to fetch About content');
