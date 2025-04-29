@@ -26,9 +26,33 @@ export default function GuestHome() {
           {menuOpen && (
             <nav className="dropdown-menu">
               <ul>
-                <li><a href="/Login" className="dropdown-link">Login</a></li>
-                <li><a href="/register" className="dropdown-link">Register</a></li>
-                <li><a href="/reviews" className="dropdown-link">Reviews</a></li>
+                <li>
+                  <Link to="/Login" className="dropdown-link">Login</Link>
+                </li>
+                <li>
+                  <Link
+                    to="#"
+                    className="dropdown-link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      alert("Registration page coming soon!");
+                    }}
+                  >
+                    Register
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="#"
+                    className="dropdown-link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      alert("Reviews page coming soon!");
+                    }}
+                  >
+                    Reviews
+                  </Link>
+                </li>
               </ul>
             </nav>
           )}
@@ -58,7 +82,7 @@ export default function GuestHome() {
         {/* Footer */}
         <footer className="footer">
           <a href="#" className="footer-link">Terms & Conditions</a>
-          <Link to="/About" className="footer-link" style={{ marginLeft: '20px' }}>About</Link> {/* React Router */}
+          <Link to="/About" className="footer-link" style={{ marginLeft: '20px' }}>About</Link>
         </footer>
       </div>
     </div>
@@ -83,3 +107,6 @@ function CategoryCard({ src, label }) {
     </div>
   );
 }
+
+
+
