@@ -10,6 +10,11 @@ export default function CustomerHome() {
     setMenuOpen(!menuOpen);
   };
 
+  const handleUnavailablePage = (e) => {
+    e.preventDefault();
+    alert("This page is not available yet. It will be available soon!");
+  };
+
   return (
     <div className="outer-container">
       <div className="overlay"></div>
@@ -23,11 +28,31 @@ export default function CustomerHome() {
           {menuOpen && (
             <nav className="dropdown-menu">
               <ul>
-                <li><a href="/edit-account" className="dropdown-link">Edit Account Details</a></li>
-                <li><a href="/orders" className="dropdown-link">My Orders</a></li>
-                <li><a href="/cart" className="dropdown-link">Shopping Cart</a></li>
-                <li><a href="/coupons" className="dropdown-link">Coupons</a></li>
-                <li><a href="/reviews" className="dropdown-link">Reviews</a></li>
+                <li>
+                  <Link to="#" className="dropdown-link" onClick={handleUnavailablePage}>
+                    Edit Account Details
+                  </Link>
+                </li>
+                <li>
+                  <Link to="#" className="dropdown-link" onClick={handleUnavailablePage}>
+                    My Orders
+                  </Link>
+                </li>
+                <li>
+                  <Link to="#" className="dropdown-link" onClick={handleUnavailablePage}>
+                    Shopping Cart
+                  </Link>
+                </li>
+                <li>
+                  <Link to="#" className="dropdown-link" onClick={handleUnavailablePage}>
+                    Coupons
+                  </Link>
+                </li>
+                <li>
+                  <Link to="#" className="dropdown-link" onClick={handleUnavailablePage}>
+                    Reviews
+                  </Link>
+                </li>
               </ul>
             </nav>
           )}
@@ -53,7 +78,7 @@ export default function CustomerHome() {
 
         <footer className="footer">
           <a href="#" className="footer-link">Terms & Conditions</a>
-          <Link to="/About" className="footer-link about-link">About</Link> {/* Link */}
+          <Link to="/About" className="footer-link about-link">About</Link>
         </footer>
       </div>
     </div>

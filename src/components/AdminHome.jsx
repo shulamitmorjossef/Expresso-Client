@@ -24,18 +24,95 @@ export default function AdminHome() {
           </button>
 
           {menuOpen && (
-            <nav className="dropdown-menu">
-              <ul className="dropdown-list">
-                <li><a href="/edit-account" className="dropdown-link">Edit Account Details</a></li>
-                <li><a href="/orders" className="dropdown-link">Orders</a></li>
-                <li><a href="/catalog" className="dropdown-link">Catalog Products</a></li>
-                <li><a href="/delivery-days" className="dropdown-link">Delivery Days</a></li>
-                <li><a href="/statistics" className="dropdown-link">Statistics</a></li>
-                <li><a href="/coupons" className="dropdown-link">Coupons</a></li>
-                <li><a href="/reviews" className="dropdown-link">Reviews</a></li>
-              </ul>
-            </nav>
-          )}
+          <nav className="dropdown-menu">
+            <ul className="dropdown-list">
+              <li>
+                <Link
+                  to="#"
+                  className="dropdown-link"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    alert("Edit Account Details page coming soon!");
+                  }}
+                >
+                  Edit Account Details
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="#"
+                  className="dropdown-link"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    alert("Orders page coming soon!");
+                  }}
+                >
+                  Orders
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="#"
+                  className="dropdown-link"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    alert("Catalog Products page coming soon!");
+                  }}
+                >
+                  Catalog Products
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="#"
+                  className="dropdown-link"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    alert("Delivery Days page coming soon!");
+                  }}
+                >
+                  Delivery Days
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="#"
+                  className="dropdown-link"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    alert("Statistics page coming soon!");
+                  }}
+                >
+                  Statistics
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="#"
+                  className="dropdown-link"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    alert("Coupons page coming soon!");
+                  }}
+                >
+                  Coupons
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="#"
+                  className="dropdown-link"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    alert("Reviews page coming soon!");
+                  }}
+                >
+                  Reviews
+                </Link>
+              </li>
+            </ul>
+          </nav>
+        )}
         </header>
 
         {/* Main */}
