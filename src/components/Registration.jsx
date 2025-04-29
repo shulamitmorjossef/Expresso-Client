@@ -30,8 +30,28 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // 1. Password match check
     if (formData.password !== formData.confirmPassword) {
-      setErrorMessage("Passwords do not match.");
+      alert("Passwords do not match.");
+      return;
+    }
+
+    // 2. Password strength check with detailed alert
+    const password = formData.password;
+    const errors = [];
+
+    if (password.length < 8) {
+      errors.push("at least 8 characters");
+    }
+    if (!/[A-Z]/.test(password)) {
+      errors.push("one uppercase letter");
+    }
+    if (!/[^A-Za-z0-9]/.test(password)) {
+      errors.push("one symbol (e.g. @, #, $, etc.)");
+    }
+
+    if (errors.length > 0) {
+      alert("Password must contain:\n- " + errors.join("\n- "));
       return;
     }
 
@@ -111,7 +131,17 @@ const Register = () => {
           <input type="email" name="email" placeholder="Email" onChange={handleChange} required style={inputStyle} />
           <input type="tel" name="phone" placeholder="Phone" onChange={handleChange} required style={inputStyle} />
           <input type="date" name="birthday" onChange={handleChange} required style={inputStyle} />
-          <input type="password" name="password" placeholder="Password" onChange={handleChange} required style={inputStyle} />
+
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={handleChange}
+            required
+            style={inputStyle}
+            title="Password must be at least 8 characters, include one uppercase letter and one symbol."
+          />
+
           <input type="password" name="confirmPassword" placeholder="Confirm Password" onChange={handleChange} required style={inputStyle} />
 
           <label style={{ display: 'flex', alignItems: 'center' }}>
@@ -186,5 +216,3 @@ const buttonStyle = {
 };
 
 export default Register;
-
-
