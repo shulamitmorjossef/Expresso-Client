@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const baseUrl = 'http://localhost:3000';
-// const baseUrl = 'https://exspresso-server.onrender.com';
+// const baseUrl = 'http://localhost:3000';
+const baseUrl = 'https://exspresso-server.onrender.com';
 
 const Register = () => {
   const [formData, setFormData] = useState({
