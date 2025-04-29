@@ -29,18 +29,7 @@ export default function GuestHome() {
                 <li>
                   <Link to="/Login" className="dropdown-link">Login</Link>
                 </li>
-                <li>
-                  <Link
-                    to="#"
-                    className="dropdown-link"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      alert("Registration page coming soon!");
-                    }}
-                  >
-                    Register
-                  </Link>
-                </li>
+                  <Link to="/Registration" className="dropdown-link">Register</Link>
                 <li>
                   <Link
                     to="#"

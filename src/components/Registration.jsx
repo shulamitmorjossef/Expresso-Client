@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// const baseUrl = import.meta.env.VITE_BASE_URL;
 const baseUrl = 'http://localhost:3000';
 // const baseUrl = 'https://exspresso-server.onrender.com';
 
@@ -11,12 +10,12 @@ const Register = () => {
     username: '',
     email: '',
     phone: '',
-    birthday: '', // <-- תוקן מ-dob ל-birthday
+    birthday: '',
     password: '',
     confirmPassword: '',
     userType: 'customer',
     managerCode: '',
-    uniqueCode: '', // גם זה מוסיפים שיהיה ריק אם צריך
+    uniqueCode: '',
   });
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -32,7 +31,7 @@ const Register = () => {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      setErrorMessage("הסיסמאות לא תואמות");
+      setErrorMessage("Passwords do not match.");
       return;
     }
 
@@ -53,7 +52,7 @@ const Register = () => {
       const phoneResult = await responsePhone.json();
 
       if (emailResult.exists || phoneResult.exists) {
-        setErrorMessage("האימייל או הטלפון כבר קיימים במערכת");
+        setErrorMessage("Email or phone number already exists.");
         return;
       }
 
@@ -64,15 +63,15 @@ const Register = () => {
       });
 
       if (!response.ok) {
-        throw new Error('ההרשמה נכשלה');
+        throw new Error('Registration failed');
       }
 
       const result = await response.json();
-      console.log('נרשמת בהצלחה!', result);
+      console.log('Registered successfully!', result);
       navigate("/");
     } catch (error) {
-      console.error('שגיאה בהרשמה:', error.message);
-      setErrorMessage("הייתה שגיאה בהרשמה, אנא נסה שוב");
+      console.error('Registration error:', error.message);
+      setErrorMessage("An error occurred during registration. Please try again.");
     }
   };
 
@@ -100,20 +99,20 @@ const Register = () => {
         width: '100%',
         maxWidth: '800px'
       }}>
-        <h2 style={{ marginBottom: '2rem', fontSize: '2rem', color: '#333', textAlign: 'center' }}>הרשמה</h2>
+        <h2 style={{ marginBottom: '2rem', fontSize: '2rem', color: '#333', textAlign: 'center' }}>Register</h2>
         <form onSubmit={handleSubmit} style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
           gap: '1rem',
           width: '100%',
         }}>
-          <input type="text" name="fullName" placeholder="שם מלא" onChange={handleChange} required style={inputStyle} />
-          <input type="text" name="username" placeholder="שם משתמש" onChange={handleChange} required style={inputStyle} />
-          <input type="email" name="email" placeholder="אימייל" onChange={handleChange} required style={inputStyle} />
-          <input type="tel" name="phone" placeholder="טלפון" onChange={handleChange} required style={inputStyle} />
+          <input type="text" name="fullName" placeholder="Full Name" onChange={handleChange} required style={inputStyle} />
+          <input type="text" name="username" placeholder="Username" onChange={handleChange} required style={inputStyle} />
+          <input type="email" name="email" placeholder="Email" onChange={handleChange} required style={inputStyle} />
+          <input type="tel" name="phone" placeholder="Phone" onChange={handleChange} required style={inputStyle} />
           <input type="date" name="birthday" onChange={handleChange} required style={inputStyle} />
-          <input type="password" name="password" placeholder="סיסמה" onChange={handleChange} required style={inputStyle} />
-          <input type="password" name="confirmPassword" placeholder="אימות סיסמה" onChange={handleChange} required style={inputStyle} />
+          <input type="password" name="password" placeholder="Password" onChange={handleChange} required style={inputStyle} />
+          <input type="password" name="confirmPassword" placeholder="Confirm Password" onChange={handleChange} required style={inputStyle} />
 
           <label style={{ display: 'flex', alignItems: 'center' }}>
             <input
@@ -124,7 +123,7 @@ const Register = () => {
               onChange={handleChange}
               style={{ marginRight: '10px' }}
             />
-            לקוח
+            Customer
           </label>
           <label style={{ display: 'flex', alignItems: 'center' }}>
             <input
@@ -135,14 +134,14 @@ const Register = () => {
               onChange={handleChange}
               style={{ marginRight: '10px' }}
             />
-            מנהל
+            Manager
           </label>
 
           {formData.userType === 'manager' && (
             <input
               type="text"
               name="managerCode"
-              placeholder="קוד מנהל"
+              placeholder="Manager Code"
               onChange={handleChange}
               style={inputStyle}
             />
@@ -158,7 +157,7 @@ const Register = () => {
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
-              הירשם
+              Register
             </button>
             {errorMessage && <p style={{ color: 'red', textAlign: 'center' }}>{errorMessage}</p>}
           </div>
@@ -187,3 +186,5 @@ const buttonStyle = {
 };
 
 export default Register;
+
+
