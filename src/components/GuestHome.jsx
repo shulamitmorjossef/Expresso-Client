@@ -26,9 +26,33 @@ export default function GuestHome() {
           {menuOpen && (
             <nav className="dropdown-menu">
               <ul>
-                <li><Link to="/Login" className="dropdown-link">Login</Link></li>
-                <li><Link to="/register" className="dropdown-link">Register</Link></li>
-                <li><Link to="/reviews" className="dropdown-link">Reviews</Link></li>
+                <li>
+                  <Link to="/Login" className="dropdown-link">Login</Link>
+                </li>
+                <li>
+                  <Link
+                    to="#"
+                    className="dropdown-link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      alert("Registration page coming soon!");
+                    }}
+                  >
+                    Register
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="#"
+                    className="dropdown-link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      alert("Reviews page coming soon!");
+                    }}
+                  >
+                    Reviews
+                  </Link>
+                </li>
               </ul>
             </nav>
           )}
@@ -83,3 +107,6 @@ function CategoryCard({ src, label }) {
     </div>
   );
 }
+
+
+
