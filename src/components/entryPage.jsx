@@ -23,7 +23,7 @@ export default function EntryPage() {
       height: '100vh',
       margin: 0,
       padding: 0,
-      backgroundImage: 'url(https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?fit=crop&w=1950&q=80)', // רקע קפה, אפשר לשנות אם תרצי
+      backgroundImage: 'url("/images/entryPage-background.jpg")',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       display: 'flex',

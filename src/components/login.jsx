@@ -40,7 +40,7 @@ const formContainerStyle = {
 
 const pageStyle = {
   minHeight: '100vh',
-  backgroundImage: 'url(https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?fit=crop&w=1950&q=80)',
+  backgroundImage: 'url("/images/entryPage-background.jpg")',
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   display: 'flex',

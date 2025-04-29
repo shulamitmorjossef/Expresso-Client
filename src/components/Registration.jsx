@@ -97,7 +97,7 @@ const Register = () => {
 
   return (
     <div style={{
-      backgroundImage: 'url(https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1470&q=80)',
+      backgroundImage: 'url("/images/entryPage-background.jpg")',
       backgroundSize: 'cover',
       backgroundPosition: 'center',
       backgroundRepeat: 'no-repeat',
