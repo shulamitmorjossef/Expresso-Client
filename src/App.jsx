@@ -6,6 +6,8 @@ import GuestHome from './components/GuestHome.jsx';
 import CustomerHome from './components/CustomerHome.jsx';
 import AdminHome from './components/AdminHome.jsx';
 import About from './components/About.jsx';
+import Registration  from './components/Registration.jsx';
+
 
 
 function App() {
@@ -17,6 +19,7 @@ function App() {
       <Route path="/CustomerHome" element={<CustomerHome />} />
       <Route path="/AdminHome" element={<AdminHome />} />
       <Route path="/About" element={<About />} />
+      <Route path="/Registration" element={<Registration />} />
     </Routes>
   );
 }

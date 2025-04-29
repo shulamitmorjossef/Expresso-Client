@@ -9,7 +9,8 @@ export default function EntryPage() {
   };
 
   const handleRegisterClick = () => {
-    alert('Registration page coming soon!');
+    navigate('/Registration');
+    // alert('Registration page coming soon!');
   };
 
   const handleGuestClick = () => {
