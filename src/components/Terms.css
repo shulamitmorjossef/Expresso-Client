@@ -1,0 +1,25 @@
+.terms-page {
+    background-color: #fff8e7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
+    text-align: center;
+  }
+  
+  .terms-page h1 {
+    color: #6f4e37;
+    font-size: 3rem;
+    margin-bottom: 30px;
+  }
+  
+  .terms-page p {
+    color: #333;
+    font-size: 20px;
+    max-width: 800px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+  

@@ -138,7 +138,7 @@ export default function AdminHome() {
 
         {/* Footer */}
         <footer className="footer">
-          <a href="#" className="footer-link">Terms & Conditions</a>
+          <a href="/term" className="footer-link">Terms & Conditions</a>
           <Link to="/About" className="footer-link about-link">About</Link>
         </footer>
       </div>

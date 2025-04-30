@@ -77,7 +77,7 @@ export default function CustomerHome() {
         </main>
 
         <footer className="footer">
-          <a href="#" className="footer-link">Terms & Conditions</a>
+          <a href="/terms" className="footer-link">Terms & Conditions</a>
           <Link to="/About" className="footer-link about-link">About</Link>
         </footer>
       </div>

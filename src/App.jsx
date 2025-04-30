@@ -8,6 +8,7 @@ import AdminHome from './components/AdminHome.jsx';
 import About from './components/About.jsx';
 import Registration  from './components/Registration.jsx';
 import Product from './components/ProductPage.jsx';
+import Terms from './components/Terms.jsx';
 
 
 
@@ -22,6 +23,7 @@ function App() {
       <Route path="/About" element={<About />} />
       <Route path="/Registration" element={<Registration />} />
       <Route path="/Product" element={<Product />} />
+      <Route path="/terms" element={<Terms />} />
     </Routes>
   );
 }
