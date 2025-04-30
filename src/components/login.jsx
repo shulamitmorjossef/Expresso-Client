@@ -1,53 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './Login.css';
 
-// const baseUrl = 'http://localhost:3000';
 const baseUrl = 'https://exspresso-server.onrender.com';
-
-
-const inputStyle = {
-  padding: '10px',
-  borderRadius: '5px',
-  border: '1px solid #ddd',
-  fontSize: '1rem',
-  width: '100%',
-  marginBottom: '1rem',
-};
-
-const buttonStyle = {
-  padding: '10px 20px',
-  backgroundColor: '#6F4E37',
-  color: 'white',
-  border: 'none',
-  borderRadius: '8px',
-  cursor: 'pointer',
-  fontSize: '1rem',
-  transition: 'background-color 0.3s ease',
-  marginTop: '1rem',
-};
-
-const formContainerStyle = {
-  maxWidth: '400px',
-  margin: '0 auto',
-  padding: '2rem',
-  border: '1px solid #eee',
-  borderRadius: '10px',
-  boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-  backgroundColor: 'white', 
-  opacity: 0.95, 
-};
-
-const pageStyle = {
-  minHeight: '100vh',
-  backgroundImage: 'url("/images/entryPage-background.jpg")',
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: '2rem',
-};
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -61,20 +17,14 @@ export default function Login() {
     setError('');
 
     try {
-      const res = await axios.post(`${baseUrl}/login`, {
-        username,
-        password
-      });
-
-      // console.log('Login successful:', res.data);
+      const res = await axios.post(`${baseUrl}/login`, { username, password });
 
       if (res.data.token) {
         localStorage.setItem('token', res.data.token);
       }
+
       navigate('/CustomerHome');
     } catch (err) {
-      // console.error('Login failed:', err);
-
       if (err.response && err.response.status === 401) {
         setError('❌ Invalid username or password');
       } else {
@@ -84,43 +34,36 @@ export default function Login() {
   };
 
   return (
-    <div style={pageStyle}>
-      <form onSubmit={handleSubmit} style={formContainerStyle}>
-        <h2 style={{ marginBottom: '2rem', fontSize: '2rem', color: '#333', textAlign: 'center' }}>
-          login
-        </h2>
+    <div className="login-page">
+      <form onSubmit={handleSubmit} className="login-form">
+        <h2 className="login-title">login</h2>
 
-        <label style={{ display: 'block', marginBottom: '0.5rem' }}>
+        <label className="login-label">
           user name:
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
-            style={inputStyle}
+            className="login-input"
           />
         </label>
 
-        <label style={{ display: 'block', marginBottom: '0.5rem' }}>
+        <label className="login-label">
           password:
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            style={inputStyle}
+            className="login-input"
           />
         </label>
 
-        <button type="submit" style={buttonStyle}>Login</button>
+        <button type="submit" className="login-button">Login</button>
 
-        {error && (
-          <div style={{ color: 'red', marginTop: '10px', textAlign: 'center' }}>
-            {error}
-          </div>
-        )}
+        {error && <div className="login-error">{error}</div>}
       </form>
     </div>
   );
 }
-

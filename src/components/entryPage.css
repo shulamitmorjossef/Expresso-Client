@@ -1,0 +1,32 @@
+.entry-page {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-image: url("/images/entryPage-background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+}
+
+.entry-title {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+}
+
+.entry-button {
+  padding: 10px 20px;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  border-radius: 5px;
+  cursor: pointer;
+}
