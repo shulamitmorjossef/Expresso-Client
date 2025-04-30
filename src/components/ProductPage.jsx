@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 
-const baseUrl = 'http://localhost:3000';
+// const baseUrl = 'http://localhost:3000';
+const baseUrl = 'https://exspresso-server.onrender.com';
+
 
 const CoffeeMachine = () => {
   const [machine, setMachine] = useState(null);
