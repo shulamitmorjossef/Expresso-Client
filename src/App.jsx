@@ -7,6 +7,7 @@ import CustomerHome from './components/CustomerHome.jsx';
 import AdminHome from './components/AdminHome.jsx';
 import About from './components/About.jsx';
 import Registration  from './components/Registration.jsx';
+import Product from './components/ProductPage.jsx';
 
 
 
@@ -20,6 +21,7 @@ function App() {
       <Route path="/AdminHome" element={<AdminHome />} />
       <Route path="/About" element={<About />} />
       <Route path="/Registration" element={<Registration />} />
+      <Route path="/Product" element={<Product />} />
     </Routes>
   );
 }
