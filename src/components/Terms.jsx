@@ -7,6 +7,8 @@ export default function Terms() {
 
   useEffect(() => {
     fetch('http://localhost:3000/terms')
+    //fetch('https://exspresso-server.onrender.com/terms')
+
       .then((response) => {
         if (!response.ok) {
           throw new Error('Failed to fetch Terms content');

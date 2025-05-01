@@ -11,7 +11,6 @@ import Product from './components/ProductPage.jsx';
 import Terms from './components/Terms.jsx';
 
 
-
 function App() {
   return (
     <Routes>
@@ -23,9 +22,8 @@ function App() {
       <Route path="/About" element={<About />} />
       <Route path="/Registration" element={<Registration />} />
       <Route path="/Product" element={<Product />} />
-      <Route path="/terms" element={<Terms />} />
+      <Route path="/Terms" element={<Terms />} />
     </Routes>
   );
 }
-
 export default App;
