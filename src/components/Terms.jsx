@@ -6,8 +6,8 @@ export default function Terms() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:3000/terms')
-    //fetch('https://exspresso-server.onrender.com/terms')
+    // fetch('http://localhost:3000/terms')
+    fetch('https://exspresso-server.onrender.com/terms')
 
       .then((response) => {
         if (!response.ok) {
