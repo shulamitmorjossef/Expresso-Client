@@ -6,6 +6,6 @@ export default defineConfig({
   plugins: [react()],
   server: {
     // open: true,
-    open: 'https://expresso-client.onrender.com'
+    open: 'https://expresso-client.onrender.com',
   }
 });
