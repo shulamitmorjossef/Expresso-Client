@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaSearch, FaBars } from 'react-icons/fa';
 import { Link } from 'react-router-dom'; 
-import './CustomerHome.css';
+import '../styles/CustomerHome.css';
 
 export default function CustomerHome() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -77,8 +77,8 @@ export default function CustomerHome() {
         </main>
 
         <footer className="footer">
-          <a href="/Terms" className="footer-link">Terms & Conditions</a>
-          <Link to="/About" className="footer-link about-link">About</Link>
+          <Link to="/Terms" className="footer-link">Terms & Conditions</Link>
+          <Link to="/About" className="footer-link"style={{ marginLeft: '20px' }}>About</Link>
         </footer>
       </div>
     </div>

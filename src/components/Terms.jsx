@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './Terms.css';
+import './styles/Terms.css';
 
 export default function Terms() {
   const [terms, setTerms] = useState(null);

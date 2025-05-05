@@ -1,7 +1,9 @@
 // src/components/About.jsx
 
 import React, { useEffect, useState } from 'react';
-import './About.css'; 
+// import './About.css'; 
+import './styles/About.css';
+
 
 function About() {
   const [aboutData, setAboutData] = useState(null);

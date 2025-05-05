@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaSearch, FaBars } from 'react-icons/fa';
 import { Link } from 'react-router-dom'; 
-import './GuestHome.css';
+import './styles/GuestHome.css';
 
 export default function GuestHome() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -70,7 +70,7 @@ export default function GuestHome() {
 
         {/* Footer */}
         <footer className="footer">
-<Link to="/Terms" className="footer-link">Terms & Conditions</Link>
+          <Link to="/Terms" className="footer-link">Terms & Conditions</Link>
           <Link to="/About" className="footer-link" style={{ marginLeft: '20px' }}>About</Link>
         </footer>
       </div>
