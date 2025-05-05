@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './styles/Terms.css';
 
+import baseUrl from '../config';
+
+
 export default function Terms() {
   const [terms, setTerms] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // fetch('http://localhost:3000/terms')
-    fetch('https://exspresso-server.onrender.com/terms')
+    fetch(`${baseUrl}/terms`)
 
       .then((response) => {
         if (!response.ok) {

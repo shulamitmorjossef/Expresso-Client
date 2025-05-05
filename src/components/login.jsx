@@ -3,8 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles/login.css';
 
-const baseUrl = 'https://exspresso-server.onrender.com';
-// const baseUrl = 'http://localhost:3000/about';
+
+import baseUrl from '../config';
+
+
+// const baseUrl = 'https://exspresso-server.onrender.com';
+// const baseUrl = 'http://localhost:3000';
 
 export default function Login() {
   const [username, setUsername] = useState('');

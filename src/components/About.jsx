@@ -1,9 +1,13 @@
 // src/components/About.jsx
 
 import React, { useEffect, useState } from 'react';
-// import './About.css'; 
 import './styles/About.css';
 
+import baseUrl from '../config';
+
+
+// const baseUrl = process.env.SERVER_URL ; 
+// const baseUrl = import.meta.env.VITE_SERVER_URL;
 
 function About() {
   const [aboutData, setAboutData] = useState(null);
@@ -11,8 +15,7 @@ function About() {
  
   useEffect(() => {
 
-    fetch('https://exspresso-server.onrender.com/about')  // 
-    // fetch('http://localhost:3000/about')  // 
+    fetch(`${baseUrl}/about`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Failed to fetch About content');

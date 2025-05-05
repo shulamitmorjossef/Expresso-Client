@@ -3,6 +3,11 @@ import { MemoryRouter } from 'react-router-dom';
 import axios from 'axios';
 import Login from '../src/components/login'; 
 
+jest.mock('../src/config', () => ({
+  default: 'http://mocked-url.com'
+}));
+
+
 jest.mock('axios');
 
 describe('Login component', () => {

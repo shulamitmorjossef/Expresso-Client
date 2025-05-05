@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 
+
+import baseUrl from '../config';
+
 // const baseUrl = 'http://localhost:3000';
-const baseUrl = 'https://exspresso-server.onrender.com';
+// const baseUrl = 'https://exspresso-server.onrender.com';
+// fetch(baseUrl)
 
 
 const CoffeeMachine = () => {

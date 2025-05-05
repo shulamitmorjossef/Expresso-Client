@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './styles/Registration.css';
 
-const baseUrl = 'https://exspresso-server.onrender.com';
+import baseUrl from '../config';
+
+
+// const baseUrl = 'https://exspresso-server.onrender.com';
 // const baseUrl = 'http://localhost:3000/about';
 
 const Register = () => {
