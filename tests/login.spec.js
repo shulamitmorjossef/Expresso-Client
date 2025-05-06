@@ -1,14 +1,21 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import axios from 'axios';
-import Login from '../src/components/login'; 
+import Login from '../src/components/login';
+import React from 'react';
 
 jest.mock('../src/config', () => ({
   default: 'http://mocked-url.com'
 }));
 
-
 jest.mock('axios');
+
+const mockedNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockedNavigate,
+}));
 
 describe('Login component', () => {
 
@@ -44,7 +51,7 @@ describe('Login component', () => {
     fireEvent.click(screen.getByRole('button', { name: /Login/i }));
 
     await waitFor(() => {
-      expect(screen.getByText('❌ Invalid username or password')).toBeInTheDocument();
+      expect(screen.getByText('Invalid username or password')).toBeInTheDocument();
     });
   });
 
@@ -62,12 +69,14 @@ describe('Login component', () => {
     fireEvent.click(screen.getByRole('button', { name: /Login/i }));
 
     await waitFor(() => {
-      expect(screen.getByText('❌ Server error. Please try again later.')).toBeInTheDocument();
+      expect(screen.getByText('Server error. Please try again later.')).toBeInTheDocument();
     });
   });
 
-  test('redirects to /customer-home on successful login', async () => {
-    axios.post.mockResolvedValue({ data: { token: 'fake_token' } });
+  test('redirects to /CustomerHome on successful customer login', async () => {
+    axios.post.mockResolvedValue({
+      data: { token: 'fake_token', user_type: 'customer' }
+    });
 
     render(
       <MemoryRouter initialEntries={['/']}>
@@ -81,6 +90,48 @@ describe('Login component', () => {
 
     await waitFor(() => {
       expect(localStorage.getItem('token')).toBe('fake_token');
+      expect(mockedNavigate).toHaveBeenCalledWith('/CustomerHome');
+    });
+  });
+
+  test('redirects to /AdminHome on successful manager login', async () => {
+    axios.post.mockResolvedValue({
+      data: { token: 'manager_token', user_type: 'manager' }
+    });
+
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <Login />
+      </MemoryRouter>
+    );
+
+    fireEvent.change(screen.getByLabelText(/user name:/i), { target: { value: 'manager' } });
+    fireEvent.change(screen.getByLabelText(/password:/i), { target: { value: 'adminpass' } });
+    fireEvent.click(screen.getByRole('button', { name: /Login/i }));
+
+    await waitFor(() => {
+      expect(localStorage.getItem('token')).toBe('manager_token');
+      expect(mockedNavigate).toHaveBeenCalledWith('/AdminHome');
+    });
+  });
+
+  test('shows error on unknown user type', async () => {
+    axios.post.mockResolvedValue({
+      data: { token: 'some_token', user_type: 'alien' }
+    });
+
+    render(
+      <MemoryRouter>
+        <Login />
+      </MemoryRouter>
+    );
+
+    fireEvent.change(screen.getByLabelText(/user name:/i), { target: { value: 'alien' } });
+    fireEvent.change(screen.getByLabelText(/password:/i), { target: { value: 'alienpass' } });
+    fireEvent.click(screen.getByRole('button', { name: /Login/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText('Unknown user type')).toBeInTheDocument();
     });
   });
 });
