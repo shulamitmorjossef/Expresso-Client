@@ -24,16 +24,25 @@ export default function Login() {
     try {
       const res = await axios.post(`${baseUrl}/login`, { username, password });
 
+      const { user_type } = res.data;
+
       if (res.data.token) {
         localStorage.setItem('token', res.data.token);
       }
 
-      navigate('/CustomerHome');
+      if (user_type === 'manager') {
+        navigate('/AdminHome');
+      } else if (user_type === 'customer') {
+        navigate('/CustomerHome');
+      } else {
+        setError('Unknown user type');
+      }
+
     } catch (err) {
       if (err.response && err.response.status === 401) {
-        setError('❌ Invalid username or password');
+        setError('Invalid username or password');
       } else {
-        setError('❌ Server error. Please try again later.');
+        setError('Server error. Please try again later.');
       }
     }
   };

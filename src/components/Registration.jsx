@@ -19,7 +19,6 @@ const Register = () => {
     confirmPassword: '',
     userType: 'customer',
     managerCode: '',
-    uniqueCode: '',
   });
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -34,11 +33,6 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match.");
-      return;
-    }
-
     const password = formData.password;
     const errors = [];
 
@@ -51,26 +45,31 @@ const Register = () => {
       return;
     }
 
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
+
     try {
-      const responseEmail = await fetch(`${baseUrl}/check-email`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: formData.email })
-      });
+      // const responseEmail = await fetch(`${baseUrl}/check-email`, {
+        // method: 'POST',
+        // headers: { 'Content-Type': 'application/json' },
+        // body: JSON.stringify({ email: formData.email })
+      // });
 
-      const responsePhone = await fetch(`${baseUrl}/check-phone`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone: formData.phone })
-      });
+      // const responsePhone = await fetch(`${baseUrl}/check-phone`, {
+        // method: 'POST',
+        // headers: { 'Content-Type': 'application/json' },
+        // body: JSON.stringify({ phone: formData.phone })
+      // });
 
-      const emailResult = await responseEmail.json();
-      const phoneResult = await responsePhone.json();
+      // const emailResult = await responseEmail.json();
+      // const phoneResult = await responsePhone.json();
 
-      if (emailResult.exists || phoneResult.exists) {
-        setErrorMessage("Email or phone number already exists.");
-        return;
-      }
+      // if (emailResult.exists || phoneResult.exists) {
+        // setErrorMessage("Email or phone number already exists.");
+        // return;
+      // }
 
       const response = await fetch(`${baseUrl}/register`, {
         method: 'POST',
@@ -89,6 +88,9 @@ const Register = () => {
     }
   };
 
+
+
+  
   return (
     <div className="register-container">
       <div className="register-card">
