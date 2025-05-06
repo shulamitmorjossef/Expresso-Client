@@ -9,6 +9,8 @@ import About from './components/About.jsx';
 import Registration  from './components/Registration.jsx';
 import Product from './components/ProductPage.jsx';
 import Terms from './components/Terms.jsx';
+import PersonalAreaAdmin from './components/Admin/personalAreaAdmin.jsx';
+import PersonalAreaCustomer from './components/Customer/personalAreaCustomer.jsx';
 
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
       <Route path="/Registration" element={<Registration />} />
       <Route path="/Product" element={<Product />} />
       <Route path="/Terms" element={<Terms />} />
+      <Route path="/PersonalAreaAdmin" element={<PersonalAreaAdmin />} />
+      <Route path="/PersonalAreaCustomer" element={<PersonalAreaCustomer />} />
     </Routes>
   );
 }

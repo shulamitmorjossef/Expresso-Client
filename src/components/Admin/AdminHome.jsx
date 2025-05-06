@@ -29,16 +29,13 @@ export default function AdminHome() {
             <ul className="dropdown-list">
               <li>
                 <Link
-                  to="#"
-                  className="dropdown-link"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    alert("Edit Account Details page coming soon!");
-                  }}
-                >
+                  to="/PersonalAreaAdmin"
+                  className="dropdown-link">
                   Edit Account Details
                 </Link>
               </li>
+              <ul className="dropdown-list">
+              </ul>
               <li>
                 <Link
                   to="#"

@@ -24,8 +24,11 @@ export default function Login() {
     try {
       const res = await axios.post(`${baseUrl}/login`, { username, password });
 
-      const { user_type } = res.data;
+      const { user_type, username: userName } = res.data;
 
+      localStorage.setItem('username', userName);
+
+      
       if (res.data.token) {
         localStorage.setItem('token', res.data.token);
       }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import baseUrl from '../../config';
 
-export default function PersonalAreaAdmin() {
+export default function PersonalAreaCustomer() {
   const [user, setUser] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [form, setForm] = useState({

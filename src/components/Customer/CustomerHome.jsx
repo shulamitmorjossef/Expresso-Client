@@ -29,9 +29,11 @@ export default function CustomerHome() {
             <nav className="dropdown-menu">
               <ul>
                 <li>
-                  <Link to="#" className="dropdown-link" onClick={handleUnavailablePage}>
-                    Edit Account Details
-                  </Link>
+                <Link
+                  to="/PersonalAreaAdmin"
+                  className="dropdown-link">
+                  Edit Account Details
+                </Link>
                 </li>
                 <li>
                   <Link to="#" className="dropdown-link" onClick={handleUnavailablePage}>
