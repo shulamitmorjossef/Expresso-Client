@@ -53,7 +53,7 @@ export default function GuestHome() {
               <CategoryCard src="/images/capsules.png" label="Capsules" />
             </Link>
 
-            <Link to="/milk-frothers" className="category-card-link">
+            <Link to="/MilkFrothers" className="category-card-link">
               <CategoryCard src="/images/milkfrothers.png" label="Milk Frothers" />
             </Link>
           </div>

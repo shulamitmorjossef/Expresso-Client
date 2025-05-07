@@ -72,12 +72,8 @@ export default function AdminHome() {
               </li>
               <li>
                 <Link
-                  to="#"
+                  to="/StatisticsPage"
                   className="dropdown-link"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    alert("Statistics page coming soon!");
-                  }}
                 >
                   Statistics
                 </Link>
