@@ -3,9 +3,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/CatalogPage.css';
 import { Info, Pencil, Trash2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function CoffeeCatalog() {
   const [machines, setMachines] = useState([]);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     axios.get('http://localhost:3000/get-all-coffee-machines')   
@@ -17,7 +21,7 @@ export default function CoffeeCatalog() {
   }, []);
 
   const handleAdd = () => alert('Add new coffee machine');
-  const handleEdit = (machine) => alert(`Edit ${machine.name}`);
+  const handleEdit = (machine) => navigate(`/EditCoffeeMachine/${machine.id}`);
   const handleDelete = (id) => {
     if (window.confirm('Are you sure you want to delete this machine?')) {
       axios.delete(`http://localhost:3000/delete-coffee-machine/${id}`)

@@ -19,6 +19,8 @@ import CatalogPage from './components/Admin/CatalogPage.jsx';
 import CapsuleCatalog from './components/Admin/CapsuleCatalog.jsx';
 import CoffeeCatalog from './components/Admin/CoffeeCatalog.jsx';
 import FrotherCatalog from './components/Admin/FrotherCatalog.jsx';
+import EditCoffeeMachine from './components/Admin/EditCoffeeMachine.jsx';
+
 
 
 
@@ -44,8 +46,11 @@ function App() {
       <Route path="/CapsuleCatalog" element={<CapsuleCatalog />} />
       <Route path="/CoffeeCatalog" element={<CoffeeCatalog />} />
       <Route path="/FrotherCatalog" element={<FrotherCatalog />} />
+      <Route path="/EditCoffeeMachine/:id" element={<EditCoffeeMachine />} />
 
-      {/* Add other routes here */}
+    
+
+
 
     </Routes>
   );
