@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import './styles/CoffeeProducts.css';
 import { FaShoppingCart } from 'react-icons/fa';
 import baseUrl from '../config';
+import ProductModal from './ProductModal'; 
 
 export default function CoffeeProducts() {
   const [machines, setMachines] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,15 +22,15 @@ export default function CoffeeProducts() {
       });
   }, []);
 
-  const handleAddToCart = (item) => {
+  const handleAddToCart = (item, quantity = 1) => {
     const userType = localStorage.getItem('userType'); // 'guest' or 'customer'
 
     if (userType === 'guest' || !userType) {
       alert('You must register or log in to view the cart.');
       navigate('/');
     } else {
-      alert(`Added ${item.name} to your cart.`);
-      // כאן תוכל להוסיף את הלוגיקה להוספת המוצר לעגלה (למשל ב-Redux או ב-localStorage)
+      alert(`Added ${quantity} x ${item.name} to your cart.`);
+      // פה בהמשך: POST לעגלה
     }
   };
 
@@ -37,18 +39,39 @@ export default function CoffeeProducts() {
       <h1>Coffee Machines</h1>
       <div className="product-list">
         {machines.map((machine) => (
-          <div key={machine.id} className="product-card">
+          <div
+            key={machine.id}
+            className="product-card"
+            onClick={() => setSelectedProduct({ ...machine, type: 'coffee_machine' })} 
+          >
             <img src={machine.image_path} alt={machine.name} />
             <div className="product-details">
               <h3>{machine.name}</h3>
               <p>${parseFloat(machine.price).toFixed(2)}</p>
-              <button className="add-to-cart-btn" onClick={() => handleAddToCart(machine)}>
+              <button
+                className="add-to-cart-btn"
+                onClick={(e) => {
+                  e.stopPropagation(); 
+                  handleAddToCart(machine);
+                }}
+              >
                 <FaShoppingCart />
               </button>
             </div>
           </div>
         ))}
       </div>
+
+      {selectedProduct && (
+        <ProductModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+          onAddToCart={(product, quantity) => {
+            handleAddToCart(product, quantity);
+            setSelectedProduct(null);
+          }}
+        />
+      )}
     </div>
   );
 }

@@ -3,11 +3,14 @@ import { FaSearch, FaBars } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import '../styles/CustomerHome.css';
 import baseUrl from '../../config';
+import SearchBar from '../SearchBar';
+import ProductModal from '../ProductModal';
 
 export default function CustomerHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
@@ -76,28 +79,22 @@ export default function CustomerHome() {
               <FaSearch className="search-icon" onClick={() => handleSearch(searchTerm)} />
             </div>
 
-            {/* תוצאות החיפוש */}
             {searchResults.length > 0 && (
               <ul className="search-dropdown">
                 {searchResults.map((item, idx) => (
                   <li key={idx}>
-                    <Link
-                      to={`/${item.type}/${item.id}`}
-                      className="search-item"
-                      onClick={() => setSearchResults([])}
-                    >
+                    <div className="search-item" onClick={() => setSelectedProduct(item)}>
                       <img src={item.image_path} alt={item.name} className="result-thumb" />
                       <div className="result-info">
                         <strong>{item.name}</strong>
                         <span className="result-meta">({item.type}) – {item.price}₪</span>
                       </div>
-                    </Link>
+                    </div>
                   </li>
                 ))}
               </ul>
             )}
 
-            {/* הודעה כשאין תוצאות */}
             {searchTerm.trim() !== '' && searchResults.length === 0 && (
               <div className="no-results-message">No results found.</div>
             )}
@@ -116,6 +113,18 @@ export default function CustomerHome() {
           <Link to="/About" className="footer-link" style={{ marginLeft: '20px' }}>About</Link>
         </footer>
       </div>
+
+      {selectedProduct && (
+        <ProductModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+          onAddToCart={(product, quantity) => {
+            console.log("🛒 Added to cart:", product, quantity);
+            // כאן תעשי post לעגלה בעתיד
+            setSelectedProduct(null);
+          }}
+        />
+      )}
     </div>
   );
 }
