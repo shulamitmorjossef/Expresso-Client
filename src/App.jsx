@@ -11,10 +11,16 @@ import Product from './components/ProductPage.jsx';
 import Terms from './components/Terms.jsx';
 import PersonalAreaAdmin from './components/Admin/personalAreaAdmin.jsx';
 import PersonalAreaCustomer from './components/Customer/personalAreaCustomer.jsx';
+<<<<<<< HEAD
 import EditTerms from './components/Admin/editTerms.jsx';
 import DeliveryDays from './components/Admin/deliveryDays.jsx';
 
 
+=======
+import CoffeeProducts from './components/CoffeeProducts.jsx';
+import MilkFrothers from './components/MilkFrothers.jsx';
+import Capsules from './components/Capsules.jsx';
+>>>>>>> 71ee913c3c4c2dc9653809f17e5cf624cfb9f706
 
 function App() {
   return (

@@ -1,26 +1,61 @@
 import React, { useState, useEffect } from 'react';
 import { format, addMonths, subMonths, startOfMonth, endOfMonth, startOfWeek, endOfWeek, addDays, isSameMonth, isSameDay } from 'date-fns';
 import '../styles/deliveryDays.css';
+import axios from 'axios';
 
 export default function DeliveryDays() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(new Date());
   const [unavailableDates, setUnavailableDates] = useState([]);
 
   useEffect(() => {
-    // Fetch unavailable dates from the server (mock data for now)
-    setUnavailableDates(["2024-05-15", "2024-05-18", "2024-05-21"]);
+    fetchUnavailableDates();
   }, []);
 
-  const renderHeader = () => {
-    return (
-      <div className="header">
-        <button className="nav-button" onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}>{'<'}</button>
-        <h2>{format(currentMonth, 'MMMM yyyy')}</h2>
-        <button className="nav-button" onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}>{'>'}</button>
-      </div>
-    );
+  const fetchUnavailableDates = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/get-all-delivery-dates');
+      const dates = response.data.map(({ day, month, year }) => `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`);
+      setUnavailableDates(dates);
+    } catch (err) {
+      console.error('❌ Error fetching unavailable dates:', err);
+    }
   };
+
+  const addUnavailableDate = async (date) => {
+    const [year, month, day] = date.split('-');
+    try {
+      await axios.post('http://localhost:3000/add-delivery-date', { day: Number(day), month: Number(month), year: Number(year) });
+      setUnavailableDates(prev => [...prev, date]);
+    } catch (err) {
+      console.error('❌ Error adding unavailable date:', err);
+    }
+  };
+
+  const removeUnavailableDate = async (date) => {
+    const [year, month, day] = date.split('-');
+    try {
+      await axios.delete('http://localhost:3000/remove-delivery-date', { data: { day: Number(day), month: Number(month), year: Number(year) } });
+      setUnavailableDates(prev => prev.filter(d => d !== date));
+    } catch (err) {
+      console.error('❌ Error removing unavailable date:', err);
+    }
+  };
+
+  const toggleAvailability = (date) => {
+    if (unavailableDates.includes(date)) {
+      removeUnavailableDate(date);
+    } else {
+      addUnavailableDate(date);
+    }
+  };
+
+  const renderHeader = () => (
+    <div className="header">
+      <button className="nav-button" onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}>{'<'}</button>
+      <h2>{format(currentMonth, 'MMMM yyyy')}</h2>
+      <button className="nav-button" onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}>{'>'}</button>
+    </div>
+  );
 
   const renderDays = () => {
     const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -35,15 +70,14 @@ export default function DeliveryDays() {
     const rows = [];
     let days = [];
     let day = startDate;
-    let formattedDate = '';
 
     while (day <= endDate) {
       for (let i = 0; i < 7; i++) {
-        formattedDate = format(day, 'yyyy-MM-dd');
+        const formattedDate = format(day, 'yyyy-MM-dd');
         const isUnavailable = unavailableDates.includes(formattedDate);
-        const isToday = isSameDay(day, new Date());
         const isCurrentMonth = isSameMonth(day, currentMonth);
-        const className = `cell ${isUnavailable ? 'unavailable' : 'available'} ${isToday ? 'today' : ''} ${isCurrentMonth ? '' : 'disabled'}`;
+        const className = `cell ${isUnavailable ? 'unavailable' : 'available'} ${isCurrentMonth ? '' : 'disabled'}`;
+
         days.push(
           <div
             key={formattedDate}
@@ -61,12 +95,6 @@ export default function DeliveryDays() {
     return rows;
   };
 
-  const toggleAvailability = (date) => {
-    setUnavailableDates(prev =>
-      prev.includes(date) ? prev.filter(d => d !== date) : [...prev, date]
-    );
-  };
-
   return (
     <div className="calendar-container">
       {renderHeader()}
@@ -78,7 +106,7 @@ export default function DeliveryDays() {
           {unavailableDates.map(date => (
             <li key={date}>
               {date}
-              <button onClick={() => toggleAvailability(date)}>Remove</button>
+              <button onClick={() => removeUnavailableDate(date)}>Remove</button>
             </li>
           ))}
         </ul>

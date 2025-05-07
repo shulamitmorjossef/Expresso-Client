@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './styles/CoffeeProducts.css';
+import baseUrl from '../config';
 
 export default function CoffeeProducts() {
   const [machines, setMachines] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:3000/get-all-coffee-machines')
+    fetch(`${baseUrl}/get-all-coffee-machines`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch coffee machines");
         return res.json();
