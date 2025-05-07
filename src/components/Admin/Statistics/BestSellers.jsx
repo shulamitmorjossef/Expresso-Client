@@ -25,7 +25,7 @@ export default function BestSellers() {
         setLoading(true);
         try {
             const response = await axios.get(
-                `http://localhost:3000/BestSellers`, 
+                `http://localhost:3000/BestSellers`,
                 {
                     params: {
                         startDate,
