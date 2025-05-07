@@ -56,12 +56,8 @@ export default function AdminHome() {
               </li>
               <li>
                 <Link
-                  to="#"
+                  to="/CatalogPage"
                   className="dropdown-link"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    alert("Catalog Products page coming soon!");
-                  }}
                 >
                   Catalog Products
                 </Link>

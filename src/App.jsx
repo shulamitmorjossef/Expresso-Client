@@ -7,8 +7,6 @@ import CustomerHome from './components/Customer/CustomerHome.jsx';
 import AdminHome from './components/Admin/AdminHome.jsx';
 import About from './components/About.jsx';
 import Registration  from './components/Registration.jsx';
-import Product from './components/ProductPage.jsx'; 
-import Product from './components/Customer/ProductPage.jsx';
 import Terms from './components/Terms.jsx';
 import PersonalAreaAdmin from './components/Admin/personalAreaAdmin.jsx';
 import PersonalAreaCustomer from './components/Customer/personalAreaCustomer.jsx';
@@ -17,6 +15,11 @@ import DeliveryDays from './components/Admin/deliveryDays.jsx';
 import CoffeeProducts from './components/CoffeeProducts.jsx';
 import MilkFrothers from './components/MilkFrothers.jsx';
 import Capsules from './components/Capsules.jsx';
+import CatalogPage from './components/Admin/CatalogPage.jsx';
+import CapsuleCatalog from './components/Admin/CapsuleCatalog.jsx';
+import CoffeeCatalog from './components/Admin/CoffeeCatalog.jsx';
+import FrotherCatalog from './components/Admin/FrotherCatalog.jsx';
+
 
 function App() {
   return (
@@ -28,7 +31,6 @@ function App() {
       <Route path="/AdminHome" element={<AdminHome />} />
       <Route path="/About" element={<About />} />
       <Route path="/Registration" element={<Registration />} />
-      <Route path="/Product" element={<Product />} />
       <Route path="/Terms" element={<Terms />} />
       <Route path="/PersonalAreaAdmin" element={<PersonalAreaAdmin />} />
       <Route path="/PersonalAreaCustomer" element={<PersonalAreaCustomer />} />
@@ -37,6 +39,12 @@ function App() {
       <Route path="/CoffeeProducts" element={<CoffeeProducts />} />
       <Route path="/MilkFrothers" element={<MilkFrothers />} />
       <Route path="/Capsules" element={<Capsules />} />
+      <Route path="/CatalogPage" element={<CatalogPage />} />
+      <Route path="/CapsuleCatalog" element={<CapsuleCatalog />} />
+      <Route path="/CoffeeCatalog" element={<CoffeeCatalog />} />
+      <Route path="/FrotherCatalog" element={<FrotherCatalog />} />
+
+      {/* Add other routes here */}
 
     </Routes>
   );

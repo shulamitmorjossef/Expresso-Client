@@ -17,7 +17,7 @@ export default function DeliveryDays() {
       const dates = response.data.map(({ day, month, year }) => `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`);
       setUnavailableDates(dates);
     } catch (err) {
-      console.error('❌ Error fetching unavailable dates:', err);
+      console.error('Error fetching unavailable dates:', err);
     }
   };
 
@@ -27,7 +27,7 @@ export default function DeliveryDays() {
       await axios.post('http://localhost:3000/add-delivery-date', { day: Number(day), month: Number(month), year: Number(year) });
       setUnavailableDates(prev => [...prev, date]);
     } catch (err) {
-      console.error('❌ Error adding unavailable date:', err);
+      console.error('Error adding unavailable date:', err);
     }
   };
 
@@ -37,7 +37,7 @@ export default function DeliveryDays() {
       await axios.delete('http://localhost:3000/remove-delivery-date', { data: { day: Number(day), month: Number(month), year: Number(year) } });
       setUnavailableDates(prev => prev.filter(d => d !== date));
     } catch (err) {
-      console.error('❌ Error removing unavailable date:', err);
+      console.error('Error removing unavailable date:', err);
     }
   };
 
