@@ -24,6 +24,6 @@ export default function EntryPage() {
       <button className="entry-button" onClick={handleGuestClick}>Guest Login</button>
       <button className="entry-button" onClick={handleLoginClick}>Login</button>
       <button className="entry-button" onClick={handleRegisterClick}>Register</button>
-    </div>
-  );
+    </div>
+  );
 }
