@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import '../styles/CustomerHome.css';
 import baseUrl from '../../config';
 
-export default function CustomerHome({ onProductClick }) {
+export default function CustomerHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -76,26 +76,30 @@ export default function CustomerHome({ onProductClick }) {
               <FaSearch className="search-icon" onClick={() => handleSearch(searchTerm)} />
             </div>
 
+            {/* תוצאות החיפוש */}
             {searchResults.length > 0 && (
               <ul className="search-dropdown">
                 {searchResults.map((item, idx) => (
                   <li key={idx}>
-                    <button
+                    <Link
+                      to={`/${item.type}/${item.id}`}
                       className="search-item"
-                      onClick={() => {
-                        setSearchResults([]);
-                        onProductClick(item);
-                      }}
+                      onClick={() => setSearchResults([])}
                     >
                       <img src={item.image_path} alt={item.name} className="result-thumb" />
                       <div className="result-info">
                         <strong>{item.name}</strong>
                         <span className="result-meta">({item.type}) – {item.price}₪</span>
                       </div>
-                    </button>
+                    </Link>
                   </li>
                 ))}
               </ul>
+            )}
+
+            {/* הודעה כשאין תוצאות */}
+            {searchTerm.trim() !== '' && searchResults.length === 0 && (
+              <div className="no-results-message">No results found.</div>
             )}
           </div>
 
