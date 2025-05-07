@@ -11,7 +11,7 @@ import Product from './components/ProductPage.jsx';
 import Terms from './components/Terms.jsx';
 import PersonalAreaAdmin from './components/Admin/personalAreaAdmin.jsx';
 import PersonalAreaCustomer from './components/Customer/personalAreaCustomer.jsx';
-import CoffeeProducts from './components/Capsules.jsx';
+import CoffeeProducts from './components/CoffeeProducts.jsx';
 import MilkFrothers from './components/MilkFrothers.jsx';
 import Capsules from './components/Capsules.jsx';
 
