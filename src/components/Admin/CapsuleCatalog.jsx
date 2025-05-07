@@ -2,9 +2,12 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/CatalogPage.css';
 import { Info, Pencil, Trash2 } from 'lucide-react'; 
+import { useNavigate } from 'react-router-dom';
+
 
 export default function CapsuleCatalog() {
   const [capsules, setCapsules] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('http://localhost:3000/get-all-capsule')
@@ -16,7 +19,7 @@ export default function CapsuleCatalog() {
   }, []);
 
   const handleAdd = () => alert('Add new capsule');
-  const handleEdit = (capsule) => alert(`Edit ${capsule.name}`);
+  const handleEdit = (capsule) => navigate(`/EditCapsule/${capsule.id}`);
   const handleDelete = (id) => {
     if (window.confirm('Are you sure you want to delete this capsule?')) {
       axios.delete(`http://localhost:3000/delete-capsule/${id}`)

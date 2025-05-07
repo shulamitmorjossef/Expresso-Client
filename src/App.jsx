@@ -19,15 +19,14 @@ import CatalogPage from './components/Admin/CatalogPage.jsx';
 import CapsuleCatalog from './components/Admin/CapsuleCatalog.jsx';
 import CoffeeCatalog from './components/Admin/CoffeeCatalog.jsx';
 import FrotherCatalog from './components/Admin/FrotherCatalog.jsx';
-<<<<<<< HEAD
 import EditCoffeeMachine from './components/Admin/EditCoffeeMachine.jsx';
-
-=======
 import TotalSold from './components/Admin/Statistics/TotalSold.jsx';
 import BestSellers from './components/Admin/Statistics/BestSellers.jsx';
 import CustomerCount from './components/Admin/Statistics/CustomerCount.jsx';
 import StatisticsPage from './components/Admin/Statistics/StatisticsPage.jsx';
->>>>>>> de6b52bf889e38c6d161d79201d2d03500f074cc
+import EditCapsule from './components/Admin/EditCapsule.jsx'; 
+import EditFrother from './components/Admin/EditFrother'; 
+
 
 
 
@@ -53,17 +52,14 @@ function App() {
       <Route path="/CapsuleCatalog" element={<CapsuleCatalog />} />
       <Route path="/CoffeeCatalog" element={<CoffeeCatalog />} />
       <Route path="/FrotherCatalog" element={<FrotherCatalog />} />
-<<<<<<< HEAD
       <Route path="/EditCoffeeMachine/:id" element={<EditCoffeeMachine />} />
-
-    
-
-=======
       <Route path="/TotalSold" element={<TotalSold />} />
       <Route path="/BestSellers" element={<BestSellers />} />
       <Route path="/CustomerCount" element={<CustomerCount />} />
       <Route path="/StatisticsPage" element={<StatisticsPage />} />
->>>>>>> de6b52bf889e38c6d161d79201d2d03500f074cc
+      <Route path="/EditCapsule/:id" element={<EditCapsule />} />
+      <Route path="/EditFrother/:id" element={<EditFrother />} />
+
 
 
     </Routes>
