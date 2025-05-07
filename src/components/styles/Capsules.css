@@ -36,6 +36,7 @@
 
 .capsule-details {
   padding: 16px;
+  position: relative;
 }
 
 .capsule-details h3 {
@@ -48,4 +49,22 @@
   font-weight: bold;
   margin-top: 8px;
   font-size: 18px;
+}
+
+.cart-icon-button {
+  background-color: #eaeaea;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  font-size: 18px;
+  color: black;
+  cursor: pointer;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.cart-icon-button:hover {
+  background-color: #ccc;
 }

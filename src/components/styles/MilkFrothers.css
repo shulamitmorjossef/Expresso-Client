@@ -21,6 +21,7 @@
   overflow: hidden;
   background-color: #fafafa;
   transition: transform 0.2s;
+  position: relative;
 }
 
 .milk-product-card:hover {
@@ -36,6 +37,7 @@
 
 .milk-product-details {
   padding: 16px;
+  position: relative;
 }
 
 .milk-product-details h3 {
@@ -48,4 +50,22 @@
   font-weight: bold;
   margin-top: 8px;
   font-size: 18px;
+}
+
+.add-to-cart-btn {
+  background-color: #eaeaea;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  font-size: 18px;
+  color: black;
+  cursor: pointer;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #ccc;
 }
