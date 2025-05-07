@@ -108,6 +108,11 @@ export default function AdminHome() {
                   Reviews
                 </Link>
               </li>
+              <li>
+              <Link to="/EntryPage" className="dropdown-link" onClick={handleUnavailablePage}>
+                LogOut
+              </Link>
+              </li>
             </ul>
           </nav>
         )}
