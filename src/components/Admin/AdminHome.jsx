@@ -68,12 +68,8 @@ export default function AdminHome() {
               </li>
               <li>
                 <Link
-                  to="#"
+                  to="/DeliveryDays"
                   className="dropdown-link"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    alert("Delivery Days page coming soon!");
-                  }}
                 >
                   Delivery Days
                 </Link>
@@ -115,7 +111,7 @@ export default function AdminHome() {
                 </Link>
               </li>
               <li>
-                <Link to="/" className="dropdown-link" onClick={handleLogout}>
+                <Link to="/EditTerms" className="dropdown-link">
                 Edit terms & conditions
               </Link>
               </li>

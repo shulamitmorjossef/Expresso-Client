@@ -1,0 +1,56 @@
+.terms-edit {
+    width: 80%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  .terms-edit h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .terms-edit label {
+    display: block;
+    margin-bottom: 20px;
+  }
+  
+  .terms-edit input[type="text"],
+  .terms-edit textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+  }
+  
+  .terms-edit button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .terms-edit button:hover {
+    background-color: #0056b3;
+  }
+  
+  .error {
+    color: #d9534f;
+    margin-bottom: 15px;
+  }
+  
+  .success {
+    color: #5cb85c;
+    margin-bottom: 15px;
+  }
+  
