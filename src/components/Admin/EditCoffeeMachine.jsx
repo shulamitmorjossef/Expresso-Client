@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { create, test, enforce } from 'vest';
+import baseUrl from '../../config';
 
 // Create validation suite
 const suite = create((data = {}, field) => {
@@ -186,7 +187,7 @@ export default function EditCoffeeMachine() {
 
       // Try with FormData first
       try {
-        await axios.put(`http://localhost:3000/update-coffee-machine/${id}`, formData, {
+        await axios.put(`${baseUrl}/update-coffee-machine/${id}`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -208,7 +209,7 @@ export default function EditCoffeeMachine() {
           image_path: form.image_path
         };
         
-        await axios.put(`http://localhost:3000/update-coffee-machine/${id}`, jsonData);
+        await axios.put(`${baseUrl}/update-coffee-machine/${id}`, jsonData);
         alert('✅ Machine updated successfully');
         navigate('/CoffeeCatalog');
       }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { create, test, enforce } from 'vest';
+import baseUrl from '../../config';
 
 const suite = create((data = {}, field) => {
   test('name', 'Name is required', () => {
@@ -77,7 +78,7 @@ export default function EditCapsule() {
   const [validationResult, setValidationResult] = useState(suite.get());
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/get-capsule/${id}`)
+    axios.get(`${baseUrl}/get-capsule/${id}`)
       .then(res => {
         const data = {
           ...res.data,
@@ -140,7 +141,7 @@ export default function EditCapsule() {
       });
 
       try {
-        await axios.put(`http://localhost:3000/update-capsule/${id}`, formData, {
+        await axios.put(`${baseUrl}/update-capsule/${id}`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
         alert('✅ Capsule updated successfully');
@@ -159,7 +160,7 @@ export default function EditCapsule() {
           image_path: form.image_path
         };
 
-        await axios.put(`http://localhost:3000/update-capsule/${id}`, jsonData);
+        await axios.put(`${baseUrl}/update-capsule/${id}`, jsonData);
         alert('✅ Capsule updated successfully');
         navigate('/CapsuleCatalog');
       }

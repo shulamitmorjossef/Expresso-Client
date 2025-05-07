@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { create, test, enforce } from 'vest';
+import baseUrl from '../../config';
 
 const suite = create((data = {}, field) => {
   test('name', 'Name is required', () => {
@@ -61,7 +62,7 @@ export default function EditFrother() {
   const frothingOptions = ["Hot", "Cold", "Both"];
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/get-milk-frother/${id}`)
+    axios.get(`${baseUrl}/get-milk-frother/${id}`)
       .then(res => {
         const data = {
           ...res.data,
@@ -122,7 +123,7 @@ export default function EditFrother() {
       });
 
       try {
-        await axios.put(`http://localhost:3000/update-milk-frother/${id}`, formData, {
+        await axios.put(`${baseUrl}/update-milk-frother/${id}`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
         alert('✅ Frother updated successfully');
@@ -138,7 +139,7 @@ export default function EditFrother() {
           price: Number(form.price),
           image_path: form.image_path
         };
-        await axios.put(`http://localhost:3000/update-milk-frother/${id}`, jsonData);
+        await axios.put(`${baseUrl}/update-milk-frother/${id}`, jsonData);
         alert('✅ Frother updated successfully');
         navigate('/FrotherCatalog');
       }
