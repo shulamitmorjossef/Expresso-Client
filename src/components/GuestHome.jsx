@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaSearch, FaBars } from 'react-icons/fa';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 import './styles/GuestHome.css';
 
 export default function GuestHome() {
@@ -12,12 +12,8 @@ export default function GuestHome() {
 
   return (
     <div className="outer-container">
-      {/* Overlay */}
       <div className="overlay"></div>
-
-      {/* Content Container */}
       <div className="content-wrapper">
-        {/* Header */}
         <header className="header">
           <button onClick={toggleMenu} className="menu-button">
             <FaBars color="white" />
@@ -26,19 +22,13 @@ export default function GuestHome() {
           {menuOpen && (
             <nav className="dropdown-menu">
               <ul>
+                <li><Link to="/Login" className="dropdown-link">Login</Link></li>
+                <li><Link to="/Registration" className="dropdown-link">Register</Link></li>
                 <li>
-                  <Link to="/Login" className="dropdown-link">Login</Link>
-                </li>
-                  <Link to="/Registration" className="dropdown-link">Register</Link>
-                <li>
-                  <Link
-                    to="#"
-                    className="dropdown-link"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      alert("Reviews page coming soon!");
-                    }}
-                  >
+                  <Link to="#" className="dropdown-link" onClick={(e) => {
+                    e.preventDefault();
+                    alert("Reviews page coming soon!");
+                  }}>
                     Reviews
                   </Link>
                 </li>
@@ -47,28 +37,28 @@ export default function GuestHome() {
           )}
         </header>
 
-        {/* Main */}
         <main className="main">
-          {/* Search Bar */}
           <div className="search-container">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="search-input"
-            />
+            <input type="text" placeholder="Search..." className="search-input" />
             <FaSearch className="search-icon" />
           </div>
 
-          {/* Categories */}
           <h2 className="categories-title">Categories</h2>
           <div className="categories-container">
-            <CategoryCard src="/images/coffee.png" label="Coffee Machines" />
-            <CategoryCard src="/images/capsules.png" label="Capsules" />
-            <CategoryCard src="/images/accessories.png" label="Accessories" />
+            <Link to="/CoffeeProducts" className="category-card-link">
+              <CategoryCard src="/images/coffee.png" label="Coffee Machines" />
+            </Link>
+
+            <Link to="/capsules" className="category-card-link">
+              <CategoryCard src="/images/capsules.png" label="Capsules" />
+            </Link>
+
+            <Link to="/milk-frothers" className="category-card-link">
+              <CategoryCard src="/images/milkfrothers.png" label="Milk Frothers" />
+            </Link>
           </div>
         </main>
 
-        {/* Footer */}
         <footer className="footer">
           <Link to="/Terms" className="footer-link">Terms & Conditions</Link>
           <Link to="/About" className="footer-link" style={{ marginLeft: '20px' }}>About</Link>
@@ -96,6 +86,3 @@ function CategoryCard({ src, label }) {
     </div>
   );
 }
-
-
-

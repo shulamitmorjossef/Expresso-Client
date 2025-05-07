@@ -11,7 +11,9 @@ import Product from './components/Customer/ProductPage.jsx';
 import Terms from './components/Terms.jsx';
 import PersonalAreaAdmin from './components/Admin/personalAreaAdmin.jsx';
 import PersonalAreaCustomer from './components/Customer/personalAreaCustomer.jsx';
-
+import CoffeeProducts from './components/CoffeeProducts.jsx';
+import MilkFrothers from './components/MilkFrothers.jsx';
+import Capsules from './components/Capsules.jsx';
 
 function App() {
   return (
@@ -27,6 +29,12 @@ function App() {
       <Route path="/Terms" element={<Terms />} />
       <Route path="/PersonalAreaAdmin" element={<PersonalAreaAdmin />} />
       <Route path="/PersonalAreaCustomer" element={<PersonalAreaCustomer />} />
+      <Route path="/CoffeeProducts" element={<CoffeeProducts />} />
+      <Route path="/milk-frothers" element={<MilkFrothers />} />
+      <Route path="/capsules" element={<Capsules />} />
+
+
+
     </Routes>
   );
 }
