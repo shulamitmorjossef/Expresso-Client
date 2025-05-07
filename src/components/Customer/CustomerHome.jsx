@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { FaSearch, FaBars } from 'react-icons/fa';
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 import '../styles/CustomerHome.css';
+import baseUrl from '../../config';
+import SearchBar from '../SearchBar';
+import ProductModal from '../ProductModal';
 
 export default function CustomerHome() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+  const toggleMenu = () => setMenuOpen(!menuOpen);
 
   const handleUnavailablePage = (e) => {
     e.preventDefault();
@@ -16,10 +20,19 @@ export default function CustomerHome() {
   };
 
   const handleLogout = () => {
-    localStorage.clear(); 
-    window.location.href = '/'; 
+    localStorage.clear();
+    window.location.href = '/';
   };
-  
+
+  const handleSearch = async (term) => {
+    try {
+      const res = await fetch(`${baseUrl}/search-products?query=${encodeURIComponent(term)}`);
+      const data = await res.json();
+      setSearchResults(data);
+    } catch (err) {
+      console.error("Search failed:", err);
+    }
+  };
 
   return (
     <div className="outer-container">
@@ -34,51 +47,57 @@ export default function CustomerHome() {
           {menuOpen && (
             <nav className="dropdown-menu">
               <ul>
-                <li>
-                <Link
-                  to="/PersonalAreaAdmin"
-                  className="dropdown-link">
-                  Edit Account Details
-                </Link>
-                </li>
-                <li>
-                  <Link to="#" className="dropdown-link" onClick={handleUnavailablePage}>
-                    My Orders
-                  </Link>
-                </li>
-                <li>
-                  <Link to="#" className="dropdown-link" onClick={handleUnavailablePage}>
-                    Shopping Cart
-                  </Link>
-                </li>
-                <li>
-                  <Link to="#" className="dropdown-link" onClick={handleUnavailablePage}>
-                    Coupons
-                  </Link>
-                </li>
-                <li>
-                  <Link to="#" className="dropdown-link" onClick={handleUnavailablePage}>
-                    Reviews
-                  </Link>
-                </li>
-                <li>
-                <Link to="/" className="dropdown-link" onClick={handleLogout}>
-                LogOut
-                  </Link>
-                </li>
+                <li><Link to="/PersonalAreaAdmin" className="dropdown-link">Edit Account Details</Link></li>
+                <li><Link to="#" className="dropdown-link" onClick={handleUnavailablePage}>My Orders</Link></li>
+                <li><Link to="#" className="dropdown-link" onClick={handleUnavailablePage}>Shopping Cart</Link></li>
+                <li><Link to="#" className="dropdown-link" onClick={handleUnavailablePage}>Coupons</Link></li>
+                <li><Link to="#" className="dropdown-link" onClick={handleUnavailablePage}>Reviews</Link></li>
+                <li><Link to="/" className="dropdown-link" onClick={handleLogout}>LogOut</Link></li>
               </ul>
             </nav>
           )}
         </header>
 
         <main className="main">
-          <div className="search-container">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="search-input"
-            />
-            <FaSearch className="search-icon" />
+          <div className="search-wrapper">
+            <div className="search-container">
+              <input
+                type="text"
+                placeholder="Search..."
+                className="search-input"
+                value={searchTerm}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setSearchTerm(value);
+                  if (value.trim()) {
+                    handleSearch(value);
+                  } else {
+                    setSearchResults([]);
+                  }
+                }}
+              />
+              <FaSearch className="search-icon" onClick={() => handleSearch(searchTerm)} />
+            </div>
+
+            {searchResults.length > 0 && (
+              <ul className="search-dropdown">
+                {searchResults.map((item, idx) => (
+                  <li key={idx}>
+                    <div className="search-item" onClick={() => setSelectedProduct(item)}>
+                      <img src={item.image_path} alt={item.name} className="result-thumb" />
+                      <div className="result-info">
+                        <strong>{item.name}</strong>
+                        <span className="result-meta">({item.type}) – {item.price}₪</span>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {searchTerm.trim() !== '' && searchResults.length === 0 && (
+              <div className="no-results-message">No results found.</div>
+            )}
           </div>
 
           <h2 className="categories-title">Categories</h2>
@@ -91,9 +110,21 @@ export default function CustomerHome() {
 
         <footer className="footer">
           <Link to="/Terms" className="footer-link">Terms & Conditions</Link>
-          <Link to="/About" className="footer-link"style={{ marginLeft: '20px' }}>About</Link>
+          <Link to="/About" className="footer-link" style={{ marginLeft: '20px' }}>About</Link>
         </footer>
       </div>
+
+      {selectedProduct && (
+        <ProductModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+          onAddToCart={(product, quantity) => {
+            console.log("🛒 Added to cart:", product, quantity);
+            // כאן תעשי post לעגלה בעתיד
+            setSelectedProduct(null);
+          }}
+        />
+      )}
     </div>
   );
 }
@@ -102,12 +133,8 @@ function CategoryCard({ src, label }) {
   return (
     <div
       className="category-card"
-      onMouseEnter={e => {
-        e.currentTarget.classList.add('hover');
-      }}
-      onMouseLeave={e => {
-        e.currentTarget.classList.remove('hover');
-      }}
+      onMouseEnter={e => e.currentTarget.classList.add('hover')}
+      onMouseLeave={e => e.currentTarget.classList.remove('hover')}
     >
       <img src={src} alt={label} className="category-image" />
       <p className="category-label">{label}</p>

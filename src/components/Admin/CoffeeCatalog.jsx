@@ -3,12 +3,17 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/CatalogPage.css';
 import { Info, Pencil, Trash2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import baseUrl from '../../config';
+
 
 export default function CoffeeCatalog() {
   const [machines, setMachines] = useState([]);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
-    axios.get('http://localhost:3000/get-all-coffee-machines')   
+    axios.get(`${baseUrl}/get-all-coffee-machines`)   
       .then(res => setMachines(res.data))
       .catch(err => {
         console.error('❌ Error loading coffee machines:', err);
@@ -17,10 +22,10 @@ export default function CoffeeCatalog() {
   }, []);
 
   const handleAdd = () => alert('Add new coffee machine');
-  const handleEdit = (machine) => alert(`Edit ${machine.name}`);
+  const handleEdit = (machine) => navigate(`/EditCoffeeMachine/${machine.id}`);
   const handleDelete = (id) => {
     if (window.confirm('Are you sure you want to delete this machine?')) {
-      axios.delete(`http://localhost:3000/delete-coffee-machine/${id}`)
+      axios.delete(`${baseUrl}/delete-coffee-machine/${id}`)
         .then(() => setMachines(machines.filter(m => m.id !== id)));
     }
   };

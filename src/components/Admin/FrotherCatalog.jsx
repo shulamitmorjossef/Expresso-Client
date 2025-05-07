@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/CatalogPage.css';
 import { Info, Pencil, Trash2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import baseUrl from '../../config';
 
 export default function FrotherCatalog() {
   const [frothers, setFrothers] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:3000/get-all-milk-frothers') // ודאי שזה הנתיב שלך
+    axios.get(`${baseUrl}/get-all-milk-frothers`) 
       .then(res => setFrothers(res.data))
       .catch(err => {
         console.error('❌ Error loading milk frothers:', err);
@@ -16,10 +19,10 @@ export default function FrotherCatalog() {
   }, []);
 
   const handleAdd = () => alert('Add new milk frother');
-  const handleEdit = (frother) => alert(`Edit ${frother.name}`);
+  const handleEdit = (frother) => navigate(`/EditFrother/${frother.id}`);
   const handleDelete = (id) => {
     if (window.confirm('Are you sure you want to delete this frother?')) {
-      axios.delete(`http://localhost:3000/delete-milk-frother/${id}`)
+      axios.delete(`${baseUrl}/delete-milk-frother/${id}`)
         .then(() => setFrothers(frothers.filter(f => f.id !== id)));
     }
   };
