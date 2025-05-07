@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './styles/MilkFrothers.css';
+import baseUrl from '../config';
 
 export default function MilkFrothers() {
   const [frothers, setFrothers] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3000/get-all-milk-frothers')
+    fetch(`${baseUrl}/get-all-milk-frothers`)
       .then((res) => res.json())
       .then((data) => setFrothers(data))
       .catch((err) => console.error('Error fetching milk frothers:', err));

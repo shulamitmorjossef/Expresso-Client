@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './styles/Capsules.css';
 
+import baseUrl from '../config';
+
+
 export default function Capsules() {
   const [capsules, setCapsules] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3000/get-all-capsule')
+    fetch(`${baseUrl}/get-all-capsule`)
       .then((res) => res.json())
       .then((data) => setCapsules(data))
       .catch((err) => console.error('Error fetching capsules:', err));
