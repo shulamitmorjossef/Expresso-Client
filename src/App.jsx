@@ -19,6 +19,10 @@ import CatalogPage from './components/Admin/CatalogPage.jsx';
 import CapsuleCatalog from './components/Admin/CapsuleCatalog.jsx';
 import CoffeeCatalog from './components/Admin/CoffeeCatalog.jsx';
 import FrotherCatalog from './components/Admin/FrotherCatalog.jsx';
+import TotalSold from './components/Admin/Statistics/TotalSold.jsx';
+import BestSellers from './components/Admin/Statistics/BestSellers.jsx';
+import CustomerCount from './components/Admin/Statistics/CustomerCount.jsx';
+import StatisticsPage from './components/Admin/Statistics/StatisticsPage.jsx';
 
 
 
@@ -44,6 +48,10 @@ function App() {
       <Route path="/CapsuleCatalog" element={<CapsuleCatalog />} />
       <Route path="/CoffeeCatalog" element={<CoffeeCatalog />} />
       <Route path="/FrotherCatalog" element={<FrotherCatalog />} />
+      <Route path="/TotalSold" element={<TotalSold />} />
+      <Route path="/BestSellers" element={<BestSellers />} />
+      <Route path="/CustomerCount" element={<CustomerCount />} />
+      <Route path="/StatisticsPage" element={<StatisticsPage />} />
 
       {/* Add other routes here */}
 

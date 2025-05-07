@@ -158,4 +158,64 @@
   .about-link {
     margin-left: 20px;
   }
+  .search-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto 40px;
+  }
+  
+  .search-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #ccc;
+    border-top: none;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 0 0 8px 8px;
+  }
+  
+  .search-dropdown li {
+    border-bottom: 1px solid #eee;
+  }
+  
+  .search-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+    font-size: 15px;
+  }
+  
+  .search-item:hover {
+    background-color: #f2f2f2;
+  }
+  
+  .result-thumb {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 10px;
+  }
+  
+  .result-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .result-meta {
+    font-size: 13px;
+    color: #777;
+  }
+  
   
