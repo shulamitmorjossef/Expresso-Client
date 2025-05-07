@@ -7,7 +7,7 @@ import CustomerHome from './components/Customer/CustomerHome.jsx';
 import AdminHome from './components/Admin/AdminHome.jsx';
 import About from './components/About.jsx';
 import Registration  from './components/Registration.jsx';
-import Product from './components/ProductPage.jsx';
+import Product from './components/Customer/ProductPage.jsx';
 import Terms from './components/Terms.jsx';
 import PersonalAreaAdmin from './components/Admin/personalAreaAdmin.jsx';
 import PersonalAreaCustomer from './components/Customer/personalAreaCustomer.jsx';
