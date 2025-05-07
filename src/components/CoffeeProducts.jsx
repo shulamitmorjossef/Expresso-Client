@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './styles/CoffeeProducts.css';
+import { FaShoppingCart } from 'react-icons/fa';
 import baseUrl from '../config';
 
 export default function CoffeeProducts() {
   const [machines, setMachines] = useState([]);
-  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`${baseUrl}/get-all-coffee-machines`)
@@ -15,16 +17,24 @@ export default function CoffeeProducts() {
       .then((data) => setMachines(data))
       .catch((err) => {
         console.error('Error:', err);
-        setError('Failed to load coffee machines');
       });
   }, []);
+
+  const handleAddToCart = (item) => {
+    const userType = localStorage.getItem('userType'); // 'guest' or 'customer'
+
+    if (userType === 'guest' || !userType) {
+      alert('You must register or log in to view the cart.');
+      navigate('/');
+    } else {
+      alert(`Added ${item.name} to your cart.`);
+      // כאן תוכל להוסיף את הלוגיקה להוספת המוצר לעגלה (למשל ב-Redux או ב-localStorage)
+    }
+  };
 
   return (
     <div className="products-page">
       <h1>Coffee Machines</h1>
-
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-
       <div className="product-list">
         {machines.map((machine) => (
           <div key={machine.id} className="product-card">
@@ -32,6 +42,9 @@ export default function CoffeeProducts() {
             <div className="product-details">
               <h3>{machine.name}</h3>
               <p>${parseFloat(machine.price).toFixed(2)}</p>
+              <button className="add-to-cart-btn" onClick={() => handleAddToCart(machine)}>
+                <FaShoppingCart />
+              </button>
             </div>
           </div>
         ))}
