@@ -15,6 +15,12 @@ export default function CustomerHome() {
     alert("This page is not available yet. It will be available soon!");
   };
 
+  const handleLogout = () => {
+    localStorage.clear(); 
+    window.location.href = '/'; 
+  };
+  
+
   return (
     <div className="outer-container">
       <div className="overlay"></div>
@@ -53,6 +59,11 @@ export default function CustomerHome() {
                 <li>
                   <Link to="#" className="dropdown-link" onClick={handleUnavailablePage}>
                     Reviews
+                  </Link>
+                </li>
+                <li>
+                <Link to="/" className="dropdown-link" onClick={handleLogout}>
+                LogOut
                   </Link>
                 </li>
               </ul>

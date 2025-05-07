@@ -11,6 +11,12 @@ export default function AdminHome() {
     setMenuOpen(!menuOpen);
   };
 
+  const handleLogout = () => {
+    localStorage.clear(); 
+    window.location.href = '/'; 
+  };
+    
+
   return (
     <div className="outer-container">
       {/* Overlay */}
@@ -107,6 +113,16 @@ export default function AdminHome() {
                 >
                   Reviews
                 </Link>
+              </li>
+              <li>
+                <Link to="/" className="dropdown-link" onClick={handleLogout}>
+                Edit terms & conditions
+              </Link>
+              </li>
+              <li>
+                <Link to="/" className="dropdown-link" onClick={handleLogout}>
+                LogOut
+              </Link>
               </li>
             </ul>
           </nav>
