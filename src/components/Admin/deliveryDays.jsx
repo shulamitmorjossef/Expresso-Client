@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { format, addMonths, subMonths, startOfMonth, endOfMonth, startOfWeek, endOfWeek, addDays, isSameMonth, isSameDay } from 'date-fns';
 import '../styles/deliveryDays.css';
 import axios from 'axios';
+import baseUrl from '../../config';
 
 export default function DeliveryDays() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -13,7 +14,7 @@ export default function DeliveryDays() {
 
   const fetchUnavailableDates = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/get-all-delivery-dates');
+      const response = await axios.get(`${baseUrl}/get-all-delivery-dates`);
       const dates = response.data.map(({ day, month, year }) => `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`);
       setUnavailableDates(dates);
     } catch (err) {
@@ -24,7 +25,7 @@ export default function DeliveryDays() {
   const addUnavailableDate = async (date) => {
     const [year, month, day] = date.split('-');
     try {
-      await axios.post('http://localhost:3000/add-delivery-date', { day: Number(day), month: Number(month), year: Number(year) });
+      await axios.post(`${baseUrl}/add-delivery-date`, { day: Number(day), month: Number(month), year: Number(year) });
       setUnavailableDates(prev => [...prev, date]);
     } catch (err) {
       console.error('Error adding unavailable date:', err);
@@ -34,7 +35,7 @@ export default function DeliveryDays() {
   const removeUnavailableDate = async (date) => {
     const [year, month, day] = date.split('-');
     try {
-      await axios.delete('http://localhost:3000/remove-delivery-date', { data: { day: Number(day), month: Number(month), year: Number(year) } });
+      await axios.delete(`${baseUrl}/remove-delivery-date`, { data: { day: Number(day), month: Number(month), year: Number(year) } });
       setUnavailableDates(prev => prev.filter(d => d !== date));
     } catch (err) {
       console.error('Error removing unavailable date:', err);

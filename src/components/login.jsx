@@ -23,6 +23,7 @@ export default function Login() {
       const { user_type, username: userName } = res.data;
       localStorage.setItem('username', userName);
       if (res.data.token) localStorage.setItem('token', res.data.token);
+      
       if (user_type === 'manager') navigate('/AdminHome');
       else if (user_type === 'customer') navigate('/CustomerHome');
       else setError('Unknown user type');
