@@ -18,6 +18,11 @@ export default function MilkFrothers() {
   }, []);
 
   const handleAddToCart = async (item, quantity = 1) => {
+    if (item.sum_of === 0) {
+      alert('Sorry, this product is out of stock.');
+      return;
+    }
+
     const userType = localStorage.getItem('userType');
     const userId = localStorage.getItem('userId');
 
@@ -27,7 +32,7 @@ export default function MilkFrothers() {
       return;
     }
 
-    const productType = item.type || 'milk_frothers'; // ✅ מבטיח שהטייפ נשלח תמיד
+    const productType = item.type || 'milk_frothers';
 
     try {
       const res = await fetch(`${baseUrl}/add-to-cart`, {
@@ -59,20 +64,61 @@ export default function MilkFrothers() {
             className="milk-product-card"
             key={item.id}
             onClick={() => setSelectedProduct({ ...item, type: 'milk_frothers' })}
+            style={{ position: 'relative' }}
           >
+            {item.sum_of === 0 && (
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                width: '100%',
+                backgroundColor: 'black',
+                color: 'white',
+                fontWeight: 'bold',
+                padding: '4px',
+                fontSize: '12px',
+                textAlign: 'center',
+                zIndex: 2,
+                borderTopLeftRadius: '12px',
+                borderTopRightRadius: '12px'
+              }}>
+                Out of Stock
+              </div>
+            )}
+            {item.sum_of === 1 && (
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                width: '100%',
+                backgroundColor: 'black',
+                color: 'white',
+                fontWeight: 'bold',
+                padding: '4px',
+                fontSize: '12px',
+                textAlign: 'center',
+                zIndex: 2,
+                borderTopLeftRadius: '12px',
+                borderTopRightRadius: '12px'
+              }}>
+                Last item in stock
+              </div>
+            )}
+
             <img src={item.image_path} alt={item.name} />
             <div className="milk-product-details">
               <h3>{item.name}</h3>
               <p>${Number(item.price).toFixed(2)}</p>
-              <button
-                className="add-to-cart-btn"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleAddToCart({ ...item, type: 'milk_frothers' });
-                }}
-              >
-                <FaShoppingCart />
-              </button>
+
+              {item.sum_of > 0 && (
+                <button
+                  className="add-to-cart-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleAddToCart({ ...item, type: 'milk_frothers' });
+                  }}
+                >
+                  <FaShoppingCart />
+                </button>
+              )}
             </div>
           </div>
         ))}

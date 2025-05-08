@@ -23,6 +23,11 @@ export default function CoffeeProducts() {
   }, []);
 
   const handleAddToCart = async (item, quantity = 1) => {
+    if (item.sum_of === 0) {
+      alert('Sorry, this product is out of stock.');
+      return;
+    }
+
     const userType = localStorage.getItem('userType');
     const userId = parseInt(localStorage.getItem('userId'));
 
@@ -38,13 +43,6 @@ export default function CoffeeProducts() {
        item.flavor ? 'capsules' : 'unknown');
 
     try {
-      console.log("📦 Sending to server:", {
-        user_id: userId,
-        product_id: item.id,
-        quantity,
-        product_type: rawType
-      });
-
       const res = await fetch(`${baseUrl}/add-to-cart`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -74,20 +72,62 @@ export default function CoffeeProducts() {
             key={machine.id}
             className="product-card"
             onClick={() => setSelectedProduct({ ...machine, type: 'coffee_machines' })}
+            style={{ position: 'relative' }}
           >
+            {/* Inventory status bar */}
+            {machine.sum_of === 0 && (
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                width: '100%',
+                backgroundColor: 'black',
+                color: 'white',
+                fontWeight: 'bold',
+                padding: '4px',
+                fontSize: '12px',
+                textAlign: 'center',
+                zIndex: 2,
+                borderTopLeftRadius: '12px',
+                borderTopRightRadius: '12px'
+              }}>
+                Out of Stock
+              </div>
+            )}
+            {machine.sum_of === 1 && (
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                width: '100%',
+                backgroundColor: 'black',
+                color: 'white',
+                fontWeight: 'bold',
+                padding: '4px',
+                fontSize: '12px',
+                textAlign: 'center',
+                zIndex: 2,
+                borderTopLeftRadius: '12px',
+                borderTopRightRadius: '12px'
+              }}>
+                Last item in stock
+              </div>
+            )}
+
             <img src={machine.image_path} alt={machine.name} />
             <div className="product-details">
               <h3>{machine.name}</h3>
               <p>${parseFloat(machine.price).toFixed(2)}</p>
-              <button
-                className="add-to-cart-btn"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleAddToCart({ ...machine, type: 'coffee_machines' });
-                }}
-              >
-                <FaShoppingCart />
-              </button>
+
+              {machine.sum_of > 0 && (
+                <button
+                  className="add-to-cart-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleAddToCart({ ...machine, type: 'coffee_machines' });
+                  }}
+                >
+                  <FaShoppingCart />
+                </button>
+              )}
             </div>
           </div>
         ))}
