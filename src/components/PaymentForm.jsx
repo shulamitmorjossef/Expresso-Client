@@ -43,7 +43,7 @@ export default function PaymentForm() {
     setErrors(validationErrors);
   
     if (Object.keys(validationErrors).length === 0) {
-      console.log('✅ Payment submitted:', form);
+      console.log('Payment submitted:', form);
       setSubmitted(true);
   
       const userId = localStorage.getItem('userId');
