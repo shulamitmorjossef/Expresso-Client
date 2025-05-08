@@ -21,6 +21,11 @@ export default function Capsules() {
   }, []);
 
   const handleAddToCart = async (item, quantity = 1) => {
+    if (item.sum_of === 0) {
+      alert('Sorry, This product is out of stock.');
+      return;
+    }
+
     const userType = localStorage.getItem('userType');
     const userId = parseInt(localStorage.getItem('userId'));
 
@@ -33,13 +38,6 @@ export default function Capsules() {
     const productType = item.type || 'capsules';
 
     try {
-      console.log("📦 Sending to server:", {
-        user_id: userId,
-        product_id: item.id,
-        quantity,
-        product_type: productType
-      });
-
       const res = await fetch(`${baseUrl}/add-to-cart`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -53,9 +51,9 @@ export default function Capsules() {
 
       if (!res.ok) throw new Error('Server error');
 
-      alert(`✅ Added ${quantity} x ${item.name} to your cart.`);
+      alert(`Added ${quantity} x ${item.name} to your cart.`);
     } catch (err) {
-      console.error('❌ Error adding to cart:', err);
+      console.error('Error adding to cart:', err);
       alert('Something went wrong.');
     }
   };
@@ -70,6 +68,47 @@ export default function Capsules() {
             key={item.id}
             onClick={() => setSelectedProduct({ ...item, type: 'capsules' })}
           >
+            {item.sum_of === 0 && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  width: '100%',
+                  backgroundColor: 'black',
+                  color: 'white',
+                  fontWeight: 'bold',
+                  padding: '4px',
+                  fontSize: '12px',
+                  textAlign: 'center',
+                  zIndex: 2,
+                  borderTopLeftRadius: '12px',
+                  borderTopRightRadius: '12px'
+                }}
+              >
+                Out of Stock
+              </div>
+            )}
+            {item.sum_of === 1 && (
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  width: '100%',
+                  backgroundColor: 'black',
+                  color: 'white',
+                  fontWeight: 'bold',
+                  padding: '4px',
+                  fontSize: '12px',
+                  textAlign: 'center',
+                  zIndex: 2,
+                  borderTopLeftRadius: '12px',
+                  borderTopRightRadius: '12px'
+                }}
+              >
+                Last item in stock
+              </div>
+            )}
+
             <img src={item.image_path} alt={item.name} />
             <div className="capsule-details">
               <h3>{item.name}</h3>
