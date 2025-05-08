@@ -25,7 +25,7 @@ export default function CustomerCount() {
     setLoading(true);
     try {
       const res = await axios.get(
-        `${baseUrl}/CustomerCount`,
+        `${baseUrl}/statistics/customers-count`,
         {
           params: {
             startDate,
