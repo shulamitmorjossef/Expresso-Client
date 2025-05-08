@@ -44,12 +44,8 @@ export default function AdminHome() {
               </ul>
               <li>
                 <Link
-                  to="#"
+                  to="/OrderAdminPage"
                   className="dropdown-link"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    alert("Orders page coming soon!");
-                  }}
                 >
                   Orders
                 </Link>
@@ -84,22 +80,19 @@ export default function AdminHome() {
                   className="dropdown-link"
                   onClick={(e) => {
                     e.preventDefault();
-                    alert("Coupons page coming soon!");
-                  }}
-                >
-                  Coupons
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="#"
-                  className="dropdown-link"
-                  onClick={(e) => {
-                    e.preventDefault();
                     alert("Reviews page coming soon!");
                   }}
                 >
                   Reviews
+
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/CouponsPage"
+                  className="dropdown-link"
+                >
+                  Coupons
                 </Link>
               </li>
               <li>

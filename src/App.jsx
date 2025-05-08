@@ -32,6 +32,8 @@ import AddFrother from './components/Admin/AddFrother.jsx';
 import CartPage from './components/CartPage';
 import DeliveryForm from './components/DeliveryForm';
 import PaymentForm from './components/PaymentForm';
+import OrderAdminPage from './components/Admin/ordersAdminPage.jsx';
+import CouponsPage from './components/Admin/couponsPage.jsx';
 
 
 
@@ -73,6 +75,8 @@ function App() {
       <Route path="/CartPage" element={<CartPage />} />
       <Route path="/DeliveryForm" element={<DeliveryForm />} />
       <Route path="/Payment" element={<PaymentForm />} />
+      <Route path="/OrderAdminPage" element={<OrderAdminPage />} />
+      <Route path="/CouponsPage" element={<CouponsPage />} />
 
 
 
