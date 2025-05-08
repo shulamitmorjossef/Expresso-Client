@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/CatalogPage.css';
-import { Info, Pencil, Trash2 } from 'lucide-react';
+import { Info, Pencil, Trash2, Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import baseUrl from '../../config';
 
@@ -14,14 +14,19 @@ export default function CoffeeCatalog() {
 
   useEffect(() => {
     axios.get(`${baseUrl}/get-all-coffee-machines`)   
-      .then(res => setMachines(res.data))
+      .then(res => {
+        console.log('📷 Response from server:', res.data); // ← הוסיפי את זה כאן
+        setMachines(res.data);
+      })
       .catch(err => {
         console.error('❌ Error loading coffee machines:', err);
         alert('Failed to load coffee machines');
       });
   }, []);
+  
+  
 
-  const handleAdd = () => alert('Add new coffee machine');
+  const handleAdd = () => navigate('/AddCoffeeMachine');
   const handleEdit = (machine) => navigate(`/EditCoffeeMachine/${machine.id}`);
   const handleDelete = (id) => {
     if (window.confirm('Are you sure you want to delete this machine?')) {
@@ -38,8 +43,11 @@ export default function CoffeeCatalog() {
   return (
     <div className="catalog-page">
       <div className="header-row">
-        <h2>☕ Coffee Machines</h2>
-        <button onClick={handleAdd} className="add-button">+ Add Coffee Machine</button>
+        <h2>Coffee Machine</h2>
+        <button onClick={handleAdd} className="add-button">
+          <Plus size={16} style={{ marginRight: 5 }} />
+          Add Coffee machine
+        </button>
       </div>
 
       <table className="product-table">

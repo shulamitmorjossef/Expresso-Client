@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import './styles/CoffeeProducts.css';
 import { FaShoppingCart } from 'react-icons/fa';
 import baseUrl from '../config';
-import ProductModal from './ProductModal'; 
+import ProductModal from './ProductModal';
 
 export default function CoffeeProducts() {
   const [machines, setMachines] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState(null); 
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,15 +22,46 @@ export default function CoffeeProducts() {
       });
   }, []);
 
-  const handleAddToCart = (item, quantity = 1) => {
-    const userType = localStorage.getItem('userType'); // 'guest' or 'customer'
+  const handleAddToCart = async (item, quantity = 1) => {
+    const userType = localStorage.getItem('userType');
+    const userId = parseInt(localStorage.getItem('userId'));
 
     if (userType === 'guest' || !userType) {
       alert('You must register or log in to view the cart.');
       navigate('/');
-    } else {
-      alert(`Added ${quantity} x ${item.name} to your cart.`);
-      // פה בהמשך: POST לעגלה
+      return;
+    }
+
+    const rawType = item.type ||
+      (item.capacity && item.frothing_type ? 'milk_frothers' :
+       item.capacity ? 'coffee_machines' :
+       item.flavor ? 'capsules' : 'unknown');
+
+    try {
+      console.log("📦 Sending to server:", {
+        user_id: userId,
+        product_id: item.id,
+        quantity,
+        product_type: rawType
+      });
+
+      const res = await fetch(`${baseUrl}/add-to-cart`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user_id: userId,
+          product_id: item.id,
+          quantity,
+          product_type: rawType
+        }),
+      });
+
+      if (!res.ok) throw new Error('Server error');
+
+      alert(`✅ Added ${quantity} x ${item.name} to your cart.`);
+    } catch (err) {
+      console.error('❌ Error adding to cart:', err);
+      alert('Something went wrong.');
     }
   };
 
@@ -42,7 +73,7 @@ export default function CoffeeProducts() {
           <div
             key={machine.id}
             className="product-card"
-            onClick={() => setSelectedProduct({ ...machine, type: 'coffee_machine' })} 
+            onClick={() => setSelectedProduct({ ...machine, type: 'coffee_machines' })}
           >
             <img src={machine.image_path} alt={machine.name} />
             <div className="product-details">
@@ -51,8 +82,8 @@ export default function CoffeeProducts() {
               <button
                 className="add-to-cart-btn"
                 onClick={(e) => {
-                  e.stopPropagation(); 
-                  handleAddToCart(machine);
+                  e.stopPropagation();
+                  handleAddToCart({ ...machine, type: 'coffee_machines' });
                 }}
               >
                 <FaShoppingCart />

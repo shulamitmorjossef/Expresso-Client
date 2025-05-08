@@ -1,13 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaSearch, FaBars } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './styles/GuestHome.css';
+import baseUrl from '../config';
+import ProductModal from './ProductModal';
 
 export default function GuestHome() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const navigate = useNavigate();
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
+  // ניקוי localStorage כשזה אורח
+  useEffect(() => {
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userType');
+  }, []);
+
+  const toggleMenu = () => setMenuOpen(!menuOpen);
+
+  const handleSearch = async (term) => {
+    try {
+      const res = await fetch(`${baseUrl}/search-products?query=${encodeURIComponent(term)}`);
+      const data = await res.json();
+      setSearchResults(data);
+    } catch (err) {
+      console.error("Search failed:", err);
+    }
   };
 
   return (
@@ -24,23 +44,55 @@ export default function GuestHome() {
               <ul>
                 <li><Link to="/Login" className="dropdown-link">Login</Link></li>
                 <li><Link to="/Registration" className="dropdown-link">Register</Link></li>
-                <li>
-                  <Link to="#" className="dropdown-link" onClick={(e) => {
-                    e.preventDefault();
-                    alert("Reviews page coming soon!");
-                  }}>
-                    Reviews
-                  </Link>
-                </li>
+                <li><Link to="#" className="dropdown-link" onClick={(e) => {
+                  e.preventDefault();
+                  alert("Reviews page coming soon!");
+                }}>Reviews</Link></li>
               </ul>
             </nav>
           )}
         </header>
 
         <main className="main">
-          <div className="search-container">
-            <input type="text" placeholder="Search..." className="search-input" />
-            <FaSearch className="search-icon" />
+          <div className="search-wrapper">
+            <div className="search-container">
+              <input
+                type="text"
+                placeholder="Search..."
+                className="search-input"
+                value={searchTerm}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setSearchTerm(value);
+                  if (value.trim()) {
+                    handleSearch(value);
+                  } else {
+                    setSearchResults([]);
+                  }
+                }}
+              />
+              <FaSearch className="search-icon" onClick={() => handleSearch(searchTerm)} />
+            </div>
+
+            {searchResults.length > 0 && (
+              <ul className="search-dropdown">
+                {searchResults.map((item, idx) => (
+                  <li key={idx}>
+                    <div className="search-item" onClick={() => setSelectedProduct(item)}>
+                      <img src={item.image_path} alt={item.name} className="result-thumb" />
+                      <div className="result-info">
+                        <strong>{item.name}</strong>
+                        <span className="result-meta">({item.type}) – {item.price}₪</span>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {searchTerm.trim() !== '' && searchResults.length === 0 && (
+              <div className="no-results-message">No results found.</div>
+            )}
           </div>
 
           <h2 className="categories-title">Categories</h2>
@@ -48,11 +100,9 @@ export default function GuestHome() {
             <Link to="/CoffeeProducts" className="category-card-link">
               <CategoryCard src="/images/coffee.png" label="Coffee Machines" />
             </Link>
-
             <Link to="/capsules" className="category-card-link">
               <CategoryCard src="/images/capsules.png" label="Capsules" />
             </Link>
-
             <Link to="/MilkFrothers" className="category-card-link">
               <CategoryCard src="/images/milkfrothers.png" label="Milk Frothers" />
             </Link>
@@ -64,6 +114,18 @@ export default function GuestHome() {
           <Link to="/About" className="footer-link" style={{ marginLeft: '20px' }}>About</Link>
         </footer>
       </div>
+
+      {selectedProduct && (
+        <ProductModal
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+          onAddToCart={() => {
+            alert('Guests cannot add to cart. Please log in first.');
+            setSelectedProduct(null);
+            navigate('/Login');
+          }}
+        />
+      )}
     </div>
   );
 }

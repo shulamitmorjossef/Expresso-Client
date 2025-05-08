@@ -3,28 +3,60 @@ import { useNavigate } from 'react-router-dom';
 import './styles/Capsules.css';
 import { FaShoppingCart } from 'react-icons/fa';
 import baseUrl from '../config';
-import ProductModal from './ProductModal'; 
+import ProductModal from './ProductModal';
 
 export default function Capsules() {
   const [capsules, setCapsules] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState(null); 
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`${baseUrl}/get-all-capsule`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch capsules');
+        return res.json();
+      })
       .then((data) => setCapsules(data))
       .catch((err) => console.error('Error fetching capsules:', err));
   }, []);
 
-  const handleAddToCart = (item, quantity = 1) => {
+  const handleAddToCart = async (item, quantity = 1) => {
     const userType = localStorage.getItem('userType');
+    const userId = parseInt(localStorage.getItem('userId'));
 
     if (userType === 'guest' || !userType) {
       alert('You must register or log in to view the cart.');
       navigate('/');
-    } else {
-      alert(`Added ${quantity} x ${item.name} to your cart.`);
+      return;
+    }
+
+    const productType = item.type || 'capsules';
+
+    try {
+      console.log("📦 Sending to server:", {
+        user_id: userId,
+        product_id: item.id,
+        quantity,
+        product_type: productType
+      });
+
+      const res = await fetch(`${baseUrl}/add-to-cart`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user_id: userId,
+          product_id: item.id,
+          quantity,
+          product_type: productType
+        }),
+      });
+
+      if (!res.ok) throw new Error('Server error');
+
+      alert(`✅ Added ${quantity} x ${item.name} to your cart.`);
+    } catch (err) {
+      console.error('❌ Error adding to cart:', err);
+      alert('Something went wrong.');
     }
   };
 
@@ -36,7 +68,7 @@ export default function Capsules() {
           <div
             className="capsule-card"
             key={item.id}
-            onClick={() => setSelectedProduct({ ...item, type: 'capsule' })} 
+            onClick={() => setSelectedProduct({ ...item, type: 'capsules' })}
           >
             <img src={item.image_path} alt={item.name} />
             <div className="capsule-details">
@@ -46,7 +78,7 @@ export default function Capsules() {
                 className="add-to-cart-btn"
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleAddToCart(item);
+                  handleAddToCart({ ...item, type: 'capsules' });
                 }}
               >
                 <FaShoppingCart />

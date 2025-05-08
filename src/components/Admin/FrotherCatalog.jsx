@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/CatalogPage.css';
-import { Info, Pencil, Trash2 } from 'lucide-react';
+import { Info, Pencil, Trash2, Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import baseUrl from '../../config';
 
@@ -18,7 +18,7 @@ export default function FrotherCatalog() {
       });
   }, []);
 
-  const handleAdd = () => alert('Add new milk frother');
+  const handleAdd = () => navigate('/AddFrother');
   const handleEdit = (frother) => navigate(`/EditFrother/${frother.id}`);
   const handleDelete = (id) => {
     if (window.confirm('Are you sure you want to delete this frother?')) {
@@ -33,11 +33,15 @@ export default function FrotherCatalog() {
   };
 
   return (
-    <div className="catalog-page">
-      <div className="header-row">
-        <h2>🥛 Milk Frothers</h2>
-        <button onClick={handleAdd} className="add-button">+ Add Frother</button>
-      </div>
+     <div className="catalog-page">
+       <div className="header-row">
+         <h2>Frother</h2>
+         <button onClick={handleAdd} className="add-button">
+           <Plus size={16} style={{ marginRight: 5 }} />
+           Add frother
+         </button>
+       </div>
+ 
 
       <table className="product-table">
         <thead>

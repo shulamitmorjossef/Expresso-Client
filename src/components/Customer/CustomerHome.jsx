@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
 import { FaSearch, FaBars } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/CustomerHome.css';
 import baseUrl from '../../config';
-import SearchBar from '../SearchBar';
 import ProductModal from '../ProductModal';
+
+const detectProductType = (item) => {
+  if (item.capacity && item.frothing_type) return 'milk_frothers';
+  if (item.capacity) return 'coffee_machines';
+  if (item.flavor) return 'capsules';
+  return 'unknown';
+};
 
 export default function CustomerHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const navigate = useNavigate();
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
-
-  const handleUnavailablePage = (e) => {
-    e.preventDefault();
-    alert("This page is not available yet. It will be available soon!");
-  };
 
   const handleLogout = () => {
     localStorage.clear();
@@ -37,21 +39,19 @@ export default function CustomerHome() {
   return (
     <div className="outer-container">
       <div className="overlay"></div>
-
       <div className="content-wrapper">
         <header className="header">
           <button onClick={toggleMenu} className="menu-button">
             <FaBars color="white" />
           </button>
-
           {menuOpen && (
             <nav className="dropdown-menu">
               <ul>
-                <li><Link to="/PersonalAreaAdmin" className="dropdown-link">Edit Account Details</Link></li>
-                <li><Link to="#" className="dropdown-link" onClick={handleUnavailablePage}>My Orders</Link></li>
-                <li><Link to="#" className="dropdown-link" onClick={handleUnavailablePage}>Shopping Cart</Link></li>
-                <li><Link to="#" className="dropdown-link" onClick={handleUnavailablePage}>Coupons</Link></li>
-                <li><Link to="#" className="dropdown-link" onClick={handleUnavailablePage}>Reviews</Link></li>
+                <li><Link to="/PersonalAreaCustomer" className="dropdown-link">Edit Account Details</Link></li>
+                <li><Link to="#" className="dropdown-link">My Orders</Link></li>
+                <li><Link to="#" className="dropdown-link">Shopping Cart</Link></li>
+                <li><Link to="#" className="dropdown-link">Coupons</Link></li>
+                <li><Link to="#" className="dropdown-link">Reviews</Link></li>
                 <li><Link to="/" className="dropdown-link" onClick={handleLogout}>LogOut</Link></li>
               </ul>
             </nav>
@@ -81,17 +81,23 @@ export default function CustomerHome() {
 
             {searchResults.length > 0 && (
               <ul className="search-dropdown">
-                {searchResults.map((item, idx) => (
-                  <li key={idx}>
-                    <div className="search-item" onClick={() => setSelectedProduct(item)}>
-                      <img src={item.image_path} alt={item.name} className="result-thumb" />
-                      <div className="result-info">
-                        <strong>{item.name}</strong>
-                        <span className="result-meta">({item.type}) – {item.price}₪</span>
+                {searchResults.map((item, idx) => {
+                  const correctedType = detectProductType(item);
+                  return (
+                    <li key={idx}>
+                      <div
+                        className="search-item"
+                        onClick={() => setSelectedProduct({ ...item, type: correctedType })}
+                      >
+                        <img src={item.image_path} alt={item.name} className="result-thumb" />
+                        <div className="result-info">
+                          <strong>{item.name}</strong>
+                          <span className="result-meta">({correctedType}) – {item.price}₪</span>
+                        </div>
                       </div>
-                    </div>
-                  </li>
-                ))}
+                    </li>
+                  );
+                })}
               </ul>
             )}
 
@@ -102,9 +108,15 @@ export default function CustomerHome() {
 
           <h2 className="categories-title">Categories</h2>
           <div className="categories-container">
-            <CategoryCard src="/images/coffee.png" label="Coffee Machines" />
-            <CategoryCard src="/images/capsules.png" label="Capsules" />
-            <CategoryCard src="/images/accessories.png" label="Accessories" />
+            <Link to="/CoffeeProducts" className="category-card-link">
+              <CategoryCard src="/images/coffee.png" label="Coffee Machines" />
+            </Link>
+            <Link to="/Capsules" className="category-card-link">
+              <CategoryCard src="/images/capsules.png" label="Capsules" />
+            </Link>
+            <Link to="/MilkFrothers" className="category-card-link">
+              <CategoryCard src="/images/milkfrothers.png" label="Milk Frothers" />
+            </Link>
           </div>
         </main>
 
@@ -119,8 +131,37 @@ export default function CustomerHome() {
           product={selectedProduct}
           onClose={() => setSelectedProduct(null)}
           onAddToCart={(product, quantity) => {
-            console.log("🛒 Added to cart:", product, quantity);
-            // כאן תעשי post לעגלה בעתיד
+            const userId = parseInt(localStorage.getItem('userId'));
+            const userType = localStorage.getItem('userType');
+
+            if (!userType || userType === 'guest') {
+              alert('You must register or log in to add items to cart.');
+              localStorage.removeItem('userId');
+              localStorage.removeItem('userType');
+              navigate('/');
+              return;
+            }
+
+            const rawType = product.type;
+            fetch(`${baseUrl}/add-to-cart`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                user_id: userId,
+                product_id: product.id,
+                quantity,
+                product_type: rawType
+              })
+            })
+              .then(res => {
+                if (!res.ok) throw new Error();
+                alert(`✅ Added ${quantity} x ${product.name} to your cart.`);
+              })
+              .catch(err => {
+                console.error('❌ Error adding to cart:', err);
+                alert('Something went wrong.');
+              });
+
             setSelectedProduct(null);
           }}
         />
