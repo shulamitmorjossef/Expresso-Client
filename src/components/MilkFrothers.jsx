@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import './styles/MilkFrothers.css';
 import { FaShoppingCart } from 'react-icons/fa';
 import baseUrl from '../config';
-import ProductModal from './ProductModal'; // ✅ ייבוא מודאל
+import ProductModal from './ProductModal';
 
 export default function MilkFrothers() {
   const [frothers, setFrothers] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState(null); // ✅ מוצר שנלחץ
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,15 +17,36 @@ export default function MilkFrothers() {
       .catch((err) => console.error('Error fetching milk frothers:', err));
   }, []);
 
-  const handleAddToCart = (item, quantity = 1) => {
+  const handleAddToCart = async (item, quantity = 1) => {
     const userType = localStorage.getItem('userType');
+    const userId = localStorage.getItem('userId');
 
     if (userType === 'guest' || !userType) {
       alert('You must register or log in to view the cart.');
       navigate('/');
-    } else {
-      alert(`Added ${quantity} x ${item.name} to your cart.`);
-      // כאן תוסיפי בהמשך שמירה לעגלה
+      return;
+    }
+
+    const productType = item.type || 'milk_frothers'; // ✅ מבטיח שהטייפ נשלח תמיד
+
+    try {
+      const res = await fetch(`${baseUrl}/add-to-cart`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user_id: userId,
+          product_id: item.id,
+          quantity,
+          product_type: productType
+        }),
+      });
+
+      if (!res.ok) throw new Error('Server error');
+
+      alert(`✅ Added ${quantity} x ${item.name} to your cart.`);
+    } catch (err) {
+      console.error('❌ Error adding to cart:', err);
+      alert('Something went wrong.');
     }
   };
 
@@ -37,7 +58,7 @@ export default function MilkFrothers() {
           <div
             className="milk-product-card"
             key={item.id}
-            onClick={() => setSelectedProduct({ ...item, type: 'milk_frother' })} // ✅ פותח חלון
+            onClick={() => setSelectedProduct({ ...item, type: 'milk_frothers' })}
           >
             <img src={item.image_path} alt={item.name} />
             <div className="milk-product-details">
@@ -46,8 +67,8 @@ export default function MilkFrothers() {
               <button
                 className="add-to-cart-btn"
                 onClick={(e) => {
-                  e.stopPropagation(); // ✅ שלא יפתח מודאל בנוסף לאזעקה
-                  handleAddToCart(item);
+                  e.stopPropagation();
+                  handleAddToCart({ ...item, type: 'milk_frothers' });
                 }}
               >
                 <FaShoppingCart />
@@ -57,13 +78,12 @@ export default function MilkFrothers() {
         ))}
       </div>
 
-      {/* ✅ החלונית */}
       {selectedProduct && (
         <ProductModal
           product={selectedProduct}
           onClose={() => setSelectedProduct(null)}
           onAddToCart={(product, quantity) => {
-            handleAddToCart(product, quantity);
+            handleAddToCart({ ...product, type: 'milk_frothers' }, quantity);
             setSelectedProduct(null);
           }}
         />
