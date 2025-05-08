@@ -26,6 +26,10 @@ import CustomerCount from './components/Admin/Statistics/CustomerCount.jsx';
 import StatisticsPage from './components/Admin/Statistics/StatisticsPage.jsx';
 import EditCapsule from './components/Admin/EditCapsule.jsx'; 
 import EditFrother from './components/Admin/EditFrother'; 
+import AddCapsule from './components/Admin/AddCapsule.jsx';
+import AddCoffeeMachine from './components/Admin/AddCoffeeMachine.jsx';
+import AddFrother from './components/Admin/AddFrother.jsx';
+
 
 
 
@@ -59,8 +63,9 @@ function App() {
       <Route path="/StatisticsPage" element={<StatisticsPage />} />
       <Route path="/EditCapsule/:id" element={<EditCapsule />} />
       <Route path="/EditFrother/:id" element={<EditFrother />} />
-
-
+      <Route path="/AddCapsule" element={<AddCapsule />} />
+      <Route path="/AddCoffeeMachine" element={<AddCoffeeMachine />} />
+      <Route path="/AddFrother" element={<AddFrother />} />
 
     </Routes>
   );

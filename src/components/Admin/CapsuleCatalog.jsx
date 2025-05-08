@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/CatalogPage.css';
-import { Info, Pencil, Trash2 } from 'lucide-react'; 
+import { Info, Pencil, Trash2, Plus } from 'lucide-react'; 
 import { useNavigate } from 'react-router-dom';
 import baseUrl from '../../config';
 
@@ -19,7 +19,8 @@ export default function CapsuleCatalog() {
       });
   }, []);
 
-  const handleAdd = () => alert('Add new capsule');
+  
+  const handleAdd = () => navigate('/AddCapsule');
   const handleEdit = (capsule) => navigate(`/EditCapsule/${capsule.id}`);
   const handleDelete = (id) => {
     if (window.confirm('Are you sure you want to delete this capsule?')) {
@@ -38,8 +39,12 @@ export default function CapsuleCatalog() {
     <div className="catalog-page">
       <div className="header-row">
         <h2>Capsules</h2>
-        <button onClick={handleAdd} className="add-button">+ Add Capsule</button>
+        <button onClick={handleAdd} className="add-button">
+          <Plus size={16} style={{ marginRight: 5 }} />
+          Add Capsule
+        </button>
       </div>
+
 
       <table className="product-table">
         <thead>
