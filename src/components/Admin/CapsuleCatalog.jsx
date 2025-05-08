@@ -4,10 +4,14 @@ import '../styles/CatalogPage.css';
 import { Info, Pencil, Trash2, Plus } from 'lucide-react'; 
 import { useNavigate } from 'react-router-dom';
 import baseUrl from '../../config';
+import InventoryModal from './InventoryModal.jsx';
+
+
 
 
 export default function CapsuleCatalog() {
   const [capsules, setCapsules] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,10 +33,29 @@ export default function CapsuleCatalog() {
     }
   };
   const handleInfo = (capsule) => {
-    alert(
-      `Name: ${capsule.name}\nFlavor: ${capsule.flavor}\nQuantity: ${capsule.quantity_per_package}\n` +
-      `Weight: ${capsule.net_weight_grams}g\nPrice: ${capsule.price} ₪\nIngredients: ${capsule.ingredients}`
-    );
+    setSelectedProduct({ ...capsule, type: 'capsule' });
+  };
+
+  const handleUpdateStock = async (id, newStock, type) => {
+    const endpoint = {
+      capsule: 'update-capsule-stock',
+      coffee_machine: 'update-coffee-machine-stock',
+      milk_frother: 'update-milk-frother-stock'
+    };
+  
+    try {
+      await axios.put(`${baseUrl}/${endpoint[type]}/${id}`, {
+        sum_of: newStock
+      });
+  
+      setCapsules(prev =>
+        prev.map(c => c.id === id ? { ...c, sum_of: newStock } : c)
+      );
+      return true;
+    } catch (err) {
+      console.error('Failed to update stock:', err);
+      throw err;
+    }
   };
 
   return (
@@ -65,11 +88,35 @@ export default function CapsuleCatalog() {
                 <Info color="#8B4513" style={{ cursor: 'pointer' }} onClick={() => handleInfo(capsule)} />
                 <Pencil color="#8B4513" style={{ marginLeft: 10, cursor: 'pointer' }} onClick={() => handleEdit(capsule)} />
                 <Trash2 color="#8B4513" style={{ marginLeft: 10, cursor: 'pointer' }} onClick={() => handleDelete(capsule.id)} />
-              </td>
+        
+  {/*  stock */}
+  <span style={{
+    display: 'inline-block',
+    marginLeft: 15,
+    backgroundColor: '#f5f5f5',
+    border: '1px solid #ccc',
+    borderRadius: '6px',
+    padding: '3px 8px',
+    fontWeight: 'bold',
+    fontSize: '13px',
+    color: '#333',
+    minWidth: '30px',
+    textAlign: 'center'
+  }}>
+    {capsule.sum_of}
+  </span>
+</td>
             </tr>
           ))}
         </tbody>
       </table>
+      {selectedProduct && (
+  <InventoryModal
+    product={selectedProduct}
+    onClose={() => setSelectedProduct(null)}
+    onUpdateStock={handleUpdateStock}
+  />
+)}
     </div>
   );
 }
