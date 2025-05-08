@@ -1,6 +1,8 @@
+// src/components/Admin/Statistics/CustomerCount.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
 import baseUrl from '../../../config';
+import "../../styles/CustomerCount.css";
 
 export default function CustomerCount() {
   const [startDate, setStartDate] = useState('');
@@ -26,12 +28,7 @@ export default function CustomerCount() {
     try {
       const res = await axios.get(
         `${baseUrl}/statistics/customers-count`,
-        {
-          params: {
-            startDate,
-            endDate
-          }
-        }
+        { params: { startDate, endDate } }
       );
       setCount(res.data.customerCount);
     } catch (e) {
@@ -42,42 +39,35 @@ export default function CustomerCount() {
   };
 
   return (
-    <div className="customer-count-page" style={{ padding: 20 }}>
+    <div className="customer-count-page">
       <h2>Customer Purchase Count</h2>
 
-      <div
-        className="filter-bar"
-        style={{ marginBottom: 16, display: 'flex', alignItems: 'center' }}
-      >
+      <div className="filter-bar">
         <label>
           From:
           <input
             type="date"
             value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            style={{ marginLeft: 8 }}
+            onChange={e => setStartDate(e.target.value)}
           />
         </label>
-        <label style={{ marginLeft: 24 }}>
+        <label>
           To:
           <input
             type="date"
             value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            style={{ marginLeft: 8 }}
+            onChange={e => setEndDate(e.target.value)}
           />
         </label>
-        <button onClick={handleView} disabled={loading} style={{ marginLeft: 24 }}>
+        <button onClick={handleView} disabled={loading}>
           View
         </button>
       </div>
 
-      {error && <p className="error-message" style={{ color: 'red' }}>{error}</p>}
-
+      {error && <p className="error-message">{error}</p>}
       {loading && <p>Loading...</p>}
-
       {!loading && count !== null && !error && (
-        <p style={{ marginTop: 20 }}>
+        <p className="result-message">
           {count > 0
             ? `Number of purchasing customers: ${count}`
             : 'No customers purchased in selected period.'}
