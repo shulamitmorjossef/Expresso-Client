@@ -49,7 +49,7 @@ export default function CustomerHome() {
               <ul>
                 <li><Link to="/PersonalAreaCustomer" className="dropdown-link">Edit Account Details</Link></li>
                 <li><Link to="#" className="dropdown-link">My Orders</Link></li>
-                <li><Link to="#" className="dropdown-link">Shopping Cart</Link></li>
+                <li><Link to="/CartPage" className="dropdown-link">Shopping Cart</Link></li>
                 <li><Link to="#" className="dropdown-link">Coupons</Link></li>
                 <li><Link to="#" className="dropdown-link">Reviews</Link></li>
                 <li><Link to="/" className="dropdown-link" onClick={handleLogout}>LogOut</Link></li>
