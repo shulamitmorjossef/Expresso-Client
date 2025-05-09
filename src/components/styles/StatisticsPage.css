@@ -1,0 +1,87 @@
+/* StatisticsPage.css */
+
+/* מיכל הראשי עם רקע התמונה ואפקט קלר */
+.statistics-page {
+    position: relative;
+    min-height: 100vh;
+    padding: 2rem;
+    background: url('/images/Statistics.png') center/cover no-repeat;
+    color: #fff;
+}
+
+/* שכבת החציצה השחורה חצי־שקופה */
+.statistics-page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 0;
+}
+
+/* כדי שהתוכן יופיע מעל השכבה */
+.statistics-page>* {
+    position: relative;
+    z-index: 1;
+}
+
+/* כותרת הדף */
+.statistics-page__title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #fff;
+    text-align: center;
+}
+
+/* תפריט הניווט */
+.statistics-page__nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+/* קישורים בתפריט */
+.statistics-page__link {
+    display: inline-block;
+    padding: 0.75rem 1.25rem;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition:
+        background-color 0.2s ease,
+        box-shadow 0.2s ease,
+        color 0.2s ease;
+}
+
+/* מצב הובר */
+.statistics-page__link:hover,
+.statistics-page__link:focus {
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* קישור פעיל */
+.statistics-page__link--active {
+    background: #3b82f6;
+    /* blue-500 */
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+/* תוכן Nested Routes */
+.statistics-page__content {
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    padding-top: 1.5rem;
+}
+
+/* רספונסיביות לטלפונים */
+@media (max-width: 640px) {
+    .statistics-page__nav {
+        flex-direction: column;
+    }
+}

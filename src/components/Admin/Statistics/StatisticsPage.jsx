@@ -1,35 +1,45 @@
 import React from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useLocation } from 'react-router-dom';
+import "../../styles/StatisticsPage.css";
 
 export default function StatisticsPage() {
-  return (
-    <div className="p-6 bg-white rounded-2xl shadow-md">
-      <h1 className="text-3xl font-bold mb-6">Statistical Data</h1>
+  const { pathname } = useLocation();
 
-      {/* Navigation Menu */}
-      <nav className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 mb-8">
+  return (
+    <div className="statistics-page">
+      <h1 className="statistics-page__title">Statistical Data</h1>
+
+      <nav className="statistics-page__nav">
         <Link
-          to="TotalSold"
-          className="px-4 py-2 rounded-2xl shadow hover:shadow-lg transition"
+          to="/TotalSold"
+          className={
+            'statistics-page__link' +
+            (pathname === '/TotalSold' ? ' statistics-page__link--active' : '')
+          }
         >
           Total Number of Products Sold
         </Link>
         <Link
           to="/BestSellers"
-          className="px-4 py-2 rounded-2xl shadow hover:shadow-lg transition"
+          className={
+            'statistics-page__link' +
+            (pathname === '/BestSellers' ? ' statistics-page__link--active' : '')
+          }
         >
           Best Selling Products
         </Link>
         <Link
           to="/CustomerCount"
-          className="px-4 py-2 rounded-2xl shadow hover:shadow-lg transition"
+          className={
+            'statistics-page__link' +
+            (pathname === '/CustomerCount' ? ' statistics-page__link--active' : '')
+          }
         >
           Customer Purchase Count
         </Link>
       </nav>
 
-      {/* Nested route content */}
-      <div className="border-t pt-4">
+      <div className="statistics-page__content">
         <Outlet />
       </div>
     </div>

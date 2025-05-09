@@ -1,106 +1,95 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import baseUrl from '../../../config';       // your API base URL
+import '../../styles/BestSellers.css';     // make sure this path matches where you put the CSS
 
 export default function BestSellers() {
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
-    const [results, setResults] = useState([]);
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [results, setResults] = useState([]);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-    const fetchBestSellers = async () => {
-        setError('');
-        setResults([]);
+  const fetchBestSellers = async () => {
+    setError('');
+    setResults([]);
 
-        if (!startDate || !endDate) {
-            setError('Please select both dates.');
-            return;
-        }
+    if (!startDate || !endDate) {
+      setError('Please select both dates.');
+      return;
+    }
+    if (new Date(startDate) > new Date(endDate)) {
+      setError('Invalid date range.');
+      return;
+    }
 
-        if (new Date(startDate) > new Date(endDate)) {
-            setError('Invalid date range.');
-            return;
-        }
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `${baseUrl}/best-sellers`,
+        { params: { startDate, endDate } }
+      );
 
-        setLoading(true);
-        try {
-            const response = await axios.get(
-                `http://localhost:3000/BestSellers`,
-                {
-                    params: {
-                        startDate,
-                        endDate,
-                    },
-                }
-            );
+      if (response.data.message) {
+        setError(response.data.message);
+      } else {
+        setResults(response.data);
+      }
+    } catch (err) {
+      setError('Server error');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-            if (response.data.message) {
-                setError(response.data.message); // No data for selected period
-            } else {
-                setResults(response.data);
-            }
-        } catch (err) {
-            setError('Server error');
-        } finally {
-            setLoading(false);
-        }
-    };
+  return (
+    <div className="best-sellers-page">
+      <h2>Best Selling Products</h2>
 
-    return (
-        <div className="space-y-4">
-            <h2 className="text-2xl font-semibold">Best Selling Products</h2>
+      <div className="filter-bar">
+        <label>
+          From:
+          <input
+            type="date"
+            value={startDate}
+            onChange={e => setStartDate(e.target.value)}
+          />
+        </label>
+        <label>
+          To:
+          <input
+            type="date"
+            value={endDate}
+            onChange={e => setEndDate(e.target.value)}
+          />
+        </label>
+        <button onClick={fetchBestSellers} disabled={loading}>
+          View
+        </button>
+      </div>
 
-            <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                <div>
-                    <label className="block">Start Date</label>
-                    <input
-                        type="date"
-                        value={startDate}
-                        onChange={(e) => setStartDate(e.target.value)}
-                        className="border px-2 py-1 rounded"
-                    />
-                </div>
+      {error && <p className="error-message">{error}</p>}
+      {loading && <p className="loading-message">Loading…</p>}
 
-                <div>
-                    <label className="block">End Date</label>
-                    <input
-                        type="date"
-                        value={endDate}
-                        onChange={(e) => setEndDate(e.target.value)}
-                        className="border px-2 py-1 rounded"
-                    />
-                </div>
-
-                <button
-                    onClick={fetchBestSellers}
-                    className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-                >
-                    View
-                </button>
-            </div>
-
-            {error && <p className="text-red-600">{error}</p>}
-
-            {loading && <p>Loading...</p>}
-
-            {results.length > 0 && (
-                <table className="w-full mt-4 border">
-                    <thead>
-                        <tr className="bg-gray-100">
-                            <th className="border px-4 py-2 text-left">Product Name</th>
-                            <th className="border px-4 py-2 text-left">Units Sold</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {results.map((product, index) => (
-                            <tr key={index}>
-                                <td className="border px-4 py-2">{product.name}</td>
-                                <td className="border px-4 py-2">{product.total_sold}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            )}
-        </div>
-    );
+      {results.length > 0 && (
+        <ul className="results-list">
+          {results.map((p, idx) => (
+            <li key={idx} className="result-item">
+              {p.image_path &&
+                <img
+                  src={p.image_path}
+                  alt={p.name}
+                  className="product-thumb"
+                />
+              }
+              <div className="product-info">
+                <span className="units-sold">{p.total_sold}</span>
+                <span className="product-name">{p.name}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
 }
