@@ -82,7 +82,7 @@ export default function GuestHome() {
                       <img src={item.image_path} alt={item.name} className="result-thumb" />
                       <div className="result-info">
                         <strong>{item.name}</strong>
-                        <span className="result-meta">({item.type}) – {item.price}₪</span>
+                        <span className="result-meta">({item.type}) – {item.price}$</span>
                       </div>
                     </div>
                   </li>

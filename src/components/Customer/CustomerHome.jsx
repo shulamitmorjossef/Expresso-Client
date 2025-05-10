@@ -48,7 +48,7 @@ export default function CustomerHome() {
             <nav className="dropdown-menu">
               <ul>
                 <li><Link to="/PersonalAreaCustomer" className="dropdown-link">Edit Account Details</Link></li>
-                <li><Link to="#" className="dropdown-link">My Orders</Link></li>
+                <li><Link to="/MyOrders" className="dropdown-link">My Orders</Link></li>
                 <li><Link to="/CartPage" className="dropdown-link">Shopping Cart</Link></li>
                 <li><Link to="#" className="dropdown-link">Coupons</Link></li>
                 <li><Link to="#" className="dropdown-link">Reviews</Link></li>
@@ -92,8 +92,8 @@ export default function CustomerHome() {
                         <img src={item.image_path} alt={item.name} className="result-thumb" />
                         <div className="result-info">
                           <strong>{item.name}</strong>
-                          <span className="result-meta">({correctedType}) – {item.price}₪</span>
-                        </div>
+                          <span className="result-meta">({correctedType}) – ${item.price}</span>
+                          </div>
                       </div>
                     </li>
                   );

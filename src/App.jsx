@@ -34,6 +34,7 @@ import DeliveryForm from './components/DeliveryForm';
 import PaymentForm from './components/PaymentForm';
 import OrderAdminPage from './components/Admin/ordersAdminPage.jsx';
 import CouponsPage from './components/Admin/couponsPage.jsx';
+import MyOrders from './components//Customer/MyOrders';
 
 
 
@@ -77,6 +78,7 @@ function App() {
       <Route path="/Payment" element={<PaymentForm />} />
       <Route path="/OrderAdminPage" element={<OrderAdminPage />} />
       <Route path="/CouponsPage" element={<CouponsPage />} />
+      <Route path="/MyOrders" element={<MyOrders />} />
 
 
 
