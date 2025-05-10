@@ -68,4 +68,20 @@
   .submit-btn:hover {
     background-color: #472c18;
   }
+  .modal-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #3c2e2a; 
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+  
+  .modal-close:hover {
+    color: #3c2e2a; 
+  }
   

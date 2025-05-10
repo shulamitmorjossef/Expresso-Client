@@ -1,5 +1,6 @@
 import baseUrl from '../config';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './DeliveryForm.css';
 
 export default function PaymentForm() {
@@ -14,6 +15,8 @@ export default function PaymentForm() {
 
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [orderId, setOrderId] = useState(null);
 
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 10 }, (_, i) => (currentYear + i).toString().slice(-2));
@@ -37,38 +40,35 @@ export default function PaymentForm() {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validate();
     setErrors(validationErrors);
-  
+
     if (Object.keys(validationErrors).length === 0) {
-      console.log('Payment submitted:', form);
       setSubmitted(true);
-  
       const userId = localStorage.getItem('userId');
-  
+
       try {
         const response = await fetch(`${baseUrl}/confirm-order/${userId}`, {
           method: 'POST',
         });
-  
+
         const data = await response.json();
-  
+
         if (!response.ok) {
           throw new Error(data.error || 'Order confirmation failed.');
         }
-  
-        alert(`✅ Order #${data.orderId} confirmed with ${data.itemCount} item(s)!`);
-        
-  
+
+        setOrderId(data.orderId);
+        setShowModal(true);
       } catch (err) {
         console.error('❌ Error confirming order:', err);
         alert('Something went wrong while confirming your order.');
       }
     }
   };
-  
 
   return (
     <div className="delivery-form-container">
@@ -152,8 +152,20 @@ export default function PaymentForm() {
         </div>
 
         <button type="submit" className="submit-btn">Pay Now</button>
-        {submitted && <p className="success-msg">Payment submitted successfully! 💳</p>}
+        {submitted && <p className="success-msg">Processing your payment...</p>}
       </form>
+
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>✅ Order Confirmed!</h3>
+            <p>Your order <strong>#{orderId}</strong> has been placed successfully.</p>
+            <Link to="/CustomerHome" className="submit-btn" onClick={() => setShowModal(false)}>
+              Go to Home
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

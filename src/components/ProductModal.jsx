@@ -15,7 +15,7 @@ export default function ProductModal({ product, onClose, onAddToCart }) {
           <img src={product.image_path} alt={product.name} className="modal-image" />
           <div className="modal-details">
             <h2>{product.name}</h2>
-            <p>Price: {product.price}₪</p>
+            <p>Price: {product.price}$</p>
 
             {product.type === 'coffee_machine' && (
               <>
