@@ -155,10 +155,10 @@ export default function CustomerHome() {
             })
               .then(res => {
                 if (!res.ok) throw new Error();
-                alert(`✅ Added ${quantity} x ${product.name} to your cart.`);
+                alert(` Added ${quantity} x ${product.name} to your cart.`);
               })
               .catch(err => {
-                console.error('❌ Error adding to cart:', err);
+                console.error(' Error adding to cart:', err);
                 alert('Something went wrong.');
               });
 
