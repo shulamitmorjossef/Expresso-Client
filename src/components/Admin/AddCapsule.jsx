@@ -126,7 +126,7 @@ export default function AddCapsule() {
         });
         
         console.log('Server response:', response.data);
-        setSuccess('✅ Capsule added successfully!');
+        setSuccess('Capsule added successfully!');
         
         // Reset form after successful submission
         setForm({
@@ -161,7 +161,7 @@ export default function AddCapsule() {
         });
         
         console.log('Server response (JSON):', response.data);
-        setSuccess('✅ Capsule added successfully!');
+        setSuccess('Capsule added successfully!');
         
         // Reset form after successful submission
         setForm({
@@ -180,7 +180,7 @@ export default function AddCapsule() {
         }, 1500);
       }
     } catch (err) {
-      console.error('❌ Failed to add capsule:', err);
+      console.error('Failed to add capsule:', err);
       setError(err.response?.data?.message || 'Failed to add capsule. Please try again.');
     } finally {
       setIsSubmitting(false);

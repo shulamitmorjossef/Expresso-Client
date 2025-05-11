@@ -24,7 +24,7 @@ function About() {
       })
       .then((data) => setAboutData(data))
       .catch((err) => {
-        console.error('❌ Error loading About content', err);
+        console.error('Error loading About content', err);
         setError('Failed to load content.');
       });
   }, []);

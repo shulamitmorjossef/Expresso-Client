@@ -4,15 +4,16 @@ import { Link, useNavigate } from 'react-router-dom';
 import './styles/GuestHome.css';
 import baseUrl from '../config';
 import ProductModal from './ProductModal';
+import ModalMessage from './ModalMessage';
 
 export default function GuestHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [modalData, setModalData] = useState(null);
   const navigate = useNavigate();
 
-  // ניקוי localStorage כשזה אורח
   useEffect(() => {
     localStorage.removeItem('userId');
     localStorage.removeItem('userType');
@@ -44,10 +45,21 @@ export default function GuestHome() {
               <ul>
                 <li><Link to="/Login" className="dropdown-link">Login</Link></li>
                 <li><Link to="/Registration" className="dropdown-link">Register</Link></li>
-                <li><Link to="#" className="dropdown-link" onClick={(e) => {
-                  e.preventDefault();
-                  alert("Reviews page coming soon!");
-                }}>Reviews</Link></li>
+                <li>
+                  <Link
+                    to="#"
+                    className="dropdown-link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setModalData({
+                        title: "Coming Soon",
+                        message: "Reviews page coming soon!",
+                        actionText: "OK",
+                        onAction: () => setModalData(null),
+                      });
+                    }}
+                  >Reviews</Link>
+                </li>
               </ul>
             </nav>
           )}
@@ -82,7 +94,7 @@ export default function GuestHome() {
                       <img src={item.image_path} alt={item.name} className="result-thumb" />
                       <div className="result-info">
                         <strong>{item.name}</strong>
-                        <span className="result-meta">({item.type}) – {item.price}$</span>
+                        <span className="result-meta">({item.type}) – {item.price}₪</span>
                       </div>
                     </div>
                   </li>
@@ -120,10 +132,27 @@ export default function GuestHome() {
           product={selectedProduct}
           onClose={() => setSelectedProduct(null)}
           onAddToCart={() => {
-            alert('Guests cannot add to cart. Please log in first.');
+            setModalData({
+              title: 'Login Required',
+              message: 'Guests cannot add to cart. Please log in first.',
+              actionText: 'Go to Login',
+              onAction: () => {
+                setModalData(null);
+                navigate('/Login');
+              }
+            });
             setSelectedProduct(null);
-            navigate('/Login');
           }}
+        />
+      )}
+
+      {modalData && (
+        <ModalMessage
+          title={modalData.title}
+          message={modalData.message}
+          onClose={modalData.onAction}
+          onAction={modalData.onAction}
+          actionText={modalData.actionText}
         />
       )}
     </div>

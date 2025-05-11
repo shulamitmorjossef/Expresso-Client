@@ -18,7 +18,7 @@ export default function CapsuleCatalog() {
     axios.get(`${baseUrl}/get-all-capsule`)
       .then(res => setCapsules(res.data))
       .catch(err => {
-        console.error('❌ Error loading capsules:', err);
+        console.error('Error loading capsules:', err);
         alert('Failed to load capsules');
       });
   }, []);

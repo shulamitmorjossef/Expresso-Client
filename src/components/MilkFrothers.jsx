@@ -4,10 +4,12 @@ import './styles/MilkFrothers.css';
 import { FaShoppingCart } from 'react-icons/fa';
 import baseUrl from '../config';
 import ProductModal from './ProductModal';
+import ModalMessage from '../components/ModalMessage';
 
 export default function MilkFrothers() {
   const [frothers, setFrothers] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [modalData, setModalData] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,16 +21,27 @@ export default function MilkFrothers() {
 
   const handleAddToCart = async (item, quantity = 1) => {
     if (item.sum_of === 0) {
-      alert('Sorry, this product is out of stock.');
+      setModalData({
+        title: 'Out of Stock',
+        message: 'Sorry, this product is out of stock.',
+        onClose: () => setModalData(null)
+      });
       return;
     }
 
     const userType = localStorage.getItem('userType');
-    const userId = localStorage.getItem('userId');
+    const userId = parseInt(localStorage.getItem('userId'));
 
     if (userType === 'guest' || !userType) {
-      alert('You must register or log in to view the cart.');
-      navigate('/');
+      setModalData({
+        title: 'Login Required',
+        message: 'You must register or log in to view the cart.',
+        onClose: () => {
+          setModalData(null);
+          navigate('/');
+        },
+        actionText: 'Go to Login'
+      });
       return;
     }
 
@@ -48,16 +61,24 @@ export default function MilkFrothers() {
 
       if (!res.ok) throw new Error('Server error');
 
-      alert(`✅ Added ${quantity} x ${item.name} to your cart.`);
+      setModalData({
+        title: 'Added to Cart',
+        message: `Added ${quantity} x ${item.name} to your cart.`,
+        onClose: () => setModalData(null)
+      });
     } catch (err) {
-      console.error('❌ Error adding to cart:', err);
-      alert('Something went wrong.');
+      console.error('Error adding to cart:', err);
+      setModalData({
+        title: 'Error',
+        message: 'Something went wrong while adding to cart.',
+        onClose: () => setModalData(null)
+      });
     }
   };
 
   return (
     <div className="milk-products-page">
-      <h1>Milk Frothers</h1>
+      <h1 className="Milk-frothers-title">Milk-frothers</h1>
       <div className="milk-product-list">
         {frothers.map((item) => (
           <div
@@ -71,7 +92,7 @@ export default function MilkFrothers() {
                 position: 'absolute',
                 top: 0,
                 width: '100%',
-                backgroundColor: 'black',
+                backgroundColor: '#6f4e37',
                 color: 'white',
                 fontWeight: 'bold',
                 padding: '4px',
@@ -89,7 +110,7 @@ export default function MilkFrothers() {
                 position: 'absolute',
                 top: 0,
                 width: '100%',
-                backgroundColor: 'black',
+                backgroundColor: '#6f4e37',
                 color: 'white',
                 fontWeight: 'bold',
                 padding: '4px',
@@ -107,18 +128,15 @@ export default function MilkFrothers() {
             <div className="milk-product-details">
               <h3>{item.name}</h3>
               <p>${Number(item.price).toFixed(2)}</p>
-
-              {item.sum_of > 0 && (
-                <button
-                  className="add-to-cart-btn"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleAddToCart({ ...item, type: 'milk_frothers' });
-                  }}
-                >
-                  <FaShoppingCart />
-                </button>
-              )}
+              <button
+                className="add-to-cart-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAddToCart({ ...item, type: 'milk_frothers' });
+                }}
+              >
+                <FaShoppingCart />
+              </button>
             </div>
           </div>
         ))}
@@ -129,9 +147,19 @@ export default function MilkFrothers() {
           product={selectedProduct}
           onClose={() => setSelectedProduct(null)}
           onAddToCart={(product, quantity) => {
-            handleAddToCart({ ...product, type: 'milk_frothers' }, quantity);
+            handleAddToCart(product, quantity);
             setSelectedProduct(null);
           }}
+        />
+      )}
+
+      {modalData && (
+        <ModalMessage
+          title={modalData.title}
+          message={modalData.message}
+          onClose={modalData.onClose}
+          onAction={modalData.onAction || modalData.onClose}
+          actionText={modalData.actionText}
         />
       )}
     </div>

@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './ProductModal.css';
+import ModalMessage from './ModalMessage'; 
 
 export default function ProductModal({ product, onClose, onAddToCart }) {
-  const [quantity, setQuantity] = React.useState(1);
+  const [quantity, setQuantity] = useState(1);
+  const [modalData, setModalData] = useState(null);
 
   if (!product) return null;
+
+  const handleAddToCartClick = () => {
+    if (product.sum_of === 0) {
+      setModalData({
+        title: 'Out of Stock',
+        message: 'Sorry, this product is out of stock.',
+        actionText: 'OK',
+        onAction: () => setModalData(null),
+      });
+      return;
+    }
+
+    onAddToCart(product, quantity);
+  };
 
   return (
     <div className="modal-overlay">
@@ -44,12 +60,22 @@ export default function ProductModal({ product, onClose, onAddToCart }) {
               <button onClick={() => setQuantity(q => q + 1)}>+</button>
             </div>
 
-            <button className="add-button" onClick={() => onAddToCart(product, quantity)}>
+            <button className="add-button" onClick={handleAddToCartClick}>
               Add to Cart
             </button>
           </div>
         </div>
       </div>
+
+      {modalData && (
+        <ModalMessage
+          title={modalData.title}
+          message={modalData.message}
+          actionText={modalData.actionText}
+          onAction={modalData.onAction}
+          onClose={() => setModalData(null)}
+        />
+      )}
     </div>
   );
 }

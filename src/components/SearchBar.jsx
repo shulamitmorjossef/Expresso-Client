@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './SearchBar.css';
 import baseUrl from '../config';
+import ModalMessage from './ModalMessage'; 
 
 export default function SearchBar() {
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState([]);
-  const [error, setError] = useState('');
+  const [modalData, setModalData] = useState(null); 
 
   const handleSearch = async () => {
     if (!searchTerm.trim()) {
@@ -18,13 +19,17 @@ export default function SearchBar() {
       const data = await res.json();
       if (Array.isArray(data)) {
         setResults(data);
-        setError('');
+        setModalData(null); 
       } else {
-        setError('Unexpected response');
+        throw new Error('Unexpected response');
       }
     } catch (err) {
-      console.error('❌ Error during fetch:', err);
-      setError('Something went wrong');
+      console.error('Error during fetch:', err);
+      setModalData({
+        title: 'Search Error',
+        message: 'Something went wrong while searching. Please try again.',
+        onClose: () => setModalData(null),
+      });
     }
   };
 
@@ -38,8 +43,6 @@ export default function SearchBar() {
       />
       <button onClick={handleSearch}>Search</button>
 
-      {error && <p className="error">{error}</p>}
-
       <ul className="search-results">
         {results.map((item, idx) => (
           <li key={idx}>
@@ -48,6 +51,16 @@ export default function SearchBar() {
           </li>
         ))}
       </ul>
+
+      {modalData && (
+        <ModalMessage
+          title={modalData.title}
+          message={modalData.message}
+          onClose={modalData.onClose}
+          onAction={modalData.onAction || modalData.onClose}
+          actionText={modalData.actionText}
+        />
+      )}
     </div>
   );
 }

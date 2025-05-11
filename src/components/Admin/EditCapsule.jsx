@@ -91,7 +91,7 @@ export default function EditCapsule() {
         setValidationResult(suite(data));
       })
       .catch(err => {
-        console.error('❌ Failed to load capsule data:', err);
+        console.error('Failed to load capsule data:', err);
         setError('Failed to load capsule data. Please try again.');
       });
   }, [id]);
@@ -144,7 +144,7 @@ export default function EditCapsule() {
         await axios.put(`${baseUrl}/update-capsule/${id}`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
-        alert('✅ Capsule updated successfully');
+        alert('Capsule updated successfully');
         navigate('/CapsuleCatalog');
         return;
       } catch (formDataErr) {
@@ -161,11 +161,11 @@ export default function EditCapsule() {
         };
 
         await axios.put(`${baseUrl}/update-capsule/${id}`, jsonData);
-        alert('✅ Capsule updated successfully');
+        alert('Capsule updated successfully');
         navigate('/CapsuleCatalog');
       }
     } catch (err) {
-      console.error('❌ Update failed:', err);
+      console.error('Update failed:', err);
       setError(err.response?.data?.message || 'Failed to update capsule.');
     } finally {
       setIsSubmitting(false);

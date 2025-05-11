@@ -74,7 +74,7 @@ export default function EditFrother() {
         setValidationResult(suite(data));
       })
       .catch(err => {
-        console.error('❌ Failed to load frother data:', err);
+        console.error('Failed to load frother data:', err);
         setError('Failed to load frother data. Please try again.');
       });
   }, [id]);
@@ -126,7 +126,7 @@ export default function EditFrother() {
         await axios.put(`${baseUrl}/update-milk-frother/${id}`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
-        alert('✅ Frother updated successfully');
+        alert('Frother updated successfully');
         navigate('/FrotherCatalog');
         return;
       } catch (formDataErr) {
@@ -140,11 +140,11 @@ export default function EditFrother() {
           image_path: form.image_path
         };
         await axios.put(`${baseUrl}/update-milk-frother/${id}`, jsonData);
-        alert('✅ Frother updated successfully');
+        alert('Frother updated successfully');
         navigate('/FrotherCatalog');
       }
     } catch (err) {
-      console.error('❌ Update failed:', err);
+      console.error('Update failed:', err);
       setError(err.response?.data?.message || 'Failed to update frother.');
     } finally {
       setIsSubmitting(false);

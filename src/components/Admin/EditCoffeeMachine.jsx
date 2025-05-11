@@ -123,7 +123,7 @@ export default function EditCoffeeMachine() {
         }
       })
       .catch((err) => {
-        console.error('❌ Failed to load machine data:', err);
+        console.error('Failed to load machine data:', err);
         setError('Failed to load machine data. Please try again.');
       });
   }, [id]);
@@ -194,7 +194,7 @@ export default function EditCoffeeMachine() {
   //         }
   //       });
         
-  //       alert('✅ Machine updated successfully');
+  //       alert('Machine updated successfully');
   //       navigate('/CoffeeCatalog');
   //       return;
   //     } catch (formDataErr) {
@@ -211,11 +211,11 @@ export default function EditCoffeeMachine() {
   //       };
         
   //       await axios.put(`${baseUrl}/update-coffee-machine/${id}`, jsonData);
-  //       alert('✅ Machine updated successfully');
+  //       alert('Machine updated successfully');
   //       navigate('/CoffeeCatalog');
   //     }
   //   } catch (err) {
-  //     console.error('❌ Update failed:', err);
+  //     console.error('Update failed:', err);
   //     setError(err.response?.data?.message || 'Failed to update machine. Please try again.');
   //   } finally {
   //     setIsSubmitting(false);
@@ -261,10 +261,10 @@ export default function EditCoffeeMachine() {
         }
       });
   
-      alert('✅ Machine updated successfully');
+      alert('Machine updated successfully');
       navigate('/CoffeeCatalog');
     } catch (err) {
-      console.error('❌ Update failed:', err);
+      console.error('Update failed:', err);
       setError(err.response?.data?.message || 'Failed to update machine. Please try again.');
     } finally {
       setIsSubmitting(false);

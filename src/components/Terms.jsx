@@ -19,7 +19,7 @@ export default function Terms() {
       })
       .then((data) => setTerms(data))
       .catch((err) => {
-        console.error('❌ Error loading Terms content', err);
+        console.error('Error loading Terms content', err);
         setError('Failed to load content.');
       });
   }, []);
