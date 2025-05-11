@@ -11,9 +11,26 @@ export default function CatalogPage() {
       <p>Select a category to manage:</p>
 
       <div className="category-buttons">
-        <button onClick={() => navigate('/CoffeeCatalog')}>☕ Coffee Machines</button>
-        <button onClick={() => navigate('/CapsuleCatalog')}> Capsules</button>
-        <button onClick={() => navigate('/FrotherCatalog')}>🥛 Milk Frothers</button>
+        <button className="category-button" onClick={() => navigate('/CoffeeCatalog')}>
+          <div className="button-image">
+            <img src="/images/PageMachine.png" alt="Coffee Machines" />
+          </div>
+          <div className="button-title">Coffee Machines</div>
+        </button>
+
+        <button className="category-button" onClick={() => navigate('/CapsuleCatalog')}>
+          <div className="button-image">
+            <img src="/images/PageCapsule.png" alt="Capsules" />
+          </div>
+          <div className="button-title">Capsules</div>
+        </button>
+
+        <button className="category-button" onClick={() => navigate('/FrotherCatalog')}>
+          <div className="button-image">
+            <img src="/images/PageFrother.png" alt="Milk Frothers" />
+          </div>
+          <div className="button-title">Milk Frothers</div>
+        </button>
       </div>
     </div>
   );

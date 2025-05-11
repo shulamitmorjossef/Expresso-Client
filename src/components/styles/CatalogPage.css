@@ -1,70 +1,72 @@
 .catalog-page {
-    padding: 40px;
-    max-width: 1000px;
-    margin: auto;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #fff;
-  }
-  
-  .header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-  }
-  
-  .header-row h2 {
-    font-size: 28px;
-    color: #333;
-  }
-  
-  .add-button {
-    background-color: #6f4e37; /* חום קפה */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  .add-button:hover {
-    background-color: #523827;
-  }
-  
-  .product-table {
-    width: 100%;
-    border-collapse: collapse;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .product-table th,
-  .product-table td {
-    padding: 14px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .product-table th {
-    background-color: #f5f5f5;
-    font-weight: bold;
-  }
-  
-  .product-table tr:hover {
-    background-color: #f0f0f0;
-  }
-  
-  .product-table button {
-    margin: 0 6px;
-    font-size: 16px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.1s ease;
-  }
-  
-  .product-table button:hover {
-    transform: scale(1.2);
-  }
-  
+  background-color: #fdf6ec;
+  min-height: 100vh;
+  padding: 60px;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.catalog-page h1 {
+  font-size: 54px; /* מוגדל משמעותית */
+  color: #5c2e0b;
+  margin-bottom: 10px;
+  font-weight: 800;
+}
+
+.catalog-page p {
+  font-size: 18px;
+  color: #8b5e3c;
+  margin-bottom: 50px;
+}
+
+.category-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 48px;
+  width: 100%;
+}
+
+.category-button {
+  all: unset;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  width: 320px; /* מוקטן יחסית */
+  height: 480px; /* מוקטן ביחס לפרופורציה הכללית */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  text-align: center;
+  padding: 20px;
+}
+
+.category-button:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+}
+
+.button-image {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.button-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* מאוד חשוב כדי שהתמונות ייכנסו שלמות */
+}
+
+.button-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #5c2e0b;
+}
