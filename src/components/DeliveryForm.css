@@ -1,3 +1,5 @@
+
+
 .delivery-form-container {
     max-width: 500px;
     margin: 30px auto;
@@ -84,4 +86,28 @@
   .modal-close:hover {
     color: #3c2e2a; 
   }
+  /* body {
+    background-image: url('images/background-beans.png'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #fffaf5; 
+    
+  
+  } */
+  .page-with-background {
+    min-height: 100vh;
+    padding: 40px;
+    background-image: url('/images/background-beans.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #fffaf5;
+  }
+  
+
+
+
   

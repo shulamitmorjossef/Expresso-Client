@@ -18,7 +18,7 @@ export default function CapsuleCatalog() {
     axios.get(`${baseUrl}/get-all-capsule`)
       .then(res => setCapsules(res.data))
       .catch(err => {
-        console.error('❌ Error loading capsules:', err);
+        console.error('Error loading capsules:', err);
         alert('Failed to load capsules');
       });
   }, []);
@@ -81,7 +81,7 @@ export default function CapsuleCatalog() {
           {capsules.map((capsule) => (
             <tr key={capsule.id}>
               <td>
-                <img src={capsule.image_path} alt={capsule.name} width="50" />
+                <img src={`${baseUrl}${capsule.image_path}`} alt={capsule.name} width="50" />
               </td>
               <td>{capsule.name}</td>
               <td className="icon-cell">

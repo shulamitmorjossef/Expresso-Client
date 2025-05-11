@@ -72,13 +72,21 @@
 
 // export default function AddCoffeeMachine() {
 //   const navigate = useNavigate();
+<<<<<<< HEAD
 //   const [formData, setFormData] = useState({
+=======
+//   const [form, setForm] = useState({
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
 //     name: '',
 //     color: '',
 //     capacity: '',
 //     price: '',
 //   });
+<<<<<<< HEAD
 //   const [image, setImage] = useState(null);
+=======
+// //   const [image, setImage] = useState(null);
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
 //   const [isSubmitting, setIsSubmitting] = useState(false);
 //   const [error, setError] = useState('');
 //   const [success, setSuccess] = useState('');
@@ -100,19 +108,32 @@
 
 //   const handleChange = (field, value) => {
 //     // Update the form with the new value
+<<<<<<< HEAD
 //     const updatedForm = { ...formData, [field]: value };
 //     setFormData(updatedForm);
+=======
+//     const updatedForm = { ...form, [field]: value };
+//     setForm(updatedForm);
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
     
 //     // Run validation on the updated form
 //     const result = suite(updatedForm, field);
 //     setValidationResult(result);
 //   };
 
+<<<<<<< HEAD
 //   const handleImageChange = (e) => {
 //     if (e.target.files && e.target.files[0]) {
 //       setImage(e.target.files[0]);
 //     }
 //   };
+=======
+// //   const handleImageChange = (e) => {
+// //     if (e.target.files && e.target.files[0]) {
+// //       setImage(e.target.files[0]);
+// //     }
+// //   };
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
 
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
@@ -120,7 +141,11 @@
 //     setSuccess('');
     
 //     // Run full validation on all fields
+<<<<<<< HEAD
 //     const result = suite(formData);
+=======
+//     const result = suite(form);
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
 //     setValidationResult(result);
 
 //     if (result.hasErrors()) {
@@ -135,6 +160,7 @@
 //       const formData = new FormData();
       
 //       // Add form data
+<<<<<<< HEAD
 //       formData.append('name', formData.name || '');
 //       formData.append('color', formData.color || '');
 //       formData.append('capacity', formData.capacity || '');
@@ -152,6 +178,25 @@
 //         capacity: formData.capacity,
 //         price: formData.price
         
+=======
+//       formData.append('name', form.name || '');
+//       formData.append('color', form.color || '');
+//       formData.append('capacity', form.capacity || '');
+//       formData.append('price', form.price || '');
+      
+//     //   // If there's an image, add it
+//     //   if (image) {
+//     //     formData.append('image', image);
+//     //   }
+
+//       // Log what we're sending for debugging
+//       console.log('Submitting data:', {
+//         name: form.name,
+//         color: form.color,
+//         capacity: form.capacity,
+//         price: form.price
+//         // hasImage: !!image
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
 //       });
 
 //       // Try with FormData approach
@@ -166,7 +211,11 @@
 //         setSuccess('Coffee machine added successfully!');
         
 //         // Reset form after successful submission
+<<<<<<< HEAD
 //         setFormData({
+=======
+//         setForm({
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
 //           name: '',
 //           color: '',
 //           capacity: '',
@@ -184,18 +233,32 @@
         
 //         // Fallback to JSON approach if FormData fails
 //         const jsonData = {
+<<<<<<< HEAD
 //           name: formData.name,
 //           color: formData.color,
 //           capacity: Number(formData.capacity), // Convert to number for JSON
 //           price: Number(formData.price), // Convert to number for JSON
+=======
+//           name: form.name,
+//           color: form.color,
+//           capacity: Number(form.capacity), // Convert to number for JSON
+//           price: Number(form.price), // Convert to number for JSON
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
 //         };
         
 //         const response = await axios.post(`${baseUrl}/add-coffee-machines`, jsonData);
 //         console.log('Server response (JSON):', response.data);
+<<<<<<< HEAD
 //         setSuccess('Coffee machine added successfully!');
         
 //         // Reset form after successful submission
 //         setFormData({
+=======
+//         setSuccess('✅ Coffee machine added successfully!');
+        
+//         // Reset form after successful submission
+//         setForm({
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
 //           name: '',
 //           color: '',
 //           capacity: '',
@@ -209,7 +272,11 @@
 //         }, 1500);
 //       }
 //     } catch (err) {
+<<<<<<< HEAD
 //       console.error('Add machine failed:', err);
+=======
+//       console.error('❌ Add machine failed:', err);
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
 //       setError(err.response?.data?.message || 'Failed to add coffee machine. Please try again.');
 //     } finally {
 //       setIsSubmitting(false);
@@ -236,7 +303,11 @@
 //       <label>Name:</label>
 //       <input
 //         type="text"
+<<<<<<< HEAD
 //         value={formData.name}
+=======
+//         value={form.name}
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
 //         onChange={e => handleChange('name', e.target.value)}
 //         className={hasFieldErrors('name') ? 'invalid' : ''}
 //         placeholder="Enter machine name"
@@ -247,7 +318,11 @@
 
 //       <label>Color:</label>
 //       <select
+<<<<<<< HEAD
 //         value={formData.color}
+=======
+//         value={form.color}
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
 //         onChange={e => handleChange('color', e.target.value)}
 //         className={hasFieldErrors('color') ? 'invalid' : ''}
 //       >
@@ -263,7 +338,11 @@
 //       <label>Water Tank Capacity (ml):</label>
 //       <input
 //         type="text"
+<<<<<<< HEAD
 //         value={formData.capacity}
+=======
+//         value={form.capacity}
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
 //         onChange={e => handleChange('capacity', e.target.value)}
 //         className={hasFieldErrors('capacity') ? 'invalid' : ''}
 //         placeholder="Enter capacity (100-500 ml)"
@@ -275,7 +354,11 @@
 //       <label>Price:</label>
 //       <input
 //         type="text"
+<<<<<<< HEAD
 //         value={formData.price}
+=======
+//         value={form.price}
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
 //         onChange={e => handleChange('price', e.target.value)}
 //         className={hasFieldErrors('price') ? 'invalid' : ''}
 //         placeholder="Enter price (1-10000)"
@@ -283,14 +366,22 @@
 //       {hasFieldErrors('price') && (
 //         <div className="error">{getFieldErrors('price')[0]}</div>
 //       )}
+<<<<<<< HEAD
 
+=======
+// {/* 
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
 //       <label>Machine Image:</label>
 //       <input 
 //         type="file" 
 //         accept="image/*" 
 //         onChange={handleImageChange}
 //       />
+<<<<<<< HEAD
 //       {/* {image && (
+=======
+//       {image && (
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
 //         <div className="preview">
 //           <p>Selected image: {image.name}</p>
 //           <img 
@@ -298,8 +389,13 @@
 //             alt="Preview" 
 //             style={{ maxWidth: '100px', marginTop: '10px' }} 
 //           />
+<<<<<<< HEAD
 //         </div> )} */}
       
+=======
+//         </div> */}
+//       {/* )} */}
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
 
 //       <button 
 //         type="submit" 
@@ -342,17 +438,30 @@
 //           cursor: not-allowed;
 //         }
 //         .error {
+<<<<<<< HEAD
 //           color: black;
+=======
+//           color: red;
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
 //           font-size: 0.85em;
 //           margin-top: 4px;
 //         }
 //         .error-message {
+<<<<<<< HEAD
 //           background-color:  #f5f5f5;
 //           color: black !important;
 //           padding: 10px;
 //           border-radius: 4px;
 //           margin-bottom: 15px;
 //           border-left:  4px solid #999;
+=======
+//           background-color: #ffebee;
+//           color: #d32f2f;
+//           padding: 10px;
+//           border-radius: 4px;
+//           margin-bottom: 15px;
+//           border-left: 4px solid #d32f2f;
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
 //         }
 //         .success-message {
 //           background-color: #e8f5e9;
@@ -375,9 +484,15 @@
 //   );
 // }
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { create, test, enforce } from 'vest';
 import baseUrl from '../../config';
 
@@ -395,6 +510,7 @@ const suite = create((data = {}, field) => {
   test('color', 'Color is required', () => {
     enforce(data.color).isNotEmpty();
   });
+<<<<<<< HEAD
   test('capacity', 'Capacity is required', () => {
     enforce(data.capacity).isNotEmpty();
   });
@@ -420,6 +536,23 @@ const suite = create((data = {}, field) => {
   test('price', 'Price must be between 1 and 10000', () => {
     if (data.price && !isNaN(Number(data.price))) {
       const priceValue = Number(data.price);
+=======
+
+  // Capacity - required and numeric
+  test('capacity', 'Capacity must be a number between 100 and 500 ml', () => {
+    if (data.capacity) {
+      const capacityValue = Number(data.capacity);
+      enforce(!isNaN(capacityValue)).equals(true);
+      enforce(capacityValue).greaterThanOrEquals(100).lessThanOrEquals(500);
+    }
+  });
+
+  // Price - required and numeric
+  test('price', 'Price must be a number between 1 and 10000', () => {
+    if (data.price) {
+      const priceValue = Number(data.price);
+      enforce(!isNaN(priceValue)).equals(true);
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
       enforce(priceValue).greaterThanOrEquals(1).lessThanOrEquals(10000);
     }
   });
@@ -434,30 +567,48 @@ export default function AddCoffeeMachine() {
     price: '',
   });
   const [image, setImage] = useState(null);
+<<<<<<< HEAD
+=======
+  const [validationResult, setValidationResult] = useState(suite.get());
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
+<<<<<<< HEAD
   const colors = ["Black", "White", "Silver", "Light blue", "Pink", "Purple", "Yellow", "Beige"];
   const [validationResult, setValidationResult] = useState(suite.get());
 
   const handleChange = (field, value) => {
     const updatedForm = { ...formData, [field]: value };
     setFormData(updatedForm);
+=======
+  const handleChange = (field, value) => {
+    const updatedForm = { ...form, [field]: value };
+    setForm(updatedForm);
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
     setValidationResult(suite(updatedForm, field));
   };
 
   const handleImageChange = (e) => {
+<<<<<<< HEAD
     if (e.target.files && e.target.files[0]) {
       setImage(e.target.files[0]);
     }
+=======
+    setImage(e.target.files[0]);
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+<<<<<<< HEAD
     setError('');
     setSuccess('');
     const result = suite(formData);
+=======
+    const result = suite(form);
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
     setValidationResult(result);
 
     if (result.hasErrors()) {
@@ -467,6 +618,7 @@ export default function AddCoffeeMachine() {
 
     try {
       setIsSubmitting(true);
+<<<<<<< HEAD
       const formUpload = new FormData();
       formUpload.append('name', formData.name || '');
       formUpload.append('color', formData.color || '');
@@ -510,6 +662,23 @@ export default function AddCoffeeMachine() {
       }
     } catch (err) {
       console.error('Add machine failed:', err);
+=======
+      const formData = new FormData();
+      formData.append('name', form.name);
+      formData.append('color', form.color);
+      formData.append('capacity', form.capacity);
+      formData.append('price', form.price);
+      if (image) formData.append('image', image);
+
+      const { data } = await axios.post(`${baseUrl}/add-coffee-machines`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      setSuccess('Coffee machine added successfully!');
+      setForm({ name: '', color: '', capacity: '', price: '' });
+      setImage(null);
+      setTimeout(() => navigate('/CoffeeCatalog'), 1500);
+    } catch (err) {
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
       setError(err.response?.data?.message || 'Failed to add coffee machine. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -527,6 +696,7 @@ export default function AddCoffeeMachine() {
       {success && <div className="success-message">{success}</div>}
 
       <label>Name:</label>
+<<<<<<< HEAD
       <input
         type="text"
         value={formData.name}
@@ -571,10 +741,30 @@ export default function AddCoffeeMachine() {
 
       <label>Machine Image:</label>
       <input type="file" accept="image/*" onChange={handleImageChange} />
+=======
+      <input type="text" value={form.name} onChange={(e) => handleChange('name', e.target.value)} className={hasFieldErrors('name') ? 'invalid' : ''} />
+      {hasFieldErrors('name') && <div className="error">{getFieldErrors('name')[0]}</div>}
+
+      <label>Color:</label>
+      <input type="text" value={form.color} onChange={(e) => handleChange('color', e.target.value)} className={hasFieldErrors('color') ? 'invalid' : ''} />
+      {hasFieldErrors('color') && <div className="error">{getFieldErrors('color')[0]}</div>}
+
+      <label>Capacity (ml):</label>
+      <input type="text" value={form.capacity} onChange={(e) => handleChange('capacity', e.target.value)} className={hasFieldErrors('capacity') ? 'invalid' : ''} />
+      {hasFieldErrors('capacity') && <div className="error">{getFieldErrors('capacity')[0]}</div>}
+
+      <label>Price:</label>
+      <input type="text" value={form.price} onChange={(e) => handleChange('price', e.target.value)} className={hasFieldErrors('price') ? 'invalid' : ''} />
+      {hasFieldErrors('price') && <div className="error">{getFieldErrors('price')[0]}</div>}
+
+      <label>Machine Image:</label>
+      <input type="file" onChange={handleImageChange} />
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
 
       <button type="submit" disabled={isSubmitting} className={isSubmitting ? 'submitting' : ''}>
         {isSubmitting ? 'Saving...' : '➕ Add Coffee Machine'}
       </button>
+<<<<<<< HEAD
 
       <style>{`
         .add-form {
@@ -638,6 +828,8 @@ export default function AddCoffeeMachine() {
           color: #555;
         }
       `}</style>
+=======
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
     </form>
   );
 }

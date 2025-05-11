@@ -177,7 +177,7 @@ export default function AddMilkFrother() {
         });
         
         console.log('Server response:', response.data);
-        setSuccess('✅ Milk frother added successfully!');
+        setSuccess('Milk frother added successfully!');
         
         // Reset form after successful submission
         setForm({
@@ -208,7 +208,7 @@ export default function AddMilkFrother() {
         
         const response = await axios.post(`${baseUrl}/add-milk-frother`, jsonData);
         console.log('Server response (JSON):', response.data);
-        setSuccess('✅ Milk frother added successfully!');
+        setSuccess('Milk frother added successfully!');
         
         // Reset form after successful submission
         setForm({
@@ -226,7 +226,7 @@ export default function AddMilkFrother() {
         }, 1500);
       }
     } catch (err) {
-      console.error('❌ Add frother failed:', err);
+      console.error('Add frother failed:', err);
       setError(err.response?.data?.message || 'Failed to add milk frother. Please try again.');
     } finally {
       setIsSubmitting(false);

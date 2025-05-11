@@ -4,10 +4,12 @@ import './styles/Capsules.css';
 import { FaShoppingCart } from 'react-icons/fa';
 import baseUrl from '../config';
 import ProductModal from './ProductModal';
+import ModalMessage from './ModalMessage';
 
 export default function Capsules() {
   const [capsules, setCapsules] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [modalData, setModalData] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,7 +24,11 @@ export default function Capsules() {
 
   const handleAddToCart = async (item, quantity = 1) => {
     if (item.sum_of === 0) {
-      alert('Sorry, This product is out of stock.');
+      setModalData({
+        title: 'Out of Stock',
+        message: 'Sorry, This product is out of stock.',
+        onClose: () => setModalData(null),
+      });
       return;
     }
 
@@ -30,8 +36,15 @@ export default function Capsules() {
     const userId = parseInt(localStorage.getItem('userId'));
 
     if (userType === 'guest' || !userType) {
-      alert('You must register or log in to view the cart.');
-      navigate('/');
+      setModalData({
+        title: 'Login Required',
+        message: 'You must register or log in to view the cart.',
+        onClose: () => {
+          setModalData(null);
+          navigate('/');
+        },
+        actionText: 'Go to Login',
+      });
       return;
     }
 
@@ -51,16 +64,24 @@ export default function Capsules() {
 
       if (!res.ok) throw new Error('Server error');
 
-      alert(`Added ${quantity} x ${item.name} to your cart.`);
+      setModalData({
+        title: 'Added to Cart',
+        message: `Added ${quantity} x ${item.name} to your cart.`,
+        onClose: () => setModalData(null)
+      });
     } catch (err) {
       console.error('Error adding to cart:', err);
-      alert('Something went wrong.');
+      setModalData({
+        title: 'Error',
+        message: 'Something went wrong.',
+        onClose: () => setModalData(null)
+      });
     }
   };
 
   return (
     <div className="capsules-page">
-      <h1>Capsules</h1>
+      <h1 className="capsule-title">Capsules</h1>
       <div className="capsule-list">
         {capsules.map((item) => (
           <div
@@ -69,42 +90,38 @@ export default function Capsules() {
             onClick={() => setSelectedProduct({ ...item, type: 'capsules' })}
           >
             {item.sum_of === 0 && (
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  width: '100%',
-                  backgroundColor: 'black',
-                  color: 'white',
-                  fontWeight: 'bold',
-                  padding: '4px',
-                  fontSize: '12px',
-                  textAlign: 'center',
-                  zIndex: 2,
-                  borderTopLeftRadius: '12px',
-                  borderTopRightRadius: '12px'
-                }}
-              >
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                width: '100%',
+                backgroundColor: '#6f4e37',
+                color: 'white',
+                fontWeight: 'bold',
+                padding: '4px',
+                fontSize: '12px',
+                textAlign: 'center',
+                zIndex: 2,
+                borderTopLeftRadius: '12px',
+                borderTopRightRadius: '12px'
+              }}>
                 Out of Stock
               </div>
             )}
             {item.sum_of === 1 && (
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  width: '100%',
-                  backgroundColor: 'black',
-                  color: 'white',
-                  fontWeight: 'bold',
-                  padding: '4px',
-                  fontSize: '12px',
-                  textAlign: 'center',
-                  zIndex: 2,
-                  borderTopLeftRadius: '12px',
-                  borderTopRightRadius: '12px'
-                }}
-              >
+              <div style={{
+                position: 'absolute',
+                top: 0,
+                width: '100%',
+                backgroundColor: '#6f4e37',
+                color: 'white',
+                fontWeight: 'bold',
+                padding: '4px',
+                fontSize: '12px',
+                textAlign: 'center',
+                zIndex: 2,
+                borderTopLeftRadius: '12px',
+                borderTopRightRadius: '12px'
+              }}>
                 Last item in stock
               </div>
             )}
@@ -135,6 +152,16 @@ export default function Capsules() {
             handleAddToCart(product, quantity);
             setSelectedProduct(null);
           }}
+        />
+      )}
+
+      {modalData && (
+        <ModalMessage
+          title={modalData.title}
+          message={modalData.message}
+          onClose={modalData.onClose}
+          onAction={modalData.onAction || modalData.onClose}
+          actionText={modalData.actionText}
         />
       )}
     </div>

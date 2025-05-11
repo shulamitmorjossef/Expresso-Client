@@ -104,7 +104,13 @@ export default function AddCapsule() {
           headers: { 'Content-Type': 'multipart/form-data' }
         });
         console.log('Server response:', response.data);
+<<<<<<< HEAD
         setSuccess('✅ Capsule added successfully!');
+=======
+        setSuccess('Capsule added successfully!');
+        
+        // Reset form after successful submission
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
         setForm({
           name: '',
           flavor: '',
@@ -126,7 +132,13 @@ export default function AddCapsule() {
 
         const response = await axios.post(`${baseUrl}/add-capsule`, jsonData);
         console.log('Server response (JSON):', response.data);
+<<<<<<< HEAD
         setSuccess('✅ Capsule added successfully!');
+=======
+        setSuccess('Capsule added successfully!');
+        
+        // Reset form after successful submission
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
         setForm({
           name: '',
           flavor: '',
@@ -138,7 +150,7 @@ export default function AddCapsule() {
         setTimeout(() => navigate('/CapsuleCatalog'), 1500);
       }
     } catch (err) {
-      console.error('❌ Failed to add capsule:', err);
+      console.error('Failed to add capsule:', err);
       setError(err.response?.data?.message || 'Failed to add capsule. Please try again.');
     } finally {
       setIsSubmitting(false);

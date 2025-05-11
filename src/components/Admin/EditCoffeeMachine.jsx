@@ -390,6 +390,7 @@ export default function UpdateProduct() {
   const [selectedProductId, setSelectedProductId] = useState('');
 
   useEffect(() => {
+<<<<<<< HEAD
     async function fetchProducts() {
       try {
         const response = await axios.get(`${baseUrl}/get-all-coffee-machines`);
@@ -400,6 +401,35 @@ export default function UpdateProduct() {
     }
     fetchProducts();
   }, []);
+=======
+    axios.get(`${baseUrl}/get-coffee-machine/${id}`)
+      .then(res => {
+        // Convert numeric values to strings for form inputs
+        const formattedData = {
+          ...res.data,
+          capacity: res.data.capacity?.toString() || '',
+          price: res.data.price?.toString() || ''
+        };
+        
+        // Log the loaded data to help with debugging
+        console.log('Loaded machine data:', res.data);
+        
+        setForm(formattedData);
+        // Check the complete form after loading data
+        setValidationResult(suite(formattedData));
+        
+        // If the color from the database is not in our list, add it
+        if (res.data.color && !colors.includes(res.data.color)) {
+          console.log(`Adding color "${res.data.color}" to available colors`);
+          colors.push(res.data.color);
+        }
+      })
+      .catch((err) => {
+        console.error('Failed to load machine data:', err);
+        setError('Failed to load machine data. Please try again.');
+      });
+  }, [id]);
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
 
   // const handleReturnHome = () => {
   //   navigate('/admin-home');
@@ -439,8 +469,89 @@ export default function UpdateProduct() {
     setImageFile(file);
   };
 
+  // !!!!!!!!
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setError('');
+    
+  //   // Run full validation on all fields
+  //   const result = suite(form);
+  //   setValidationResult(result);
+
+  //   if (result.hasErrors()) {
+  //     setError('Please fix the validation errors before saving.');
+  //     return;
+  //   }
+
+  //   try {
+  //     setIsSubmitting(true);
+      
+  //     // First approach: Try with FormData
+  //     const formData = new FormData();
+      
+  //     // Add form data
+  //     formData.append('name', form.name || '');
+  //     formData.append('color', form.color || '');
+  //     formData.append('capacity', form.capacity || '');
+  //     formData.append('price', form.price || '');
+      
+  //     // If there's a new image, add it
+  //     if (newImage) {
+  //       formData.append('image', newImage);
+  //     } else if (form.image_path) {
+  //       formData.append('image_path', form.image_path);
+  //     }
+
+  //     // Log what we're sending for debugging
+  //     console.log('Submitting data:', {
+  //       name: form.name,
+  //       color: form.color,
+  //       capacity: form.capacity,
+  //       price: form.price,
+  //       hasNewImage: !!newImage
+  //     });
+
+  //     // Try with FormData first
+  //     try {
+  //       await axios.put(`${baseUrl}/update-coffee-machine/${id}`, formData, {
+  //         headers: {
+  //           'Content-Type': 'multipart/form-data'
+  //         }
+  //       });
+        
+  //       alert('Machine updated successfully');
+  //       navigate('/CoffeeCatalog');
+  //       return;
+  //     } catch (formDataErr) {
+  //       console.warn('FormData approach failed, trying JSON:', formDataErr);
+        
+  //       // If FormData fails, try with JSON
+  //       // Create a plain object for the JSON approach
+  //       const jsonData = {
+  //         name: form.name,
+  //         color: form.color,
+  //         capacity: Number(form.capacity), // Convert to number for JSON
+  //         price: Number(form.price), // Convert to number for JSON
+  //         image_path: form.image_path
+  //       };
+        
+  //       await axios.put(`${baseUrl}/update-coffee-machine/${id}`, jsonData);
+  //       alert('Machine updated successfully');
+  //       navigate('/CoffeeCatalog');
+  //     }
+  //   } catch (err) {
+  //     console.error('Update failed:', err);
+  //     setError(err.response?.data?.message || 'Failed to update machine. Please try again.');
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
+  // Helper function to display errors for a specific field
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
+<<<<<<< HEAD
  
     const data = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
@@ -471,6 +582,62 @@ export default function UpdateProduct() {
     }
   };
  
+=======
+    setError('');
+    
+    // Run full validation on all fields
+    const result = suite(form);
+    setValidationResult(result);
+  
+    if (result.hasErrors()) {
+      setError('Please fix the validation errors before saving.');
+      return;
+    }
+  
+    try {
+      setIsSubmitting(true);
+      
+      // Prepare FormData
+      const formData = new FormData();
+      formData.append('name', form.name || '');
+      formData.append('color', form.color || '');
+      formData.append('capacity', form.capacity || '');
+      formData.append('price', form.price || '');
+      
+      // Add new image if selected
+      if (newImage) {
+        formData.append('image', newImage);
+      } else if (form.image_path) {
+        formData.append('image_path', form.image_path);
+      }
+  
+      // Send the request
+      await axios.put(`${baseUrl}/update-coffee-machine/${id}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+  
+      alert('Machine updated successfully');
+      navigate('/CoffeeCatalog');
+    } catch (err) {
+      console.error('Update failed:', err);
+      setError(err.response?.data?.message || 'Failed to update machine. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+  
+  
+  const getFieldErrors = (field) => {
+    return validationResult.getErrors(field);
+  };
+
+  // Helper function to check if a field has errors
+  const hasFieldErrors = (field) => {
+    return validationResult.hasErrors(field);
+  };
+>>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
 
   return (
     <div className="add-product-container">
@@ -522,3 +689,5 @@ export default function UpdateProduct() {
     </div>
   );
 }
+
+

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import baseUrl from '../../config';
-import '../styles/OrderInfoModal.css'; // תעשי בו סטיילינג דומה לדף משלוח
+import '../styles/OrderInfoModal.css'; 
 
 
 export default function OrderInfoModal({ orderId, onClose }) {
@@ -12,7 +12,7 @@ export default function OrderInfoModal({ orderId, onClose }) {
       .then(res => res.json())
       .then(data => setOrder(data))
       .catch(err => {
-        console.error('❌ Error fetching order info:', err);
+        console.error('Error fetching order info:', err);
         setError('Failed to load order details.');
       });
   }, [orderId]);

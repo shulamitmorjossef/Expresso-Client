@@ -30,7 +30,7 @@ const CoffeeMachine = () => {
     fetchMachine();
   }, []);
 
-  if (error) return <p style={{ color: 'red' }}>❌ {error}</p>;
+  if (error) return <p style={{ color: 'red' }}> {error}</p>;
   if (!machine) return <p>Loading...</p>;
 
   return (

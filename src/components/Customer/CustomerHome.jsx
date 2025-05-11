@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../styles/CustomerHome.css';
 import baseUrl from '../../config';
 import ProductModal from '../ProductModal';
+import ModalMessage from '../ModalMessage';
 
 const detectProductType = (item) => {
   if (item.capacity && item.frothing_type) return 'milk_frothers';
@@ -17,6 +18,7 @@ export default function CustomerHome() {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [modalInfo, setModalInfo] = useState(null);
   const navigate = useNavigate();
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
@@ -33,6 +35,56 @@ export default function CustomerHome() {
       setSearchResults(data);
     } catch (err) {
       console.error("Search failed:", err);
+    }
+  };
+
+  const handleAddToCart = async (product, quantity) => {
+    const userId = parseInt(localStorage.getItem('userId'));
+    const userType = localStorage.getItem('userType');
+
+    if (!userType || userType === 'guest') {
+      setModalInfo({
+        title: 'Login Required',
+        message: 'You must register or log in to add items to cart.',
+        actionText: 'Go to Login',
+        onAction: () => {
+          localStorage.removeItem('userId');
+          localStorage.removeItem('userType');
+          setModalInfo(null);
+          navigate('/');
+        }
+      });
+      return;
+    }
+
+    try {
+      const res = await fetch(`${baseUrl}/add-to-cart`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          user_id: userId,
+          product_id: product.id,
+          quantity,
+          product_type: product.type
+        })
+      });
+
+      if (!res.ok) throw new Error();
+
+      setModalInfo({
+        title: 'Added to Cart',
+        message: `Added ${quantity} x ${product.name} to your cart.`,
+        onAction: () => setModalInfo(null),
+        actionText: 'OK'
+      });
+    } catch (err) {
+      console.error('Error adding to cart:', err);
+      setModalInfo({
+        title: 'Error',
+        message: 'Something went wrong.',
+        onAction: () => setModalInfo(null),
+        actionText: 'OK'
+      });
     }
   };
 
@@ -93,7 +145,7 @@ export default function CustomerHome() {
                         <div className="result-info">
                           <strong>{item.name}</strong>
                           <span className="result-meta">({correctedType}) – ${item.price}</span>
-                          </div>
+                        </div>
                       </div>
                     </li>
                   );
@@ -131,39 +183,19 @@ export default function CustomerHome() {
           product={selectedProduct}
           onClose={() => setSelectedProduct(null)}
           onAddToCart={(product, quantity) => {
-            const userId = parseInt(localStorage.getItem('userId'));
-            const userType = localStorage.getItem('userType');
-
-            if (!userType || userType === 'guest') {
-              alert('You must register or log in to add items to cart.');
-              localStorage.removeItem('userId');
-              localStorage.removeItem('userType');
-              navigate('/');
-              return;
-            }
-
-            const rawType = product.type;
-            fetch(`${baseUrl}/add-to-cart`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                user_id: userId,
-                product_id: product.id,
-                quantity,
-                product_type: rawType
-              })
-            })
-              .then(res => {
-                if (!res.ok) throw new Error();
-                alert(`✅ Added ${quantity} x ${product.name} to your cart.`);
-              })
-              .catch(err => {
-                console.error('❌ Error adding to cart:', err);
-                alert('Something went wrong.');
-              });
-
+            handleAddToCart(product, quantity);
             setSelectedProduct(null);
           }}
+        />
+      )}
+
+      {modalInfo && (
+        <ModalMessage
+          title={modalInfo.title}
+          message={modalInfo.message}
+          onClose={modalInfo.onAction}
+          onAction={modalInfo.onAction}
+          actionText={modalInfo.actionText}
         />
       )}
     </div>

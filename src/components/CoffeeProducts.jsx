@@ -4,10 +4,12 @@ import './styles/CoffeeProducts.css';
 import { FaShoppingCart } from 'react-icons/fa';
 import baseUrl from '../config';
 import ProductModal from './ProductModal';
+import ModalMessage from '../components/ModalMessage';
 
 export default function CoffeeProducts() {
   const [machines, setMachines] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [modalData, setModalData] = useState(null); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,7 +26,11 @@ export default function CoffeeProducts() {
 
   const handleAddToCart = async (item, quantity = 1) => {
     if (item.sum_of === 0) {
-      alert('Sorry, this product is out of stock.');
+      setModalData({
+        title: 'Out of Stock',
+        message: 'Sorry, this product is out of stock.',
+        onClose: () => setModalData(null),
+      });
       return;
     }
 
@@ -32,8 +38,15 @@ export default function CoffeeProducts() {
     const userId = parseInt(localStorage.getItem('userId'));
 
     if (userType === 'guest' || !userType) {
-      alert('You must register or log in to view the cart.');
-      navigate('/');
+      setModalData({
+        title: 'Login Required',
+        message: 'You must register or log in to view the cart.',
+        onClose: () => {
+          setModalData(null);
+          navigate('/');
+        },
+        actionText: 'Go to Login',
+      });
       return;
     }
 
@@ -56,16 +69,24 @@ export default function CoffeeProducts() {
 
       if (!res.ok) throw new Error('Server error');
 
-      alert(`✅ Added ${quantity} x ${item.name} to your cart.`);
+      setModalData({
+        title: 'Added to Cart',
+        message: `Added ${quantity} x ${item.name} to your cart.`,
+        onClose: () => setModalData(null)
+      });
     } catch (err) {
-      console.error('❌ Error adding to cart:', err);
-      alert('Something went wrong.');
+      console.error('Error adding to cart:', err);
+      setModalData({
+        title: 'Error',
+        message: 'Something went wrong while adding to cart.',
+        onClose: () => setModalData(null)
+      });
     }
   };
 
   return (
     <div className="products-page">
-      <h1>Coffee Machines</h1>
+      <h1 className="Coffee-title">Coffee Machines</h1>
       <div className="product-list">
         {machines.map((machine) => (
           <div
@@ -74,13 +95,12 @@ export default function CoffeeProducts() {
             onClick={() => setSelectedProduct({ ...machine, type: 'coffee_machines' })}
             style={{ position: 'relative' }}
           >
-            {/* Inventory status bar */}
             {machine.sum_of === 0 && (
               <div style={{
                 position: 'absolute',
                 top: 0,
                 width: '100%',
-                backgroundColor: 'black',
+                backgroundColor: '#6f4e37',
                 color: 'white',
                 fontWeight: 'bold',
                 padding: '4px',
@@ -98,7 +118,7 @@ export default function CoffeeProducts() {
                 position: 'absolute',
                 top: 0,
                 width: '100%',
-                backgroundColor: 'black',
+                backgroundColor: '#6f4e37',
                 color: 'white',
                 fontWeight: 'bold',
                 padding: '4px',
@@ -117,17 +137,15 @@ export default function CoffeeProducts() {
               <h3>{machine.name}</h3>
               <p>${parseFloat(machine.price).toFixed(2)}</p>
 
-              {machine.sum_of > 0 && (
-                <button
-                  className="add-to-cart-btn"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleAddToCart({ ...machine, type: 'coffee_machines' });
-                  }}
-                >
-                  <FaShoppingCart />
-                </button>
-              )}
+              <button
+                className="add-to-cart-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAddToCart({ ...machine, type: 'coffee_machines' });
+                }}
+              >
+                <FaShoppingCart />
+              </button>
             </div>
           </div>
         ))}
@@ -141,6 +159,16 @@ export default function CoffeeProducts() {
             handleAddToCart(product, quantity);
             setSelectedProduct(null);
           }}
+        />
+      )}
+
+      {modalData && (
+        <ModalMessage
+          title={modalData.title}
+          message={modalData.message}
+          onClose={modalData.onClose}
+          onAction={modalData.onAction || modalData.onClose}
+          actionText={modalData.actionText}
         />
       )}
     </div>

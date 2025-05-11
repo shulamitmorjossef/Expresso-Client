@@ -76,12 +76,12 @@ export default function AdminHome() {
               </li>
               <li>
                 <Link
-                  to="#"
+                  to="/Try"
                   className="dropdown-link"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    alert("Reviews page coming soon!");
-                  }}
+                  // onClick={(e) => {
+                  //   e.preventDefault();
+                  //   alert("Reviews page coming soon!");
+                  // }}
                 >
                   Reviews
 

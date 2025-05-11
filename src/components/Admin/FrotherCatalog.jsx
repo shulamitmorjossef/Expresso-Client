@@ -15,7 +15,7 @@ export default function FrotherCatalog() {
     axios.get(`${baseUrl}/get-all-milk-frothers`)
       .then(res => setFrothers(res.data))
       .catch(err => {
-        console.error('❌ Error loading milk frothers:', err);
+        console.error('Error loading milk frothers:', err);
         alert('Failed to load milk frothers');
       });
   }, []);
@@ -76,7 +76,7 @@ export default function FrotherCatalog() {
         <tbody>
           {frothers.map((frother) => (
             <tr key={frother.id}>
-              <td><img src={frother.image_path} alt={frother.name} width="50" /></td>
+              <td><img src={`${baseUrl}${frother.image_path}`} alt={frother.name} width="50" /></td>
               <td>{frother.name}</td>
               <td className="icon-cell">
                 <Info color="#8B4513" style={{ cursor: 'pointer' }} onClick={() => handleInfo(frother)} />

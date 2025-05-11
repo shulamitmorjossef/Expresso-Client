@@ -92,4 +92,57 @@
     height: 16px;
     accent-color: #5a351e; 
   }
+  .page-with-background {
+    min-height: 100vh;
+    padding: 40px;
+    background-image: url('/images/background-beans.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #5a351e;
+  }
+  .quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .quantity-controls button {
+    background-color: #f3e9dc;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #3c2e2a;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .quantity-controls button:hover {
+    background-color: #e0d1c0;
+  }
+  
+  .quantity-controls span {
+    min-width: 24px;
+    text-align: center;
+    font-size: 16px;
+    color: #3c2e2a;
+  }
+  
+  .delete-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: transform 0.2s ease;
+  }
+  
+  .delete-btn:hover {
+    transform: scale(1.1);
+  }
+  
   

@@ -69,3 +69,21 @@
 .add-to-cart-btn:hover {
   background-color: #ccc;
 }
+.products-page {
+  padding: 40px;
+  min-height: 100vh;
+  text-align: center;
+  background-image: url('/images/background-empty.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: #fffaf5;
+}
+.Coffee-title {
+  color: #6f4e37; 
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+

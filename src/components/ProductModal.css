@@ -69,4 +69,14 @@
     font-weight: bold;
   }
   
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #6f4e37; 
+  }
   

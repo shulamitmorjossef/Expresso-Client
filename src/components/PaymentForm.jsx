@@ -1,7 +1,8 @@
 import baseUrl from '../config';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './DeliveryForm.css';
+import ModalMessage from '../components/ModalMessage';
 
 export default function PaymentForm() {
   const [form, setForm] = useState({
@@ -16,7 +17,10 @@ export default function PaymentForm() {
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [errorModal, setErrorModal] = useState(false);
   const [orderId, setOrderId] = useState(null);
+
+  const navigate = useNavigate(); 
 
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 10 }, (_, i) => (currentYear + i).toString().slice(-2));
@@ -64,108 +68,119 @@ export default function PaymentForm() {
         setOrderId(data.orderId);
         setShowModal(true);
       } catch (err) {
-        console.error('❌ Error confirming order:', err);
-        alert('Something went wrong while confirming your order.');
+        console.error('Error confirming order:', err);
+        setErrorModal(true);
       }
     }
   };
 
   return (
-    <div className="delivery-form-container">
-      <h2>Payment Details</h2>
-      <form onSubmit={handleSubmit} className="delivery-form">
-        <div className="form-group">
-          <label>Cardholder Name:</label>
-          <input
-            name="cardName"
-            type="text"
-            value={form.cardName}
-            onChange={handleChange}
-            className={errors.cardName ? 'invalid' : ''}
-            placeholder="Enter cardholder name"
-          />
-          {errors.cardName && <span className="error">{errors.cardName}</span>}
-        </div>
-
-        <div className="form-group">
-          <label>Card Number:</label>
-          <input
-            name="cardNumber"
-            type="text"
-            value={form.cardNumber}
-            onChange={handleChange}
-            className={errors.cardNumber ? 'invalid' : ''}
-            placeholder="Enter 16-digit card number"
-          />
-          {errors.cardNumber && <span className="error">{errors.cardNumber}</span>}
-        </div>
-
-        <div className="form-group">
-          <label>Expiry Date:</label>
-          <div style={{ display: 'flex', gap: '10px' }}>
-            <select
-              name="expiryMonth"
-              value={form.expiryMonth}
+    <div className="page-with-background">
+      <div className="delivery-form-container">
+        <h2>Payment Details</h2>
+        <form onSubmit={handleSubmit} className="delivery-form">
+          <div className="form-group">
+            <label>Cardholder Name:</label>
+            <input
+              name="cardName"
+              type="text"
+              value={form.cardName}
               onChange={handleChange}
-              className={errors.expiry ? 'invalid' : ''}
-            >
-              <option value="">Month</option>
-              {months.map(m => <option key={m} value={m}>{m}</option>)}
-            </select>
-            <select
-              name="expiryYear"
-              value={form.expiryYear}
+              className={errors.cardName ? 'invalid' : ''}
+              placeholder="Enter cardholder name"
+            />
+            {errors.cardName && <span className="error">{errors.cardName}</span>}
+          </div>
+
+          <div className="form-group">
+            <label>Card Number:</label>
+            <input
+              name="cardNumber"
+              type="text"
+              value={form.cardNumber}
               onChange={handleChange}
-              className={errors.expiry ? 'invalid' : ''}
-            >
-              <option value="">Year</option>
-              {years.map(y => <option key={y} value={y}>{y}</option>)}
-            </select>
+              className={errors.cardNumber ? 'invalid' : ''}
+              placeholder="Enter 16-digit card number"
+            />
+            {errors.cardNumber && <span className="error">{errors.cardNumber}</span>}
           </div>
-          {errors.expiry && <span className="error">{errors.expiry}</span>}
-        </div>
 
-        <div className="form-group">
-          <label>CVV:</label>
-          <input
-            name="cvv"
-            type="text"
-            value={form.cvv}
-            onChange={handleChange}
-            className={errors.cvv ? 'invalid' : ''}
-            placeholder="Enter CVV"
-          />
-          {errors.cvv && <span className="error">{errors.cvv}</span>}
-        </div>
-
-        <div className="form-group">
-          <label>ID Number:</label>
-          <input
-            name="idNumber"
-            type="text"
-            value={form.idNumber}
-            onChange={handleChange}
-            className={errors.idNumber ? 'invalid' : ''}
-            placeholder="Enter 9-digit ID"
-          />
-          {errors.idNumber && <span className="error">{errors.idNumber}</span>}
-        </div>
-
-        <button type="submit" className="submit-btn">Pay Now</button>
-        {submitted && <p className="success-msg">Processing your payment...</p>}
-      </form>
-
-      {showModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h3>✅ Order Confirmed!</h3>
-            <p>Your order <strong>#{orderId}</strong> has been placed successfully.</p>
-            <Link to="/CustomerHome" className="submit-btn" onClick={() => setShowModal(false)}>
-              Go to Home
-            </Link>
+          <div className="form-group">
+            <label>Expiry Date:</label>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <select
+                name="expiryMonth"
+                value={form.expiryMonth}
+                onChange={handleChange}
+                className={errors.expiry ? 'invalid' : ''}
+              >
+                <option value="">Month</option>
+                {months.map(m => <option key={m} value={m}>{m}</option>)}
+              </select>
+              <select
+                name="expiryYear"
+                value={form.expiryYear}
+                onChange={handleChange}
+                className={errors.expiry ? 'invalid' : ''}
+              >
+                <option value="">Year</option>
+                {years.map(y => <option key={y} value={y}>{y}</option>)}
+              </select>
+            </div>
+            {errors.expiry && <span className="error">{errors.expiry}</span>}
           </div>
-        </div>
-      )}
+
+          <div className="form-group">
+            <label>CVV:</label>
+            <input
+              name="cvv"
+              type="text"
+              value={form.cvv}
+              onChange={handleChange}
+              className={errors.cvv ? 'invalid' : ''}
+              placeholder="Enter CVV"
+            />
+            {errors.cvv && <span className="error">{errors.cvv}</span>}
+          </div>
+
+          <div className="form-group">
+            <label>ID Number:</label>
+            <input
+              name="idNumber"
+              type="text"
+              value={form.idNumber}
+              onChange={handleChange}
+              className={errors.idNumber ? 'invalid' : ''}
+              placeholder="Enter 9-digit ID"
+            />
+            {errors.idNumber && <span className="error">{errors.idNumber}</span>}
+          </div>
+
+          <button type="submit" className="submit-btn">Pay Now</button>
+          {submitted && <p className="success-msg">Processing your payment...</p>}
+        </form>
+
+        {showModal && (
+          <ModalMessage
+            title="✅ Order Confirmed!"
+            message={`Your order #${orderId} has been placed successfully.`}
+            onClose={() => setShowModal(false)}
+            redirectTo="/CustomerHome" 
+            actionText="Go to Home"
+          />
+        )}
+
+       
+        {errorModal && (
+          <ModalMessage
+            title="Error"
+            message="Something went wrong while confirming your order."
+            onClose={() => setErrorModal(false)}
+            onAction={() => setErrorModal(false)}
+            actionText="OK"
+          />
+        )}
+      </div>
     </div>
   );
 }
