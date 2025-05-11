@@ -100,7 +100,7 @@ export default function EditCoffeeMachine() {
   const [validationResult, setValidationResult] = useState(suite.get());
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/get-coffee-machine/${id}`)
+    axios.get(`${baseUrl}/get-coffee-machine/${id}`)
       .then(res => {
         // Convert numeric values to strings for form inputs
         const formattedData = {
@@ -144,6 +144,86 @@ export default function EditCoffeeMachine() {
     }
   };
 
+  // !!!!!!!!
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setError('');
+    
+  //   // Run full validation on all fields
+  //   const result = suite(form);
+  //   setValidationResult(result);
+
+  //   if (result.hasErrors()) {
+  //     setError('Please fix the validation errors before saving.');
+  //     return;
+  //   }
+
+  //   try {
+  //     setIsSubmitting(true);
+      
+  //     // First approach: Try with FormData
+  //     const formData = new FormData();
+      
+  //     // Add form data
+  //     formData.append('name', form.name || '');
+  //     formData.append('color', form.color || '');
+  //     formData.append('capacity', form.capacity || '');
+  //     formData.append('price', form.price || '');
+      
+  //     // If there's a new image, add it
+  //     if (newImage) {
+  //       formData.append('image', newImage);
+  //     } else if (form.image_path) {
+  //       formData.append('image_path', form.image_path);
+  //     }
+
+  //     // Log what we're sending for debugging
+  //     console.log('Submitting data:', {
+  //       name: form.name,
+  //       color: form.color,
+  //       capacity: form.capacity,
+  //       price: form.price,
+  //       hasNewImage: !!newImage
+  //     });
+
+  //     // Try with FormData first
+  //     try {
+  //       await axios.put(`${baseUrl}/update-coffee-machine/${id}`, formData, {
+  //         headers: {
+  //           'Content-Type': 'multipart/form-data'
+  //         }
+  //       });
+        
+  //       alert('✅ Machine updated successfully');
+  //       navigate('/CoffeeCatalog');
+  //       return;
+  //     } catch (formDataErr) {
+  //       console.warn('FormData approach failed, trying JSON:', formDataErr);
+        
+  //       // If FormData fails, try with JSON
+  //       // Create a plain object for the JSON approach
+  //       const jsonData = {
+  //         name: form.name,
+  //         color: form.color,
+  //         capacity: Number(form.capacity), // Convert to number for JSON
+  //         price: Number(form.price), // Convert to number for JSON
+  //         image_path: form.image_path
+  //       };
+        
+  //       await axios.put(`${baseUrl}/update-coffee-machine/${id}`, jsonData);
+  //       alert('✅ Machine updated successfully');
+  //       navigate('/CoffeeCatalog');
+  //     }
+  //   } catch (err) {
+  //     console.error('❌ Update failed:', err);
+  //     setError(err.response?.data?.message || 'Failed to update machine. Please try again.');
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
+  // Helper function to display errors for a specific field
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -151,68 +231,38 @@ export default function EditCoffeeMachine() {
     // Run full validation on all fields
     const result = suite(form);
     setValidationResult(result);
-
+  
     if (result.hasErrors()) {
       setError('Please fix the validation errors before saving.');
       return;
     }
-
+  
     try {
       setIsSubmitting(true);
       
-      // First approach: Try with FormData
+      // Prepare FormData
       const formData = new FormData();
-      
-      // Add form data
       formData.append('name', form.name || '');
       formData.append('color', form.color || '');
       formData.append('capacity', form.capacity || '');
       formData.append('price', form.price || '');
       
-      // If there's a new image, add it
+      // Add new image if selected
       if (newImage) {
         formData.append('image', newImage);
       } else if (form.image_path) {
         formData.append('image_path', form.image_path);
       }
-
-      // Log what we're sending for debugging
-      console.log('Submitting data:', {
-        name: form.name,
-        color: form.color,
-        capacity: form.capacity,
-        price: form.price,
-        hasNewImage: !!newImage
+  
+      // Send the request
+      await axios.put(`${baseUrl}/update-coffee-machine/${id}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       });
-
-      // Try with FormData first
-      try {
-        await axios.put(`${baseUrl}/update-coffee-machine/${id}`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        });
-        
-        alert('✅ Machine updated successfully');
-        navigate('/CoffeeCatalog');
-        return;
-      } catch (formDataErr) {
-        console.warn('FormData approach failed, trying JSON:', formDataErr);
-        
-        // If FormData fails, try with JSON
-        // Create a plain object for the JSON approach
-        const jsonData = {
-          name: form.name,
-          color: form.color,
-          capacity: Number(form.capacity), // Convert to number for JSON
-          price: Number(form.price), // Convert to number for JSON
-          image_path: form.image_path
-        };
-        
-        await axios.put(`${baseUrl}/update-coffee-machine/${id}`, jsonData);
-        alert('✅ Machine updated successfully');
-        navigate('/CoffeeCatalog');
-      }
+  
+      alert('✅ Machine updated successfully');
+      navigate('/CoffeeCatalog');
     } catch (err) {
       console.error('❌ Update failed:', err);
       setError(err.response?.data?.message || 'Failed to update machine. Please try again.');
@@ -220,8 +270,8 @@ export default function EditCoffeeMachine() {
       setIsSubmitting(false);
     }
   };
-
-  // Helper function to display errors for a specific field
+  
+  
   const getFieldErrors = (field) => {
     return validationResult.getErrors(field);
   };
@@ -368,3 +418,5 @@ export default function EditCoffeeMachine() {
     </form>
   );
 }
+
+

@@ -15,7 +15,7 @@ export default function CoffeeCatalog() {
     axios.get(`${baseUrl}/get-all-coffee-machines`)
       .then(res => setMachines(res.data))
       .catch(err => {
-        console.error('❌ Error loading coffee machines:', err);
+        console.error(' Error loading coffee machines:', err);
         alert('Failed to load coffee machines');
       });
   }, []);
@@ -76,7 +76,7 @@ export default function CoffeeCatalog() {
         <tbody>
           {machines.map((machine) => (
             <tr key={machine.id}>
-              <td><img src={machine.image_path} alt={machine.name} width="50" /></td>
+              <td><img src={`${baseUrl}${machine.image_path}`} alt={machine.name} width="50" /></td>
               <td>{machine.name}</td>
               <td className="icon-cell">
                 <Info color="#8B4513" style={{ cursor: 'pointer' }} onClick={() => handleInfo(machine)} />
