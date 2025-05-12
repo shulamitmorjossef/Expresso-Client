@@ -12,9 +12,10 @@ const suite = create((data = {}, field) => {
   });
   
   // Name - only allow letters and spaces, limit to 30 characters
-  test('name', 'Name must contain only English letters (max 30)', () => {
+  test('name', 'Name must contain only letters (max 30)', () => {
     if (data.name && data.name.trim()) {
-        enforce(data.name).matches(/^[A-Za-z\s]{1,30}$/);
+      enforce(data.name)
+        .matches(/^[\p{L}\s]{1,30}$/u); // Unicode letter class to support all languages
       enforce(data.name.length).lessThanOrEquals(30);
     }
   });
@@ -375,17 +376,17 @@ export default function AddMilkFrother() {
           cursor: not-allowed;
         }
         .error {
-          color: black;
+          color: red;
           font-size: 0.85em;
           margin-top: 4px;
         }
         .error-message {
           background-color: #ffebee;
-          color: black;
+          color: #d32f2f;
           padding: 10px;
           border-radius: 4px;
           margin-bottom: 15px;
-          border-left: 4px solid #999;
+          border-left: 4px solid #d32f2f;
         }
         .success-message {
           background-color: #e8f5e9;

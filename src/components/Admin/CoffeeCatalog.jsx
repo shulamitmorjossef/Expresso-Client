@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../styles/CatalogPage.css';
+import '../styles/Tables.css';
 import { Info, Pencil, Trash2, Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import baseUrl from '../../config';
@@ -15,11 +15,7 @@ export default function CoffeeCatalog() {
     axios.get(`${baseUrl}/get-all-coffee-machines`)
       .then(res => setMachines(res.data))
       .catch(err => {
-<<<<<<< HEAD
-        console.error('Error loading coffee machines:', err);
-=======
         console.error(' Error loading coffee machines:', err);
->>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
         alert('Failed to load coffee machines');
       });
   }, []);
@@ -80,13 +76,6 @@ export default function CoffeeCatalog() {
         <tbody>
           {machines.map((machine) => (
             <tr key={machine.id}>
-<<<<<<< HEAD
-<<<<<<< HEAD
-              <td><img src={`data:image/jpeg;base64,${machine.imageBase64}`} alt={machine.name} width="50" /></td>
-=======
-              <td><img src={`${baseUrl}${machine.image_path}`} alt={machine.name} width="50" /></td>
->>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
-=======
         <td>
         <img 
           src= {`data:image/jpeg;base64,${machine.image}`} 
@@ -94,7 +83,6 @@ export default function CoffeeCatalog() {
           width="50" 
         />
         </td>
->>>>>>> f2db5bc988dfbe899464b10333ec06de25b84c8c
               <td>{machine.name}</td>
               <td className="icon-cell">
                 <Info color="#8B4513" style={{ cursor: 'pointer' }} onClick={() => handleInfo(machine)} />

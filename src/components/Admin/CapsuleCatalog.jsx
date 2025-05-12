@@ -32,9 +32,14 @@ export default function CapsuleCatalog() {
         .then(() => setCapsules(capsules.filter(c => c.id !== id)));
     }
   };
-  const handleInfo = (capsule) => {
-    setSelectedProduct({ ...capsule, type: 'capsule' });
-  };
+const handleInfo = (capsule) => {
+  setSelectedProduct({ 
+    ...capsule, 
+    type: 'capsule', 
+    sum_of: capsule.sum_of ?? 0 // ← זה מה שחשוב
+  });
+};
+
 
   const handleUpdateStock = async (id, newStock, type) => {
     const endpoint = {
@@ -93,21 +98,9 @@ export default function CapsuleCatalog() {
                 <Trash2 color="#8B4513" style={{ marginLeft: 10, cursor: 'pointer' }} onClick={() => handleDelete(capsule.id)} />
         
   {/*  stock */}
-                <span style={{
-                  display: 'inline-block',
-                  marginLeft: 15,
-                  backgroundColor: '#f5f5f5',
-                  border: '1px solid #ccc',
-                  borderRadius: '6px',
-                  padding: '3px 8px',
-                  fontWeight: 'bold',
-                  fontSize: '13px',
-                  color: '#333',
-                  minWidth: '30px',
-                  textAlign: 'center'
-                }}>
-                  {capsule.sum_of}
-                </span>
+  <span className="stock-box">
+  {capsule.sum_of ?? 0}
+</span>
               </td>
             </tr>
           ))}
