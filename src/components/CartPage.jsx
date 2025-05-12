@@ -96,7 +96,7 @@ export default function CartPage() {
         {cartItems.map(item => (
           <div key={item.product_id} className="cart-item">
             <img 
-            src={`data:image/jpeg;base64,${item.image}`} 
+            src={`data:image/jpeg;base64,${item.image}`}
             alt={item.name} className="cart-image" />
             <div className="cart-details">
               <h4>{item.name}</h4>
