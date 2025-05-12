@@ -1,15 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import './CartPage.css';
 import baseUrl from '../config';
+import ModalMessage from '../components/ModalMessage';
+import { Trash2 } from 'lucide-react';
 
 export default function CartPage() {
   const [cartItems, setCartItems] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
   const [agreed, setAgreed] = useState(false);
-  const userId = localStorage.getItem('userId');
+  const [showWarning, setShowWarning] = useState(false);
+
+  const navigate = useNavigate();
+  const userId = parseInt(localStorage.getItem('userId'));
 
   useEffect(() => {
+    if (!userId || isNaN(userId)) {
+      console.error('Invalid user ID – user not logged in.');
+      return;
+    }
+
     fetch(`${baseUrl}/get-cart/${userId}`)
       .then(res => res.json())
       .then(data => {
@@ -71,53 +81,71 @@ export default function CartPage() {
       .catch(err => console.error('Error removing item:', err));
   };
 
+  const handleContinue = () => {
+    if (!agreed || cartItems.length === 0) {
+      setShowWarning(true);
+      return;
+    }
+    window.location.href = '/DeliveryForm';
+  };
+
   return (
-    <div className="cart-container">
-      <h2>Shopping Cart</h2>
-      {cartItems.map(item => (
-        <div key={item.product_id} className="cart-item">
-          <img src={item.image_path} alt={item.name} className="cart-image" />
-          <div className="cart-details">
-            <h4>{item.name}</h4>
-            <p>Price: ${parseFloat(item.price).toFixed(2)}</p>
-            <div className="quantity-controls">
-              <button onClick={() => updateQuantity(item.product_id, item.product_type, item.quantity - 1)}>-</button>
-              <span>{item.quantity}</span>
-              <button onClick={() => updateQuantity(item.product_id, item.product_type, item.quantity + 1)}>+</button>
+    <div className="page-with-background">
+      <div className="cart-container">
+        <h2>Shopping Cart</h2>
+        {cartItems.map(item => (
+          <div key={item.product_id} className="cart-item">
+            <img src={item.image_path} alt={item.name} className="cart-image" />
+            <div className="cart-details">
+              <h4>{item.name}</h4>
+              <p>Price: ${parseFloat(item.price).toFixed(2)}</p>
+              <div className="quantity-controls">
+                <button onClick={() => updateQuantity(item.product_id, item.product_type, item.quantity - 1)}>-</button>
+                <span>{item.quantity}</span>
+                <button onClick={() => updateQuantity(item.product_id, item.product_type, item.quantity + 1)}>+</button>
+              </div>
+              <p><strong>Total: ${(item.quantity * parseFloat(item.price)).toFixed(2)}</strong></p>
             </div>
-            <p><strong>Total: ${(item.quantity * parseFloat(item.price)).toFixed(2)}</strong></p>
+            <button className="delete-btn" onClick={() => handleDelete(item.product_id, item.product_type)}>
+              <Trash2 size={22} color="#6f4e37" />
+            </button>
           </div>
-          <button className="delete-btn" onClick={() => handleDelete(item.product_id, item.product_type)}>🗑️</button>
+        ))}
+
+        <hr />
+        <div className="subtotal">
+          <span>Subtotal:</span>
+          <strong>${subtotal}</strong>
         </div>
-      ))}
-      <hr />
-      <div className="subtotal">
-        <span>Subtotal:</span>
-        <strong>${subtotal}</strong>
-      </div>
-      <input className="coupon-input" placeholder="Enter coupon code" />
-      <button className="apply-btn">Apply</button>
+        <input className="coupon-input" placeholder="Enter coupon code" />
+        <button className="apply-btn">Apply</button>
 
-      <div className="terms">
-        <input
-          type="checkbox"
-          id="agree"
-          checked={agreed}
-          onChange={() => setAgreed(!agreed)}
-        />
-        <label htmlFor="agree">I agree to the terms and conditions</label>
-      </div>
+        <div className="terms">
+          <input
+            type="checkbox"
+            id="agree"
+            checked={agreed}
+            onChange={() => setAgreed(!agreed)}
+          />
+          <label htmlFor="agree">I agree to the terms and conditions</label>
+        </div>
 
-      {agreed ? (
-        <Link to="/DeliveryForm" className="continue-btn">Continue</Link>
-      ) : (
-        <button
-          className="continue-btn"
-          onClick={() => alert('You must agree to the terms and conditions before continuing.')}
-        >
-          Continue
-        </button>
-      )}
+        <button className="continue-btn" onClick={handleContinue}>Continue</button>
+
+        {showWarning && (
+          <ModalMessage
+            title="Cannot Continue"
+            message={
+              !agreed
+                ? "Please agree to the terms and conditions."
+                : "Your cart is empty."
+            }
+            onClose={() => setShowWarning(false)}
+            actionText="OK"
+            onAction={() => setShowWarning(false)}
+          />
+        )}
+      </div>
     </div>
   );
 }

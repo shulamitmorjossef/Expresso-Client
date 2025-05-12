@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import baseUrl from '../../../config';       // your API base URL
-import '../../styles/BestSellers.css';     // make sure this path matches where you put the CSS
+import baseUrl from '../../../config';       
+import '../../styles/BestSellers.css';     
 
 export default function BestSellers() {
   const [startDate, setStartDate] = useState('');

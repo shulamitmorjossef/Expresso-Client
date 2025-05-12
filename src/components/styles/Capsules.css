@@ -1,8 +1,19 @@
 .capsules-page {
   padding: 40px;
-  background-color: #fff;
   min-height: 100vh;
   text-align: center;
+  background-image: url('/images/background-empty.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: #fffaf5;
+}
+
+.capsule-title {
+  color: #6f4e37;
+  font-size: 36px;
+  margin-bottom: 20px;
 }
 
 .capsule-list {
@@ -14,7 +25,6 @@
 }
 
 .capsule-card {
-  position: relative;
   width: 300px;
   border: 1px solid #ddd;
   border-radius: 12px;
@@ -22,6 +32,7 @@
   overflow: hidden;
   background-color: #fafafa;
   transition: transform 0.2s;
+  position: relative;
 }
 
 .capsule-card:hover {
@@ -52,7 +63,7 @@
   font-size: 18px;
 }
 
-.cart-icon-button {
+.add-to-cart-btn {
   background-color: #eaeaea;
   border: none;
   border-radius: 50%;
@@ -66,6 +77,6 @@
   transition: background-color 0.3s ease;
 }
 
-.cart-icon-button:hover {
+.add-to-cart-btn:hover {
   background-color: #ccc;
 }

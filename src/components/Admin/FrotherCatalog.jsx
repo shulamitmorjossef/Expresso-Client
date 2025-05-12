@@ -15,7 +15,7 @@ export default function FrotherCatalog() {
     axios.get(`${baseUrl}/get-all-milk-frothers`)
       .then(res => setFrothers(res.data))
       .catch(err => {
-        console.error('❌ Error loading milk frothers:', err);
+        console.error('Error loading milk frothers:', err);
         alert('Failed to load milk frothers');
       });
   }, []);

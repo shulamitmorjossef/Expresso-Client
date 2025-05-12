@@ -11,9 +11,9 @@ export default function CatalogPage() {
       <p>Select a category to manage:</p>
 
       <div className="category-buttons">
-        <button onClick={() => navigate('/CoffeeCatalog')}>☕ Coffee Machines</button>
+        <button onClick={() => navigate('/CoffeeCatalog')}> Coffee Machines</button>
         <button onClick={() => navigate('/CapsuleCatalog')}> Capsules</button>
-        <button onClick={() => navigate('/FrotherCatalog')}>🥛 Milk Frothers</button>
+        <button onClick={() => navigate('/FrotherCatalog')}> Milk Frothers</button>
       </div>
     </div>
   );
