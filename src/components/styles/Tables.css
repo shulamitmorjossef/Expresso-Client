@@ -1,0 +1,104 @@
+/* Tables.css */
+
+.table-container {
+    width: 80%; /* הגבלת רוחב הטבלה */
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #fffaf5; /* צבע שמנת */
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  thead {
+    background-color: #8b4513; /* חום כהה */
+    color: white;
+    text-align: left;
+  }
+  
+  th,
+  td {
+    padding: 16px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  td img {
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+  
+  tbody tr:nth-child(odd) {
+    background-color: #fffaf5; /* צבע שמנת */
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #f5e6d8; /* צבע שמנת בהיר */
+  }
+  
+  button {
+    background-color: #8b4513; /* חום כהה */
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #693510; /* חום כהה יותר */
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  .icon-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .icon-cell svg {
+    margin: 0 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .icon-cell svg:hover {
+    transform: scale(1.2);
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .table-container {
+      width: 90%; /* שינוי רוחב הטבלה בגרסה לנייד */
+      padding: 20px;
+    }
+  
+    table,
+    th,
+    td {
+      font-size: 12px;
+    }
+  
+    td img {
+      width: 150px;
+    }
+  
+    button {
+      padding: 6px 12px;
+    }
+  }
+  

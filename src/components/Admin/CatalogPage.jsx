@@ -7,14 +7,23 @@ export default function CatalogPage() {
 
   return (
     <div className="catalog-page">
-      <h1>Catalog Management</h1>
-      <p>Select a category to manage:</p>
+  <h2>Catalog Management</h2>
+  <p>Select a category to manage:</p>
 
-      <div className="category-buttons">
-        <button onClick={() => navigate('/CoffeeCatalog')}> Coffee Machines</button>
-        <button onClick={() => navigate('/CapsuleCatalog')}> Capsules</button>
-        <button onClick={() => navigate('/FrotherCatalog')}> Milk Frothers</button>
-      </div>
+  <div className="category-grid">
+    <div className="category-card" onClick={() => navigate('/CoffeeCatalog')}>
+      <img src="/images/PageMachine.png" alt="Coffee Machines" />
+      <h3>Coffee Machines</h3>
     </div>
+    <div className="category-card" onClick={() => navigate('/CapsuleCatalog')}>
+      <img src="/images/PageCapsule.png" alt="Capsules" />
+      <h3>Capsules</h3>
+    </div>
+    <div className="category-card" onClick={() => navigate('/FrotherCatalog')}>
+      <img src="/images/PageFrother.png" alt="Milk Frothers" />
+      <h3>Milk Frothers</h3>
+    </div>
+  </div>
+</div>
   );
 }

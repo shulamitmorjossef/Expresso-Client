@@ -1,0 +1,110 @@
+.form-background {
+    background-image: url('/images/background-beans.png');
+    background-size: cover;
+    background-repeat: repeat;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    box-sizing: border-box;
+  }
+  
+  .add-capsule-form {
+    background-color: white;
+    border-radius: 24px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-sizing: border-box;
+  }
+  
+  .add-capsule-form h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 26px;
+    text-align: center;
+    color: #3e1f0d;
+  }
+  
+  .add-capsule-form label {
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #4b2e0b;
+  }
+  
+  .add-capsule-form input,
+  .add-capsule-form select {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .add-capsule-form input:focus,
+  .add-capsule-form select:focus {
+    border-color: #a6784d;
+    outline: none;
+    box-shadow: 0 0 0 2px #f4e6d4;
+  }
+  
+  .add-capsule-form .error {
+    color: red;
+    font-size: 13px;
+    margin-top: -8px;
+    margin-bottom: 8px;
+  }
+  
+  .error-message,
+  .success-message {
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+  
+  .error-message {
+    background-color: #fff0f0;
+    color: #b30000;
+    border-left: 5px solid #b30000;
+  }
+  
+  .success-message {
+    background-color: #f0fff5;
+    color: #118848;
+    border-left: 5px solid #118848;
+  }
+  
+  .invalid {
+    border: 1px solid red;
+  }
+  
+  .add-capsule-form button {
+    margin-top: 12px;
+    padding: 14px;
+    background-color: #5c2e0b;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .add-capsule-form button:hover {
+    background-color: #472409;
+  }
+  
+  .add-capsule-form button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  

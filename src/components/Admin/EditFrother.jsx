@@ -59,7 +59,7 @@ export default function EditFrother() {
   const [error, setError] = useState('');
   const [validationResult, setValidationResult] = useState(suite.get());
 
-  const colors = ["Black", "White", "Silver", "Red", "Blue"];
+  const colors = ["Black", "White", "Silver", "Yellow", "Light blue", "Pink", "Purple", "Beige"];
   const frothingOptions = ["Hot", "Cold", "Both"];
 
   useEffect(() => {

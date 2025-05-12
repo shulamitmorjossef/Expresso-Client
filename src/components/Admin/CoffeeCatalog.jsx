@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import '../styles/CatalogPage.css';
+import '../styles/Tables.css';
 import { Info, Pencil, Trash2, Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import baseUrl from '../../config';
