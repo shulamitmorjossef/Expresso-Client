@@ -1,97 +1,115 @@
+
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import '../styles/AdminOrders.css';
 import baseUrl from '../../config';
+import '../DeliveryForm.css';
+import OrderInfoModal from '../Customer/OrderInfoModal';
+import ModalMessage from '../ModalMessage';
 
-export default function OrderAdminPage() {
-    const [orders, setOrders] = useState([]);
-    const [selectedStatuses, setSelectedStatuses] = useState({});
-    const [selectedOrder, setSelectedOrder] = useState(null);
-    const [orderDetails, setOrderDetails] = useState([]);
+export default function AdminOrders() {
+  const [orders, setOrders] = useState([]);
+  const [modalOrderId, setModalOrderId] = useState(null);
+  const [error, setError] = useState('');
+  const [modalInfo, setModalInfo] = useState(null);
+  const [confirmCancelId, setConfirmCancelId] = useState(null);
+  const [selectedStatus, setSelectedStatus] = useState({});
 
-    useEffect(() => {
-        fetchOrders();
-    }, []);
+  const statusOptions = ['pending', 'confirmed', 'shipped', 'delivered', 'cancelled'];
 
-    const fetchOrders = async () => {
-        try {
-            const response = await axios.get(`${baseUrl}/get-all-orders`);
-            setOrders(response.data);
-            const initialStatuses = response.data.reduce((acc, order) => {
-                acc[order.id] = order.status;
-                return acc;
-            }, {});
-            setSelectedStatuses(initialStatuses);
-        } catch (err) {
-            console.error('Error fetching orders:', err);
-        }
-    };
+  useEffect(() => {
+    fetch(`${baseUrl}/get-all-orders`)
+      .then(res => res.json())
+      .then(data => setOrders(data))
+      .catch(err => {
+        console.error('Error loading orders:', err);
+        setError('Failed to load orders.');
+      });
+  }, []);
 
-    const fetchOrderDetails = async (orderId) => {
-        try {
-            const response = await axios.get(`${baseUrl}/get-order-details/${orderId}`);
-            setOrderDetails(response.data.products || []);
-            setSelectedOrder(orderId);
-        } catch (err) {
-            console.error('Error fetching order details:', err);
-        }
-    };
+  const updateOrderStatus = async (orderId, status) => {
+    try {
+      const res = await fetch(`${baseUrl}/set-status-order/${orderId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status })
+      });
 
-    const updateOrderStatus = async (orderId) => {
-        const newStatus = selectedStatuses[orderId];
-        try {
-            await axios.put(`${baseUrl}/set-status-order/${orderId}`, { status: newStatus });
-            alert('Order status updated successfully!');
-        } catch (err) {
-            console.error('Error updating order status:', err);
-        }
-    };
+      if (!res.ok) throw new Error();
 
-    const closeModal = () => {
-        setSelectedOrder(null);
-        setOrderDetails([]);
-    };
+      setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status } : o));
+      setModalInfo({
+        title: 'Status Updated',
+        message: `Order #${orderId} status updated to ${status}.`,
+        onClose: () => setModalInfo(null)
+      });
+    } catch {
+      setModalInfo({
+        title: 'Update Failed',
+        message: 'Failed to update the order status. Please try again later.',
+        onClose: () => setModalInfo(null)
+      });
+    }
+  };
 
-    return (
-        <div className="orders-container">
-            <h1>All Orders</h1>
-            {orders.map(order => (
-                <div key={order.id} className="order-card">
-                    <h3>Order ID: {order.id}</h3>
-                    <button className="info-button" onClick={() => fetchOrderDetails(order.id)}>
-                        Info
-                    </button>
-                    <select
-                        value={selectedStatuses[order.id]}
-                        onChange={(e) =>
-                            setSelectedStatuses({ ...selectedStatuses, [order.id]: e.target.value })
-                        }
-                    >
-                        <option value="pending">Pending</option>
-                        <option value="confirmed">Confirmed</option>
-                        <option value="shipped">Shipped</option>
-                        <option value="delivered">Delivered</option>
-                        <option value="cancelled">Cancelled</option>
-                    </select>
-                    <button onClick={() => updateOrderStatus(order.id)}>Save</button>
-                </div>
-            ))}
+  return (
+    <div className="page-with-background">
+      <div className="delivery-form-container">
+        <h2>Manage Orders</h2>
+        {error && <p className="error">{error}</p>}
+        {orders.length === 0 ? (
+          <p>No orders found.</p>
+        ) : (
+          orders.map(order => (
+            <div key={order.id} className="form-group" style={{ borderBottom: '1px solid #ddd', paddingBottom: '10px' }}>
+              <p><strong>Order #{order.id}</strong></p>
+              <p>Status: {order.status}</p>
+              <p>Order Date: {new Date(order.order_date).toLocaleDateString()}</p>
+              <p>Total: ${parseFloat(order.total || 0).toFixed(2)}</p>
 
-            {selectedOrder && (
-                <div className="modal" onClick={closeModal}>
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <h2>Order Details for Order ID: {selectedOrder}</h2>
-                        <ul>
-                            {orderDetails.map(item => (
-                                <li key={`${item.product_id}-${item.product_type}`}>
-                                    {item.product_type}: {item.product_name} (ID: {item.product_id}) - Quantity: {item.quantity}
-                                </li>
-                            ))}
-                        </ul>
-                        <button onClick={closeModal}>Close</button>
-                    </div>
-                </div>
-            )}
-        </div>
-    );
+              <select
+                value={selectedStatus[order.id] || order.status}
+                onChange={(e) => setSelectedStatus({ ...selectedStatus, [order.id]: e.target.value })}
+              >
+                {statusOptions.map(status => (
+                  <option key={status} value={status}>{status}</option>
+                ))}
+              </select>
+
+              <button
+                className="submit-btn"
+                style={{ marginTop: '10px' }}
+                onClick={() => updateOrderStatus(order.id, selectedStatus[order.id] || order.status)}
+              >
+                Update Status
+              </button>
+
+              <button
+                className="submit-btn"
+                style={{ marginBottom: '5px', marginTop: '5px' }}
+                onClick={() => setModalOrderId(order.id)}
+              >
+                Show Info
+              </button>
+            </div>
+          ))
+        )}
+
+        {modalOrderId && (
+          <OrderInfoModal
+            orderId={modalOrderId}
+            onClose={() => setModalOrderId(null)}
+          />
+        )}
+
+        {modalInfo && (
+          <ModalMessage
+            title={modalInfo.title}
+            message={modalInfo.message}
+            onClose={modalInfo.onClose}
+            onAction={modalInfo.onClose}
+            actionText="OK"
+          />
+        )}
+      </div>
+    </div>
+  );
 }

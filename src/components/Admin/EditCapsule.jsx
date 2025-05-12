@@ -87,6 +87,10 @@ export default function EditCapsule() {
           net_weight_grams: res.data.net_weight_grams?.toString() || '',
           price: res.data.price?.toString() || '',
         };
+
+        setForm(data);
+        setExistingImage(res.data.image_url || '');
+
         console.log('Loaded capsule data:', data);
         setForm(data);
         setValidationResult(suite(data));
@@ -181,7 +185,7 @@ export default function EditCapsule() {
       {hasFieldErrors('ingredients') && <div className="error">{getFieldErrors('ingredients')[0]}</div>}
 
       <label>Current Image:</label><br />
-      {form.existingImage && <img src={existingImage} alt="capsule" width="100" />}
+      {existingImage && <img src={existingImage} alt="capsule" width="100" />}
 
       <label>Change Image:</label>
       <input 
