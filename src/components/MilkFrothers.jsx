@@ -124,7 +124,9 @@ export default function MilkFrothers() {
               </div>
             )}
 
-            <img src={item.image_path} alt={item.name} />
+            <img 
+              src={`data:image/jpeg;base64,${item.image}`} 
+              alt={item.name} />
             <div className="milk-product-details">
               <h3>{item.name}</h3>
               <p>${Number(item.price).toFixed(2)}</p>

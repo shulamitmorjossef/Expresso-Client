@@ -132,7 +132,9 @@ export default function CoffeeProducts() {
               </div>
             )}
 
-            <img src={machine.image_path} alt={machine.name} />
+            <img 
+              src={`data:image/jpeg;base64,${machine.image}`} 
+              alt={machine.name} />
             <div className="product-details">
               <h3>{machine.name}</h3>
               <p>${parseFloat(machine.price).toFixed(2)}</p>
