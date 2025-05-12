@@ -76,7 +76,13 @@ export default function CoffeeCatalog() {
         <tbody>
           {machines.map((machine) => (
             <tr key={machine.id}>
-              <td><img src={`${baseUrl}${machine.image_path}`} alt={machine.name} width="50" /></td>
+        <td>
+        <img 
+          src= {`data:image/jpeg;base64,${machine.image}`} 
+          alt={machine.name} 
+          width="50" 
+        />
+        </td>
               <td>{machine.name}</td>
               <td className="icon-cell">
                 <Info color="#8B4513" style={{ cursor: 'pointer' }} onClick={() => handleInfo(machine)} />
