@@ -239,8 +239,8 @@ export default function AddCoffeeMachine() {
         value={form.name}
         onChange={e => handleChange('name', e.target.value)}
         className={hasFieldErrors('name') ? 'invalid' : ''}
-        placeholder="Enter machine name"
-      />
+
+        />
       {hasFieldErrors('name') && (
         <div className="error">{getFieldErrors('name')[0]}</div>
       )}
@@ -296,7 +296,7 @@ export default function AddCoffeeMachine() {
         disabled={isSubmitting}
         className={isSubmitting ? 'submitting' : ''}
       >
-        {isSubmitting ? 'Saving...' : '➕ Add Coffee Machine'}
+        {isSubmitting ? 'Saving...' : ' Add Coffee Machine'}
       </button>
 
       <style>{`

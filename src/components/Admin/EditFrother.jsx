@@ -51,9 +51,10 @@ export default function EditFrother() {
     frothing_type: '',
     capacity: '',
     price: '',
-    image_path: '',
   });
   const [newImage, setNewImage] = useState(null);
+  const [existingImage, setExistingImage] = useState('');
+  
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [validationResult, setValidationResult] = useState(suite.get());
@@ -113,36 +114,13 @@ export default function EditFrother() {
 
       if (newImage) {
         formData.append('image', newImage);
-      } else if (form.image_path) {
-        formData.append('image_path', form.image_path);
       }
-
-      console.log('Submitting frother data:', {
-        ...form,
-        hasNewImage: !!newImage
-      });
-
-      try {
-        await axios.put(`${baseUrl}/update-milk-frother/${id}`, formData, {
-          headers: { 'Content-Type': 'multipart/form-data' }
+      await axios.put(`${baseUrl}/update-milk-frother/${id}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
         });
         alert('Frother updated successfully');
         navigate('/FrotherCatalog');
-        return;
-      } catch (formDataErr) {
-        console.warn('FormData failed, trying JSON:', formDataErr);
-        const jsonData = {
-          name: form.name,
-          color: form.color,
-          frothing_type: form.frothing_type,
-          capacity: Number(form.capacity),
-          price: Number(form.price),
-          image_path: form.image_path
-        };
-        await axios.put(`${baseUrl}/update-milk-frother/${id}`, jsonData);
-        alert('Frother updated successfully');
-        navigate('/FrotherCatalog');
-      }
+
     } catch (err) {
       console.error('Update failed:', err);
       setError(err.response?.data?.message || 'Failed to update frother.');
@@ -190,14 +168,15 @@ export default function EditFrother() {
       {hasFieldErrors('price') && <div className="error">{getFieldErrors('price')[0]}</div>}
 
       <label>Current Image:</label><br />
-      {form.image_path && <img src={form.image_path} alt="frother" width="100" />}
+      {existingImage && <img src={existingImage} alt="frother" width="100" />}
 
-      <label>Upload Image:</label>
-      <div className="custom-file-upload">
-        <label htmlFor="imageUpload">Upload Image</label>
-        <input id="imageUpload" type="file" accept="image/png, image/jpeg" onChange={handleImageChange} />
-      </div>
-      {newImage && <div className="preview">New image: {newImage.name}</div>}
+      <label>Change Image:</label>
+      <input 
+        type="file" 
+        accept="image/*"
+        onChange={handleImageChange} 
+        />
+      {newImage && <div className="preview">New image selected: {newImage.name}</div>}
 
       <button type="submit" disabled={isSubmitting} className={isSubmitting ? 'submitting' : ''}>
         {isSubmitting ? 'Saving...' : '💾 Save Changes'}

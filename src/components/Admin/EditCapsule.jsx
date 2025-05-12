@@ -70,11 +70,12 @@ export default function EditCapsule() {
     net_weight_grams: '',
     price: '',
     ingredients: '',
-    image_path: '',
   });
   const [newImage, setNewImage] = useState(null);
+  const [existingImage, setExistingImage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
+ 
   const [validationResult, setValidationResult] = useState(suite.get());
 
   useEffect(() => {
@@ -103,7 +104,7 @@ export default function EditCapsule() {
   };
 
   const handleImageChange = (e) => {
-    if (e.target.files?.[0]) {
+    if (e.target.files && e.target.files[0]) {
       setNewImage(e.target.files[0]);
     }
   };
@@ -131,40 +132,15 @@ export default function EditCapsule() {
 
       if (newImage) {
         formData.append('image', newImage);
-      } else if (form.image_path) {
-        formData.append('image_path', form.image_path);
-      }
+      } 
 
-      console.log('Submitting capsule data:', {
-        ...form,
-        hasNewImage: !!newImage
-      });
-
-      try {
-        await axios.put(`${baseUrl}/update-capsule/${id}`, formData, {
-          headers: { 'Content-Type': 'multipart/form-data' }
+      await axios.put(`${baseUrl}/update-capsule/${id}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
         });
+
         alert('Capsule updated successfully');
         navigate('/CapsuleCatalog');
-        return;
-      } catch (formDataErr) {
-        console.warn('FormData approach failed, trying JSON:', formDataErr);
-
-        const jsonData = {
-          name: form.name,
-          flavor: form.flavor,
-          quantity_per_package: Number(form.quantity_per_package),
-          net_weight_grams: Number(form.net_weight_grams),
-          price: Number(form.price),
-          ingredients: form.ingredients,
-          image_path: form.image_path
-        };
-
-        await axios.put(`${baseUrl}/update-capsule/${id}`, jsonData);
-        alert('Capsule updated successfully');
-        navigate('/CapsuleCatalog');
-      }
-    } catch (err) {
+      } catch (err) {
       console.error('Update failed:', err);
       setError(err.response?.data?.message || 'Failed to update capsule.');
     } finally {
@@ -205,10 +181,14 @@ export default function EditCapsule() {
       {hasFieldErrors('ingredients') && <div className="error">{getFieldErrors('ingredients')[0]}</div>}
 
       <label>Current Image:</label><br />
-      {form.image_path && <img src={form.image_path} alt="capsule" width="100" />}
+      {form.existingImage && <img src={existingImage} alt="capsule" width="100" />}
 
       <label>Change Image:</label>
-      <input type="file" accept="image/*" onChange={handleImageChange} />
+      <input 
+      type="file" 
+      accept="image/*" 
+      onChange={handleImageChange}
+       />
       {newImage && <div className="preview">New image: {newImage.name}</div>}
 
       <button type="submit" disabled={isSubmitting} className={isSubmitting ? 'submitting' : ''}>

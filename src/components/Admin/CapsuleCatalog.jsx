@@ -81,7 +81,10 @@ export default function CapsuleCatalog() {
           {capsules.map((capsule) => (
             <tr key={capsule.id}>
               <td>
-                <img src={`${baseUrl}${capsule.image_path}`} alt={capsule.name} width="50" />
+                <img 
+          src= {`data:image/jpeg;base64,${capsule.image}`} 
+          alt={capsule.name} 
+                width="50" />
               </td>
               <td>{capsule.name}</td>
               <td className="icon-cell">
@@ -90,22 +93,22 @@ export default function CapsuleCatalog() {
                 <Trash2 color="#8B4513" style={{ marginLeft: 10, cursor: 'pointer' }} onClick={() => handleDelete(capsule.id)} />
         
   {/*  stock */}
-  <span style={{
-    display: 'inline-block',
-    marginLeft: 15,
-    backgroundColor: '#f5f5f5',
-    border: '1px solid #ccc',
-    borderRadius: '6px',
-    padding: '3px 8px',
-    fontWeight: 'bold',
-    fontSize: '13px',
-    color: '#333',
-    minWidth: '30px',
-    textAlign: 'center'
-  }}>
-    {capsule.sum_of}
-  </span>
-</td>
+                <span style={{
+                  display: 'inline-block',
+                  marginLeft: 15,
+                  backgroundColor: '#f5f5f5',
+                  border: '1px solid #ccc',
+                  borderRadius: '6px',
+                  padding: '3px 8px',
+                  fontWeight: 'bold',
+                  fontSize: '13px',
+                  color: '#333',
+                  minWidth: '30px',
+                  textAlign: 'center'
+                }}>
+                  {capsule.sum_of}
+                </span>
+              </td>
             </tr>
           ))}
         </tbody>
