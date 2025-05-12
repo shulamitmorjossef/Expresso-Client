@@ -37,7 +37,7 @@ const CoffeeMachine = () => {
     <div style={{ maxWidth: 600, margin: 'auto', fontFamily: 'sans-serif' }}>
       <h2>{machine.name}</h2>
       <img
-        src={`${machine.image_path}`}
+        src={`data:image/jpeg;base64,${machine.image}`} 
         alt={machine.name}
         style={{ width: '100%', borderRadius: '8px' }}
       />

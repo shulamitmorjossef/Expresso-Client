@@ -31,7 +31,10 @@ export default function OrderInfoModal({ orderId, onClose }) {
         <div className="modal-products">
           {order.products.map((p, i) => (
             <div key={i} className="modal-product-item">
-              <img src={p.image_path} alt={p.product_name} className="modal-product-img" />
+              <img 
+              src={`data:image/jpeg;base64,${p.image}`} 
+              alt={p.product_name} 
+              className="modal-product-img" />
               <div>
                 <p><strong>{p.product_name}</strong></p>
                 <p>Quantity: {p.quantity}</p>
