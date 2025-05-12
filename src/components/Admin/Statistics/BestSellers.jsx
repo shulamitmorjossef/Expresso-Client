@@ -77,7 +77,8 @@ export default function BestSellers() {
             <li key={idx} className="result-item">
               {p.image_path &&
                 <img
-                  src={p.image_path}
+                  // src={p.image}
+                  src= {`data:image/jpeg;base64,${machine.image}`} 
                   alt={p.name}
                   className="product-thumb"
                 />
