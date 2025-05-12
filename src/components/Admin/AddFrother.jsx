@@ -74,6 +74,7 @@ const suite = create((data = {}, field) => {
   });
 });
 
+
 export default function AddMilkFrother() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -165,7 +166,7 @@ export default function AddMilkFrother() {
         frothing_type: form.frothingType,
         capacity: form.capacity,
         price: form.price,
-        hasImage: !!image
+        // hasImage: !!image
       });
 
       // Try with FormData approach
@@ -187,7 +188,7 @@ export default function AddMilkFrother() {
           capacity: '',
           price: '',
         });
-        setImage(null);
+        // setImage(null);
         
         // Navigate after short delay to show success message
         setTimeout(() => {
@@ -322,7 +323,7 @@ export default function AddMilkFrother() {
         accept="image/*" 
         onChange={handleImageChange}
       />
-      {image && (
+      {/* {image && (
         <div className="preview">
           <p>Selected image: {image.name}</p>
           <img 
@@ -331,14 +332,14 @@ export default function AddMilkFrother() {
             style={{ maxWidth: '100px', marginTop: '10px' }} 
           />
         </div>
-      )}
+      )} */}
 
       <button 
         type="submit" 
         disabled={isSubmitting}
         className={isSubmitting ? 'submitting' : ''}
       >
-        {isSubmitting ? 'Saving...' : '➕ Add Milk Frother'}
+        {isSubmitting ? 'Saving...' : ' Add Milk Frother'}
       </button>
 
       <style>{`

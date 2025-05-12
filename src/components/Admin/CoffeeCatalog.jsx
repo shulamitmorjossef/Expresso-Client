@@ -81,10 +81,20 @@ export default function CoffeeCatalog() {
           {machines.map((machine) => (
             <tr key={machine.id}>
 <<<<<<< HEAD
+<<<<<<< HEAD
               <td><img src={`data:image/jpeg;base64,${machine.imageBase64}`} alt={machine.name} width="50" /></td>
 =======
               <td><img src={`${baseUrl}${machine.image_path}`} alt={machine.name} width="50" /></td>
 >>>>>>> b2c5636cd002a8e4cbbc33610d14c62b64c98e9e
+=======
+        <td>
+        <img 
+          src= {`data:image/jpeg;base64,${machine.image}`} 
+          alt={machine.name} 
+          width="50" 
+        />
+        </td>
+>>>>>>> f2db5bc988dfbe899464b10333ec06de25b84c8c
               <td>{machine.name}</td>
               <td className="icon-cell">
                 <Info color="#8B4513" style={{ cursor: 'pointer' }} onClick={() => handleInfo(machine)} />

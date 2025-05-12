@@ -76,7 +76,11 @@ export default function FrotherCatalog() {
         <tbody>
           {frothers.map((frother) => (
             <tr key={frother.id}>
-              <td><img src={`${baseUrl}${frother.image_path}`} alt={frother.name} width="50" /></td>
+              <td><img src={`data:image/jpeg;base64,${frother.image}`} 
+              alt={frother.name} 
+              width="50" 
+              />
+              </td>
               <td>{frother.name}</td>
               <td className="icon-cell">
                 <Info color="#8B4513" style={{ cursor: 'pointer' }} onClick={() => handleInfo(frother)} />

@@ -3,37 +3,37 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import baseUrl from '../../config';
 
-const CoffeeMachineDetail = () => {
+export default function CoffeeMachineDetails() {
   const { id } = useParams();
   const [machine, setMachine] = useState(null);
 
   useEffect(() => {
-    async function fetchMachine() {
+    const fetchMachine = async () => {
       try {
-        const { data } = await axios.get(`${baseUrl}/coffee-machines/${id}`);
-        setMachine(data);
-      } catch (err) {
-        console.error('Error fetching machine:', err);
+        const response = await axios.get(`${baseUrl}/get-coffee-machine/${id}`);
+        setMachine(response.data);
+      } catch (error) {
+        console.error('Error fetching coffee machine:', error);
+        alert('Failed to fetch coffee machine details.');
       }
-    }
+    };
+
     fetchMachine();
   }, [id]);
 
   if (!machine) return <p>Loading...</p>;
 
   return (
-    <div>
+    <div className="coffee-machine-details">
       <h2>{machine.name}</h2>
-      <img
-        src={`${baseUrl}${machine.image_path}`}
-        alt={machine.name}
-        style={{ maxWidth: '400px' }}
+      <img 
+        src={`data:image/png;base64,${machine.image}`} 
+        alt={machine.name} 
+        className="coffee-machine-image"
       />
-      <p>Color: {machine.color}</p>
-      <p>Capacity: {machine.capacity} ml</p>
-      <p>Price: ${machine.price}</p>
+      <p><strong>Color:</strong> {machine.color}</p>
+      <p><strong>Capacity:</strong> {machine.capacity}</p>
+      <p><strong>Price:</strong> ${machine.price}</p>
     </div>
   );
-};
-
-export default CoffeeMachineDetail;
+}

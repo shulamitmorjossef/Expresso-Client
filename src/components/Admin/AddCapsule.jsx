@@ -71,6 +71,11 @@ export default function AddCapsule() {
     price: '',
     ingredients: '',
   });
+<<<<<<< HEAD
+=======
+//   const [newImage, setNewImage] = useState(null);
+  const [image, setImage] = useState(null);
+>>>>>>> f2db5bc988dfbe899464b10333ec06de25b84c8c
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -79,9 +84,20 @@ export default function AddCapsule() {
   const handleChange = (field, value) => {
     const updated = { ...form, [field]: value };
     setForm(updated);
-    setValidationResult(suite(updated, field));
+
+    const result = suite(updated, field);
+    setValidationResult(result);
   };
 
+<<<<<<< HEAD
+=======
+  const handleImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setImage(e.target.files[0]);
+    }
+  };
+
+>>>>>>> f2db5bc988dfbe899464b10333ec06de25b84c8c
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -99,6 +115,19 @@ export default function AddCapsule() {
       const formData = new FormData();
       Object.entries(form).forEach(([key, val]) => formData.append(key, val));
 
+<<<<<<< HEAD
+=======
+      if (image) {
+        formData.append('image', image);
+      }
+
+    //   console.log('Submitting capsule data:', {
+    //     ...form,
+    //     hasNewImage: !!newImage
+    //   });
+
+      // Use the correct endpoint - the one that exists in your backend
+>>>>>>> f2db5bc988dfbe899464b10333ec06de25b84c8c
       try {
         const response = await axios.post(`${baseUrl}/add-capsule`, formData, {
           headers: { 'Content-Type': 'multipart/form-data' }
@@ -161,12 +190,18 @@ export default function AddCapsule() {
   const hasFieldErrors = (field) => validationResult.hasErrors(field);
 
   return (
+<<<<<<< HEAD
     <form className="edit-form" onSubmit={handleSubmit}>
       <h2>Add Capsule</h2>
+=======
+    <form className="add-form" onSubmit={handleSubmit} encType="multipart/form-data">
+      <h2>Add New Capsule</h2>
+>>>>>>> f2db5bc988dfbe899464b10333ec06de25b84c8c
       {error && <div className="error-message">{error}</div>}
       {success && <div className="success-message">{success}</div>}
 
       <label>Name:</label>
+<<<<<<< HEAD
       <input
         type="text"
         placeholder="Enter capsule name"
@@ -174,6 +209,14 @@ export default function AddCapsule() {
         onChange={e => handleChange('name', e.target.value)}
         className={hasFieldErrors('name') ? 'invalid' : ''}
       />
+=======
+      <input type="text" value={form.name} 
+      onChange={e => handleChange('name', e.target.value)} 
+      className={hasFieldErrors('name') ? 'invalid' : ''}
+      placeholder="Enter capsule name"
+
+       />
+>>>>>>> f2db5bc988dfbe899464b10333ec06de25b84c8c
       {hasFieldErrors('name') && <div className="error">{getFieldErrors('name')[0]}</div>}
 
       <label>Flavor:</label>
@@ -226,26 +269,38 @@ export default function AddCapsule() {
       />
       {hasFieldErrors('ingredients') && <div className="error">{getFieldErrors('ingredients')[0]}</div>}
 
+<<<<<<< HEAD
       <button type="submit" disabled={isSubmitting} className={isSubmitting ? 'submitting' : ''}>
+=======
+      <label>capsule Image:</label>
+      <input type="file" 
+      accept="image/*" 
+      onChange={handleImageChange}
+      />
+
+      <button type="submit" 
+      disabled={isSubmitting} 
+      className={isSubmitting ? 'submitting' : ''}>
+>>>>>>> f2db5bc988dfbe899464b10333ec06de25b84c8c
         {isSubmitting ? 'Saving...' : '➕ Add Capsule'}
       </button>
 
       <style>{`
-        .edit-form {
+        .add-form {
           padding: 20px;
           max-width: 400px;
         }
-        .edit-form label {
+        .add-form label {
           font-weight: bold;
           display: block;
           margin-top: 15px;
         }
-        .edit-form input {
+        .add-form input {
           width: 100%;
           padding: 6px;
           margin-top: 4px;
         }
-        .edit-form button {
+        .add-form button {
           margin-top: 20px;
           padding: 8px 16px;
           background-color: #4285f4;
@@ -255,10 +310,10 @@ export default function AddCapsule() {
           cursor: pointer;
           font-weight: bold;
         }
-        .edit-form button:hover {
+        .add-form button:hover {
           background-color: #3367d6;
         }
-        .edit-form button.submitting {
+        .add-form button.submitting {
           background-color: #cccccc;
           cursor: not-allowed;
         }
