@@ -1,166 +1,215 @@
 .outer-container {
-    position: relative;
-    font-family: 'Poppins', Arial, sans-serif;
-    min-height: 100vh;
-    background-image: url("/images/coffee_background.jpg");
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    overflow: hidden;
-    width: 100%;
-  }
-  
-  .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.4);
-    z-index: 0;
-  }
-  
-  .content-wrapper {
-    position: relative;
-    z-index: 2;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 30px;
-  }
-  
-  .menu-button {
-    background-color: transparent;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-  }
-  
-  .dropdown-menu {
-    position: absolute;
-    top: 80px;
-    right: 20px;
-    background-color: rgba(0, 0, 0, 0.8);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    border-radius: 8px;
-    overflow: hidden;
-    z-index: 5;
-  }
-  
-  .dropdown-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .dropdown-link {
-    display: block;
-    padding: 15px 30px;
-    text-decoration: none;
-    color: white;
-    font-size: 16px;
-  }
-  
-  .main {
-    width: 100%;
-    text-align: center;
-    padding: 40px 20px;
-  }
-  
-  .search-container {
-    position: relative;
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto 40px;
-  }
-  
-  .search-input {
-    width: 100%;
-    padding: 10px 40px 10px 15px;
-    border-radius: 25px;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  }
-  
-  .search-icon {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #888;
-  }
-  
-  .categories-title {
-    color: white;
-    font-size: 32px;
-    margin-bottom: 30px;
-  }
-  
-  .categories-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 40px;
-  }
-  
-  .category-card {
-    text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
-    cursor: pointer;
-  }
-  
-  .category-image {
-    border-radius: 10px;
-  }
-  
-  .category-label {
-    margin-top: 10px;
-    font-weight: bold;
-    color: white;
-  }
-  
-  .footer {
-    width: 100%;
-    text-align: center;
-    padding: 20px;
-    margin-top: 40px;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-  }
-  
-  .footer-link {
-    text-decoration: none;
-    color: white;
-    font-size: 14px;
-  }
-  
-  .about-link {
-    margin-left: 20px;
-  }
-  
+  position: relative;
+  font-family: 'Poppins', Arial, sans-serif;
+  min-height: 100vh;
+  background-image: url("/images/coffee_background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  overflow: hidden;
+  width: 100%;
+}
 
-  .fade-out {
-    animation: fadeOut 0.5s forwards;
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 0;
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 🔥 תפריט עליון חדש */
+.admin-navbar {
+  width: 100%;
+  background-color: #4b2e0b;
+  color: white;
+  padding: 10px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0 40px;
+  margin: 0;
+  gap: 20px;
+}
+
+.nav-list li a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+}
+
+.nav-list li a:hover {
+  background-color: #5c4033;
+}
+
+/* תוכן ראשי */
+.main-content {
+  margin-top: 60px;
+  padding: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.search-container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 40px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 40px 10px 15px;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.search-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+}
+
+.categories-title {
+  color: white;
+  font-size: 32px;
+  margin-bottom: 30px;
+}
+
+.categories-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.category-card {
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.category-image {
+  border-radius: 10px;
+}
+
+.category-label {
+  margin-top: 10px;
+  font-weight: bold;
+  color: white;
+}
+
+.footer {
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+.footer-link {
+  text-decoration: none;
+  color: white;
+  font-size: 14px;
+}
+
+.about-link {
+  margin-left: 20px;
+}
+
+/* אנימציה */
+.fade-out {
+  animation: fadeOut 0.5s forwards;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
   }
-  
-  @keyframes fadeOut {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
+  to {
+    opacity: 0;
   }
+}
+
+/* Dropdown menus */
+.dropdown-parent {
+  position: relative;
+  cursor: pointer;
+}
+
+.dropdown-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  color: white;
+  font-size: 20px;
+}
+
+.dropdown-submenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #4b2e0b;
+  list-style: none;
+  margin: 0;
+  padding: 10px 0;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  border-radius: 6px;
+  min-width: 220px;
+  z-index: 10;
+  white-space: nowrap;
+}
+
+.dropdown-submenu li {
+  padding: 8px 20px;
+}
+
+.dropdown-submenu li a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  color: white;
+  text-decoration: none;
+  font-size: 17px;
+  white-space: nowrap;
+}
+
+.dropdown-submenu li:hover {
+  background-color: #5c4033;
+}
