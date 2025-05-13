@@ -201,7 +201,7 @@ export default function AddMilkFrother() {
           disabled={isSubmitting}
           className={isSubmitting ? 'submitting' : ''}
         >
-          {isSubmitting ? 'Saving...' : 'Add Milk Frother'}
+          {isSubmitting ? 'Saving...' : ' ➕ Add Milk Frother'}
         </button>
       </form>
     </div>

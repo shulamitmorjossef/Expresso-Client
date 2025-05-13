@@ -80,3 +80,38 @@
 .add-to-cart-btn:hover {
   background-color: #ccc;
 }
+.sort-button {
+  margin: 10px 0 20px;
+  padding: 8px 16px;
+  background-color: #6f4e37;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.sort-button:hover {
+  background-color: #5a3c2a;
+}
+
+.stock-badge {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background-color: #6f4e37;
+  color: white;
+  font-weight: bold;
+  padding: 4px;
+  font-size: 12px;
+  text-align: center;
+  z-index: 2;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+.sort-controls {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
