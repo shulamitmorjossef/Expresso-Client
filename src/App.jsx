@@ -36,9 +36,6 @@ import OrderAdminPage from './components/Admin/ordersAdminPage.jsx';
 import CouponsPage from './components/Admin/couponsPage.jsx';
 import MyOrders from './components//Customer/MyOrders';
 
-import Try from './components/Admin/TryP.jsx';
-import Try2 from './components/Admin/Try2.jsx';
-
 
 
 
@@ -82,9 +79,6 @@ function App() {
       <Route path="/CouponsPage" element={<CouponsPage />} />
       <Route path="/MyOrders" element={<MyOrders />} />
 
-
-      <Route path="/Try" element={<Try />} />
-      <Route path="/Try2/:id" element={<Try2 />} />
 
       
 

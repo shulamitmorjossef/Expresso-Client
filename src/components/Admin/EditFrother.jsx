@@ -70,6 +70,12 @@ export default function EditFrother() {
           capacity: res.data.capacity?.toString() || '',
           price: res.data.price?.toString() || '',
         };
+
+
+        setForm(data);
+        setExistingImage(res.data.image_url || '');
+
+        console.log('Loaded frother data:', data);
         setForm(data);
         setExistingImage(res.data.image_url); // adjust if needed
         // setValidationResult(suite(data));

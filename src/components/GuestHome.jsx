@@ -91,7 +91,11 @@ export default function GuestHome() {
                 {searchResults.map((item, idx) => (
                   <li key={idx}>
                     <div className="search-item" onClick={() => setSelectedProduct(item)}>
-                      <img src={item.image_path} alt={item.name} className="result-thumb" />
+                    <img 
+                          src={item.image ? `data:image/jpeg;base64,${item.image}` : '/images/placeholder.jpg'} 
+                          alt={item.name} 
+                          className="result-thumb" 
+                        />
                       <div className="result-info">
                         <strong>{item.name}</strong>
                         <span className="result-meta">({item.type}) – {item.price}₪</span>
