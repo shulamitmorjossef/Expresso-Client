@@ -10,7 +10,7 @@
     box-sizing: border-box;
   }
   
-  .add-capsule-form {
+  .edit-milk-frother-form {
     background-color: white;
     border-radius: 24px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
@@ -23,7 +23,7 @@
     box-sizing: border-box;
   }
   
-  .add-capsule-form h2 {
+  .edit-milk-frother-form h2 {
     margin-top: 0;
     margin-bottom: 10px;
     font-size: 26px;
@@ -31,14 +31,14 @@
     color: #3e1f0d;
   }
   
-  .add-capsule-form label {
+  .edit-milk-frother-form label {
     font-weight: 600;
     margin-bottom: 4px;
     color: #4b2e0b;
   }
   
-  .add-capsule-form input,
-  .add-capsule-form select {
+  .edit-milk-frother-form input,
+  .edit-milk-frother-form select {
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -47,14 +47,14 @@
     box-sizing: border-box;
   }
   
-  .add-capsule-form input:focus,
-  .add-capsule-form select:focus {
+  .edit-milk-frother-form input:focus,
+  .edit-milk-frother-form select:focus {
     border-color: #a6784d;
     outline: none;
     box-shadow: 0 0 0 2px #f4e6d4;
   }
   
-  .add-capsule-form .error {
+  .edit-milk-frother-form .error {
     color: red;
     font-size: 13px;
     margin-top: -8px;
@@ -86,7 +86,7 @@
     border: 1px solid red;
   }
   
-  .add-capsule-form button {
+  .edit-milk-frother-form button {
     margin-top: 12px;
     padding: 14px;
     background-color: #5c2e0b;
@@ -99,28 +99,12 @@
     transition: background-color 0.3s;
   }
   
-  .add-capsule-form button:hover {
+  .edit-milk-frother-form button:hover {
     background-color: #472409;
   }
   
-  .add-capsule-form button:disabled {
+  .edit-milk-frother-form button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
   }
   
-  .error {
-  color: red;
-  font-size: 13px;
-  margin-top: 5px;
-  margin-bottom: 10px;
-}
-
-input.invalid,
-select.invalid {
-  border: 2px solid red;
-}
-
-.add-capsule-form input,
-.add-capsule-form select {
-  margin-bottom: 5px;
-}
