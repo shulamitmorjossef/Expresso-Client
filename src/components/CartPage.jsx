@@ -147,7 +147,6 @@ export default function CartPage() {
         </div>
         <input className="coupon-input" placeholder="Enter coupon code" />
         <button className="apply-btn">Apply</button>
-
         <div className="terms">
           <input
             type="checkbox"
@@ -155,8 +154,13 @@ export default function CartPage() {
             checked={agreed}
             onChange={() => setAgreed(!agreed)}
           />
-          <label htmlFor="agree">I agree to the terms and conditions</label>
+          <label htmlFor="agree">
+            I agree to the
+            <a href="/Terms" className="terms-link"> Terms and Conditions</a>
+          </label>
         </div>
+
+        
 
         <button className="continue-btn" onClick={handleContinue}>Continue</button>
 

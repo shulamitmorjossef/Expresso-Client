@@ -147,4 +147,13 @@
     transform: scale(1.1);
   }
   
+  .terms-link {
+    color: #3c2e2a;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .terms-link:hover {
+    text-decoration: underline;
+  }
   
