@@ -179,6 +179,9 @@ export default function AddCoffeeMachine() {
           {isSubmitting ? 'Saving...' :' ➕ Add Coffee Machine'}
         </button>
       </form>
+      <button className="back-button" onClick={() => navigate('/CoffeeCatalog')}>
+      Back
+     </button>
     </div>
   );
 }

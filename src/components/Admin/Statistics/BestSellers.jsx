@@ -2,13 +2,17 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import baseUrl from '../../../config';
 import '../../styles/BestSellers.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function BestSellers() {
+  const navigate = useNavigate();
+  
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [results, setResults] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
 
   const fetchBestSellers = async () => {
     setError('');
@@ -97,6 +101,9 @@ export default function BestSellers() {
           ))}
         </ul>
       )}
+       <button className="back-button" onClick={() => navigate('/StatisticsPage')}>
+      Back
+    </button>
 
     </div>
   );

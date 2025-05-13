@@ -3,8 +3,10 @@ import { format, addMonths, subMonths, startOfMonth, endOfMonth, startOfWeek, en
 import '../styles/deliveryDays.css';
 import axios from 'axios';
 import baseUrl from '../../config';
+import { useNavigate } from 'react-router-dom';
 
 export default function DeliveryDays() {
+  const navigate = useNavigate();
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [unavailableDates, setUnavailableDates] = useState([]);
 
@@ -112,6 +114,9 @@ export default function DeliveryDays() {
           ))}
         </ul>
       </div>
+      <button className="back-button" onClick={() => navigate('/AdminHome')}>
+        Back
+      </button>
     </div>
   );
 }

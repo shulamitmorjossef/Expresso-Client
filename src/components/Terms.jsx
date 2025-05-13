@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './styles/Terms.css';
+import { useNavigate } from 'react-router-dom';
 
 import baseUrl from '../config';
 
 
 export default function Terms() {
+  const navigate = useNavigate();
+  
   const [terms, setTerms] = useState(null);
   const [error, setError] = useState(null);
 
@@ -40,6 +43,9 @@ export default function Terms() {
       <p>{terms.section3}</p>
       <p>{terms.section4}</p>
       <p>{terms.section5}</p>
+      <button className="back-button" onClick={() => navigate(-1)}>
+      Back
+     </button>
     </div>
   );
 }

@@ -148,7 +148,7 @@ export default function AdminHome() {
           <div className="categories-container">
             <CategoryCard src="/images/coffee.png" label="Coffee Machines" />
             <CategoryCard src="/images/capsules.png" label="Capsules" />
-            <CategoryCard src="/images/accessories.png" label="Accessories" />
+            <CategoryCard src="/images/milkfrothers.png" label="Accessories" />
           </div>
         </main>
 

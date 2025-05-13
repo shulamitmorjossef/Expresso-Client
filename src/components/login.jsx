@@ -119,6 +119,9 @@ export default function Login() {
           </div>
         </div>
       )}
+      <button className="back-button" onClick={() => navigate(-1)}>
+      Back
+     </button>
     </div>
   );
 }

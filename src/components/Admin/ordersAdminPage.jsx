@@ -4,8 +4,13 @@ import baseUrl from '../../config';
 import '../DeliveryForm.css';
 import OrderInfoModal from '../Customer/OrderInfoModal';
 import ModalMessage from '../ModalMessage';
+import { useNavigate } from 'react-router-dom';
+
+
 
 export default function AdminOrders() {
+  const navigate = useNavigate();
+  
   const [orders, setOrders] = useState([]);
   const [modalOrderId, setModalOrderId] = useState(null);
   const [error, setError] = useState('');
@@ -110,6 +115,9 @@ export default function AdminOrders() {
           />
         )}
       </div>
+      <button className="back-button" onClick={() => navigate('/AdminHome')}>
+        Back
+      </button>
     </div>
   );
 }

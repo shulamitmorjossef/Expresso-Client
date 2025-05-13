@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import baseUrl from '../../../config'; // Adjust path as needed
-import '../../styles/TotalSold.css';     // make sure this path matches where you put the CSS
+import baseUrl from '../../../config'; 
+import '../../styles/TotalSold.css';     
+import { useNavigate } from 'react-router-dom';
+
+
 
 export default function TotalSold() {
+  const navigate = useNavigate();
+  
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [totalSold, setTotalSold] = useState(null);
@@ -75,6 +80,9 @@ export default function TotalSold() {
           Total Units Sold: <strong>{totalSold}</strong>
         </p>
       )}
+      <button className="back-button" onClick={() => navigate('/StatisticsPage')}>
+      Back
+    </button>
     </div>
   );
 }

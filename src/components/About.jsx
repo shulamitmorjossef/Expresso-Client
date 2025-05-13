@@ -4,12 +4,16 @@ import React, { useEffect, useState } from 'react';
 import './styles/About.css';
 
 import baseUrl from '../config';
+import { useNavigate } from 'react-router-dom';
+
 
 
 // const baseUrl = process.env.SERVER_URL ; 
 // const baseUrl = import.meta.env.VITE_SERVER_URL;
 
 function About() {
+  const navigate = useNavigate();
+
   const [aboutData, setAboutData] = useState(null);
   const [error, setError] = useState(null);
  
@@ -45,6 +49,9 @@ function About() {
       <p>{aboutData.section3}</p>
       <p>{aboutData.section4}</p>
       <p>{aboutData.section5}</p>
+      <button className="back-button" onClick={() => navigate(-1)}>
+      Back
+     </button>
     </div>
   );
 }

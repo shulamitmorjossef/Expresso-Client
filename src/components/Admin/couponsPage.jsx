@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/AdminCoupons.css';
 import baseUrl from '../../config';   
+import { useNavigate } from 'react-router-dom';
 
 export default function AdminCoupons() {
+    const navigate = useNavigate();
     const [coupons, setCoupons] = useState([]);
     const [newCoupon, setNewCoupon] = useState({ codename: '', discount_percent: '' });
 
@@ -75,6 +77,9 @@ export default function AdminCoupons() {
                     </li>
                 ))}
             </ul>
+             <button className="back-button" onClick={() => navigate('/AdminHome')}>
+                Back
+            </button>
         </div>
     );
 }

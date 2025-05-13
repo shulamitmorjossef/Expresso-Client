@@ -241,4 +241,27 @@
     }
   }
   
-  
+  .cart-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #5a351e;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-button:hover {
+  background-color: #472c18;
+}
+
+.cart-icon {
+  font-size: 24px;
+}

@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import baseUrl from '../../config';
 import "../styles/PersonalAreaAdmin.css";
+import { useNavigate } from 'react-router-dom';
 
 export default function PersonalAreaAdmin() {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [form, setForm] = useState({
@@ -201,6 +203,9 @@ export default function PersonalAreaAdmin() {
           </>
         )}
       </div>
+      <button className="back-button" onClick={() => navigate('/AdminHome')}>
+        Back
+      </button>
     </div>
   );
 }

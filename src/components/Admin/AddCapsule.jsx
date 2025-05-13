@@ -183,6 +183,9 @@ export default function AddCapsule() {
           {isSubmitting ? 'Saving...' : '➕ Add Capsule'}
         </button>
       </form>
+      <button className="back-button" onClick={() => navigate('/CapsuleCatalog')}>
+      Back
+     </button>
     </div>
   );
 }

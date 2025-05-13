@@ -92,11 +92,11 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-attachment: fixed; /* תמונה נשארת במקום בזמן גלילה */
+    background-attachment: fixed; 
     background-color: #fffaf5;
     margin: 0;
     font-family: sans-serif;
-    height: 100%; /* חשוב כדי לאפשר גלילה */
+    height: 100%;
 }
 
 .page-with-background {
@@ -106,6 +106,25 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-attachment: fixed; /* גם כאן תמונה נשארת במקום בזמן גלילה */
+    background-attachment: fixed;
     background-color: #fffaf5;
 }
+
+  .back-button {
+  position: fixed; 
+  top: 20px;
+  left: 20px;
+  background-color: #5a351e;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  z-index: 1000; 
+}
+
+.back-button:hover {
+  background-color: #472c18;
+}
+
