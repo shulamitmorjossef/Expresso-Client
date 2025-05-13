@@ -48,15 +48,15 @@ export default function AdminHome() {
                 </Link>
               </li>
 
-              {/* Catalog Dropdown */}
+              {/* Catalog Dropdown + Clickable */}
               <li
                 className="dropdown-parent"
                 onMouseEnter={() => setCatalogOpen(true)}
                 onMouseLeave={() => setCatalogOpen(false)}
               >
-                <span className="dropdown-trigger">
+                <Link to="/CatalogPage" className="dropdown-trigger">
                   <Package size={20} /> <span>Catalog</span>
-                </span>
+                </Link>
                 {catalogOpen && (
                   <ul className="dropdown-submenu">
                     <li>
@@ -78,15 +78,15 @@ export default function AdminHome() {
                 )}
               </li>
 
-              {/* Statistics Dropdown */}
+              {/* Statistics Dropdown + Clickable */}
               <li
                 className="dropdown-parent"
                 onMouseEnter={() => setStatsOpen(true)}
                 onMouseLeave={() => setStatsOpen(false)}
               >
-                <span className="dropdown-trigger">
+                <Link to="/StatisticsPage" className="dropdown-trigger">
                   <BarChart size={20} /> <span>Statistics</span>
-                </span>
+                </Link>
                 {statsOpen && (
                   <ul className="dropdown-submenu">
                     <li>

@@ -2,10 +2,7 @@
   position: relative;
   font-family: 'Poppins', Arial, sans-serif;
   min-height: 100vh;
-  background-image: url("/images/coffee_background.jpg");
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  background-color: #fffaf5;; 
   overflow: hidden;
   width: 100%;
 }
@@ -117,6 +114,7 @@
 }
 
 .category-card {
+  width: 280px;
   text-align: center;
   transition: transform 0.3s, box-shadow 0.3s;
   cursor: pointer;
@@ -130,6 +128,12 @@
   margin-top: 10px;
   font-weight: bold;
   color: white;
+}
+
+@media (min-width: 1025px) {
+  .categories-container {
+    flex-wrap: nowrap;
+  }
 }
 
 .footer {
