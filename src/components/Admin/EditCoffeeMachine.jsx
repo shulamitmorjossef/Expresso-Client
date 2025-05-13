@@ -3,20 +3,51 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { create, test, enforce } from 'vest';
 import baseUrl from '../../config';
+import '../styles/EditCoffeeMachine.css';
 
-// Create validation suite
+// Validation suite
 const suite = create((data = {}, field) => {
   test('name', 'Name is required', () => {
     enforce(data.name).isNotEmpty();
   });
+
+  test('name', 'Name must contain only English letters', () => {
+    if (data.name && data.name.trim()) {
+      enforce(data.name).matches(/^[A-Za-z\s\-']{1,30}$/);
+    }
+  });
+
   test('color', 'Color is required', () => {
     enforce(data.color).isNotEmpty();
   });
+
   test('capacity', 'Capacity is required', () => {
     enforce(data.capacity).isNotEmpty();
   });
+
+  test('capacity', 'Capacity must be a number between 100 and 500 ml', () => {
+    try {
+      const value = Number(data.capacity);
+      if (isNaN(value)) throw new Error();
+      enforce(value).greaterThanOrEquals(100);
+      enforce(value).lessThanOrEquals(500);
+    } catch {
+      throw new Error("Capacity must be a number between 100 and 500 ml");
+    }
+  });
+
   test('price', 'Price is required', () => {
     enforce(data.price).isNotEmpty();
+  });
+
+  test('price', 'Price must be a number greater than 0', () => {
+    try {
+      const value = Number(data.price);
+      if (isNaN(value)) throw new Error();
+      enforce(value).greaterThan(0);
+    } catch {
+      throw new Error("Price must be a number greater than 0");
+    }
   });
 });
 
@@ -33,8 +64,10 @@ export default function EditCoffeeMachine() {
   const [existingImage, setExistingImage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [validationResult, setValidationResult] = useState(suite.get());
 
-  // Load coffee machine data on mount
+  const colors = ["Black", "White", "Silver", "Light blue", "Pink", "Purple", "Yellow", "Beige"];
+
   useEffect(() => {
     axios.get(`${baseUrl}/get-coffee-machine/${id}`)
       .then(res => {
@@ -44,9 +77,10 @@ export default function EditCoffeeMachine() {
           capacity: res.data.capacity?.toString() || '',
           price: res.data.price?.toString() || '',
         };
-
         setForm(formattedData);
         setExistingImage(res.data.image_url || '');
+        // suite(formattedData);
+        // setValidationResult(suite.get());
       })
       .catch((err) => {
         console.error('Failed to load machine data:', err);
@@ -55,7 +89,10 @@ export default function EditCoffeeMachine() {
   }, [id]);
 
   const handleChange = (field, value) => {
-    setForm({ ...form, [field]: value });
+    const updatedForm = { ...form, [field]: value };
+    setForm(updatedForm);
+    suite(updatedForm, field);
+    setValidationResult(suite.get());
   };
 
   const handleImageChange = (e) => {
@@ -68,8 +105,10 @@ export default function EditCoffeeMachine() {
     e.preventDefault();
     setError('');
 
-    // Run full validation on all fields
-    const result = suite(form);
+    suite(form);
+    const result = suite.get();
+    setValidationResult(result);
+
     if (result.hasErrors()) {
       setError('Please fix the validation errors before saving.');
       return;
@@ -77,24 +116,15 @@ export default function EditCoffeeMachine() {
 
     try {
       setIsSubmitting(true);
-      
-      // Prepare FormData
       const formData = new FormData();
       formData.append('name', form.name || '');
       formData.append('color', form.color || '');
       formData.append('capacity', form.capacity || '');
       formData.append('price', form.price || '');
-      
-      // Add new image if selected
-      if (newImage) {
-        formData.append('image', newImage);
-      }
+      if (newImage) formData.append('image', newImage);
 
-      // Send the request
       await axios.put(`${baseUrl}/update-coffee-machine/${id}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+        headers: { 'Content-Type': 'multipart/form-data' }
       });
 
       alert('Machine updated successfully');
@@ -107,98 +137,74 @@ export default function EditCoffeeMachine() {
     }
   };
 
+  const getFieldErrors = (field) => validationResult.getErrors(field);
+  const hasFieldErrors = (field) => validationResult.hasErrors(field);
+
   return (
-    <form className="edit-form" onSubmit={handleSubmit} encType="multipart/form-data">
-      <h2>Edit Coffee Machine</h2>
+    <div className="form-background">
+      <form className="edit-coffee-machine-form" onSubmit={handleSubmit} encType="multipart/form-data">
+        <h2>Edit Coffee Machine</h2>
 
-      {error && <div className="error-message">{error}</div>}
+        {error && <div className="error-message">{error}</div>}
 
-      <label>Name:</label>
-      <input
-        type="text"
-        value={form.name || ''}
-        onChange={e => handleChange('name', e.target.value)}
-      />
+        <label>Name:</label>
+        <input
+          type="text"
+          placeholder="Enter coffee machine name"
+          value={form.name}
+          onChange={e => handleChange('name', e.target.value)}
+          className={hasFieldErrors('name') ? 'invalid' : ''}
+        />
+        {hasFieldErrors('name') && <div className="error">{getFieldErrors('name')[0]}</div>}
 
-      <label>Color:</label>
-      <input
-        type="text"
-        value={form.color || ''}
-        onChange={e => handleChange('color', e.target.value)}
-      />
+        <label>Color:</label>
+        <select
+          value={form.color}
+          onChange={e => handleChange('color', e.target.value)}
+          className={hasFieldErrors('color') ? 'invalid' : ''}
+        >
+          <option value="">Select Color</option>
+          {colors.map(color => (
+            <option key={color} value={color}>{color}</option>
+          ))}
+        </select>
+        {hasFieldErrors('color') && <div className="error">{getFieldErrors('color')[0]}</div>}
 
-      <label>Water Tank Capacity (ml):</label>
-      <input
-        type="text"
-        value={form.capacity || ''}
-        onChange={e => handleChange('capacity', e.target.value)}
-      />
+        <label>Water Tank Capacity (ml):</label>
+        <input
+          type="text"
+          placeholder="Enter capacity (100-500 ml)"
+          value={form.capacity}
+          onChange={e => handleChange('capacity', e.target.value)}
+          className={hasFieldErrors('capacity') ? 'invalid' : ''}
+        />
+        {hasFieldErrors('capacity') && <div className="error">{getFieldErrors('capacity')[0]}</div>}
 
-      <label>Price:</label>
-      <input
-        type="text"
-        value={form.price || ''}
-        onChange={e => handleChange('price', e.target.value)}
-      />
+        <label>Price:</label>
+        <input
+          type="text"
+          placeholder="Enter price (must be > 0)"
+          value={form.price}
+          onChange={e => handleChange('price', e.target.value)}
+          className={hasFieldErrors('price') ? 'invalid' : ''}
+        />
+        {hasFieldErrors('price') && <div className="error">{getFieldErrors('price')[0]}</div>}
 
-      <label>Current Image:</label><br />
-      {existingImage && <img src={existingImage} alt="machine" width="100" />}
+        {existingImage && (
+          <>
+            <label>Current Image:</label>
+            <img src={existingImage} alt="machine" width="100" style={{ marginBottom: '10px' }} />
+          </>
+        )}
 
-      <label>Change Image:</label>
-      <input 
-        type="file" 
-        accept="image/*" 
-        onChange={handleImageChange}
-      />
-      {newImage && (
-        <div className="preview">
-          <p>New image selected: {newImage.name}</p>
-        </div>
-      )}
+        <label>Change Image:</label>
+        <input type="file" accept="image/*" onChange={handleImageChange} />
+        {newImage && <div className="preview">New image selected: {newImage.name}</div>}
 
-      <button 
-        type="submit" 
-        disabled={isSubmitting}
-      >
-        {isSubmitting ? 'Saving...' : '💾 Save Changes'}
-      </button>
-
-      <style>{`
-        .edit-form {
-          padding: 20px;
-          max-width: 400px;
-        }
-        .edit-form label {
-          font-weight: bold;
-          display: block;
-          margin-top: 15px;
-        }
-        .edit-form input {
-          width: 100%;
-          padding: 6px;
-          margin-top: 4px;
-        }
-        .edit-form button {
-          margin-top: 20px;
-          padding: 8px 16px;
-          background-color: #4285f4;
-          color: white;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          font-weight: bold;
-        }
-        .edit-form button:hover {
-          background-color: #3367d6;
-        }
-        .error-message {
-          background-color: #ffebee;
-          color: #d32f2f;
-          padding: 10px;
-          border-radius: 4px;
-          margin-bottom: 15px;
-        }
-      `}</style>
-    </form>
+        <button type="submit" disabled={isSubmitting} className={isSubmitting ? 'submitting' : ''}>
+          {isSubmitting ? 'Saving...' : 'Save Changes'}
+        </button>
+      </form>
+    </div>
   );
 }

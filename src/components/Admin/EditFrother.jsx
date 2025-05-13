@@ -3,14 +3,15 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { create, test, enforce } from 'vest';
 import baseUrl from '../../config';
+import '../styles/EditMilkFrother.css';
 
 const suite = create((data = {}, field) => {
   test('name', 'Name is required', () => {
     enforce(data.name).isNotEmpty();
   });
-  test('name', 'Name must contain only letters (max 30)', () => {
+  test('name', 'Name must contain only English letters (max 30)', () => {
     if (data.name && data.name.trim()) {
-      enforce(data.name).matches(/^[A-Za-z\s]{1,30}$/);
+      enforce(data.name).matches(/^[A-Za-z\s\-']{1,30}$/u);
       enforce(data.name.length).lessThanOrEquals(30);
     }
   });
@@ -54,7 +55,6 @@ export default function EditFrother() {
   });
   const [newImage, setNewImage] = useState(null);
   const [existingImage, setExistingImage] = useState('');
-  
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [validationResult, setValidationResult] = useState(suite.get());
@@ -68,15 +68,17 @@ export default function EditFrother() {
         const data = {
           ...res.data,
           capacity: res.data.capacity?.toString() || '',
-          price: res.data.price?.toString() || ''
+          price: res.data.price?.toString() || '',
         };
+
 
         setForm(data);
         setExistingImage(res.data.image_url || '');
 
         console.log('Loaded frother data:', data);
         setForm(data);
-        setValidationResult(suite(data));
+        setExistingImage(res.data.image_url); // adjust if needed
+        // setValidationResult(suite(data));
       })
       .catch(err => {
         console.error('Failed to load frother data:', err);
@@ -115,15 +117,14 @@ export default function EditFrother() {
       formData.append('frothing_type', form.frothing_type);
       formData.append('capacity', form.capacity);
       formData.append('price', form.price);
+      if (newImage) formData.append('image', newImage);
 
-      if (newImage) {
-        formData.append('image', newImage);
-      }
       await axios.put(`${baseUrl}/update-milk-frother/${id}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
-        });
-        alert('Frother updated successfully');
-        navigate('/FrotherCatalog');
+      });
+
+      alert('Frother updated successfully');
+      navigate('/FrotherCatalog');
 
     } catch (err) {
       console.error('Update failed:', err);
@@ -137,124 +138,80 @@ export default function EditFrother() {
   const hasFieldErrors = (field) => validationResult.hasErrors(field);
 
   return (
-    <form className="edit-form" onSubmit={handleSubmit} encType="multipart/form-data">
-      <h2>Edit Milk Frother</h2>
-      {error && <div className="error-message">{error}</div>}
+    <div className="form-background">
+      <form className="edit-milk-frother-form" onSubmit={handleSubmit} encType="multipart/form-data">
+        <h2>Edit Milk Frother</h2>
 
-      <label>Name:</label>
-      <input type="text" value={form.name} onChange={e => handleChange('name', e.target.value)} className={hasFieldErrors('name') ? 'invalid' : ''} />
-      {hasFieldErrors('name') && <div className="error">{getFieldErrors('name')[0]}</div>}
+        {error && <div className="error-message">{error}</div>}
 
-      <label>Color:</label>
-      <select value={form.color} onChange={e => handleChange('color', e.target.value)} className={hasFieldErrors('color') ? 'invalid' : ''}>
-        <option value="">Select Color</option>
-        {colors.map(color => (
-          <option key={color} value={color}>{color}</option>
-        ))}
-      </select>
-      {hasFieldErrors('color') && <div className="error">{getFieldErrors('color')[0]}</div>}
-
-      <label>Frothing Type:</label>
-      <select value={form.frothing_type} onChange={e => handleChange('frothing_type', e.target.value)} className={hasFieldErrors('frothing_type') ? 'invalid' : ''}>
-        <option value="">Select Type</option>
-        {frothingOptions.map(type => (
-          <option key={type} value={type}>{type}</option>
-        ))}
-      </select>
-      {hasFieldErrors('frothing_type') && <div className="error">{getFieldErrors('frothing_type')[0]}</div>}
-
-      <label>Capacity (ml):</label>
-      <input type="text" value={form.capacity} onChange={e => handleChange('capacity', e.target.value)} className={hasFieldErrors('capacity') ? 'invalid' : ''} />
-      {hasFieldErrors('capacity') && <div className="error">{getFieldErrors('capacity')[0]}</div>}
-
-      <label>Price:</label>
-      <input type="text" value={form.price} onChange={e => handleChange('price', e.target.value)} className={hasFieldErrors('price') ? 'invalid' : ''} />
-      {hasFieldErrors('price') && <div className="error">{getFieldErrors('price')[0]}</div>}
-
-      <label>Current Image:</label><br />
-      {existingImage && <img src={existingImage} alt="frother" width="100" />}
-
-      <label>Change Image:</label>
-      <input 
-        type="file" 
-        accept="image/*"
-        onChange={handleImageChange} 
+        <label>Name:</label>
+        <input
+          type="text"
+          value={form.name}
+          onChange={e => handleChange('name', e.target.value)}
+          className={hasFieldErrors('name') ? 'invalid' : ''}
         />
-      {newImage && <div className="preview">New image selected: {newImage.name}</div>}
+        {hasFieldErrors('name') && <div className="error">{getFieldErrors('name')[0]}</div>}
 
-      <button type="submit" disabled={isSubmitting} className={isSubmitting ? 'submitting' : ''}>
-        {isSubmitting ? 'Saving...' : '💾 Save Changes'}
-      </button>
+        <label>Color:</label>
+        <select
+          value={form.color}
+          onChange={e => handleChange('color', e.target.value)}
+          className={hasFieldErrors('color') ? 'invalid' : ''}
+        >
+          <option value="">Select Color</option>
+          {colors.map(color => (
+            <option key={color} value={color}>{color}</option>
+          ))}
+        </select>
+        {hasFieldErrors('color') && <div className="error">{getFieldErrors('color')[0]}</div>}
 
-      <style>{`
-        .edit-form {
-          padding: 20px;
-          max-width: 400px;
-        }
-        .edit-form label {
-          font-weight: bold;
-          display: block;
-          margin-top: 15px;
-        }
-        .edit-form input, .edit-form select {
-          width: 100%;
-          padding: 6px;
-          margin-top: 4px;
-        }
-        .edit-form button {
-          margin-top: 20px;
-          padding: 8px 16px;
-          background-color: #4285f4;
-          color: white;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          font-weight: bold;
-        }
-        .edit-form button:hover {
-          background-color: #3367d6;
-        }
-        .edit-form button.submitting {
-          background-color: #cccccc;
-          cursor: not-allowed;
-        }
-        .error {
-          color: red;
-          font-size: 0.85em;
-          margin-top: 4px;
-        }
-        .error-message {
-          background-color: #ffebee;
-          color: #d32f2f;
-          padding: 10px;
-          border-radius: 4px;
-          margin-bottom: 15px;
-          border-left: 4px solid #d32f2f;
-        }
-        .invalid {
-          border: 1px solid red;
-        }
-        .custom-file-upload {
-          margin-top: 10px;
-        }
-        .custom-file-upload label {
-          display: inline-block;
-          padding: 6px 12px;
-          cursor: pointer;
-          background-color: #4285f4;
-          color: white;
-          border-radius: 4px;
-          font-weight: bold;
-        }
-        .custom-file-upload input[type="file"] {
-          display: none;
-        }
-        .preview {
-          margin-top: 10px;
-          font-size: 0.9em;
-          color: #555;
-        }
-      `}</style>
-    </form>
+        <label>Frothing Type:</label>
+        <select
+          value={form.frothing_type}
+          onChange={e => handleChange('frothing_type', e.target.value)}
+          className={hasFieldErrors('frothing_type') ? 'invalid' : ''}
+        >
+          <option value="">Select Type</option>
+          {frothingOptions.map(type => (
+            <option key={type} value={type}>{type}</option>
+          ))}
+        </select>
+        {hasFieldErrors('frothing_type') && <div className="error">{getFieldErrors('frothing_type')[0]}</div>}
+
+        <label>Capacity (ml):</label>
+        <input
+          type="text"
+          value={form.capacity}
+          onChange={e => handleChange('capacity', e.target.value)}
+          className={hasFieldErrors('capacity') ? 'invalid' : ''}
+        />
+        {hasFieldErrors('capacity') && <div className="error">{getFieldErrors('capacity')[0]}</div>}
+
+        <label>Price:</label>
+        <input
+          type="text"
+          value={form.price}
+          onChange={e => handleChange('price', e.target.value)}
+          className={hasFieldErrors('price') ? 'invalid' : ''}
+        />
+        {hasFieldErrors('price') && <div className="error">{getFieldErrors('price')[0]}</div>}
+
+        {existingImage && (
+          <>
+            <label>Current Image:</label><br />
+            {existingImage && <img src={existingImage} alt="frother" width="100" style={{ marginBottom: '10px' }} />
+}          </>
+        )}
+
+        <label>Change Image:</label>
+        <input type="file" accept="image/*" onChange={handleImageChange} />
+        {newImage && <div className="preview">New image selected: {newImage.name}</div>}
+
+        <button type="submit" disabled={isSubmitting} className={isSubmitting ? 'submitting' : ''}>
+          {isSubmitting ? 'Saving...' : 'Save Changes'}
+        </button>
+      </form>
+    </div>
   );
 }

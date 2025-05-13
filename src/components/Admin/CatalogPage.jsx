@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/CatalogPage.css';
 
+
+
 export default function CatalogPage() {
   const navigate = useNavigate();
 
