@@ -25,6 +25,24 @@ export default function CoffeeProducts() {
       });
   }, []);
 
+  const handlenavigateToCart = () => {
+    const userType = localStorage.getItem('userType');
+    const userId = parseInt(localStorage.getItem('userId'));
+
+    if (userType === 'guest' || !userType) {
+      setModalData({
+        title: 'Login Required',
+        message: 'You must register or log in to view the cart.',
+        onClose: () => {
+          setModalData(null);
+          navigate('/');
+        },
+        actionText: 'Go to Login'
+      });
+      return;
+    }
+    navigate('/CartPage')
+  }
   const handleAddToCart = async (item, quantity = 1) => {
     if (item.sum_of === 0) {
       setModalData({
@@ -174,9 +192,9 @@ export default function CoffeeProducts() {
       <button className="back-button" onClick={() => navigate(-1)}>
       Back
      </button>
-     <button className="cart-button" onClick={() => navigate('/CartPage')}>
-        <FaShoppingCart className="cart-icon" />
-      </button>
+     <button className="cart-button" onClick={handlenavigateToCart}>
+      <FaShoppingCart className="cart-icon" />
+    </button>
     </div>
   );
 }
