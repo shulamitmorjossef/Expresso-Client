@@ -39,8 +39,8 @@ export default function Capsules() {
       });
       return;
     }
-    navigate('/CartPage')
-  }
+    navigate('/CartPage');
+  };
   const handleAddToCart = async (item, quantity = 1) => {
     if (item.sum_of === 0) {
       setModalData({
