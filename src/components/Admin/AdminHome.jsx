@@ -71,7 +71,7 @@ export default function AdminHome() {
                   to="/StatisticsPage"
                   className="dropdown-link"
                 >
-                  Statistics
+                  Statistical Data
                 </Link>
               </li>
               <li>

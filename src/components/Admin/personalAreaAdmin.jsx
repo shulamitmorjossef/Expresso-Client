@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import baseUrl from '../../config';
+import "../styles/PersonalAreaAdmin.css";
 
 export default function PersonalAreaAdmin() {
   const [user, setUser] = useState(null);
@@ -59,7 +60,6 @@ export default function PersonalAreaAdmin() {
   };
 
   const handleSave = () => {
-
     if (form.password !== user.password) {
       if (!validatePassword(form.password)) {
         setError('Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.');
@@ -100,98 +100,107 @@ export default function PersonalAreaAdmin() {
           setSuccess('');
         }
       })
-      .catch(err => {
+      .catch(() => {
         setError('Failed to update details');
         setSuccess('');
       });
   };
 
   return (
-    <div className="user-profile">
-      <h2>My Profile</h2>
+    <div className="page-with-background">
+      <div className="personal-area-admin">
+        <h2>My Profile</h2>
 
-      {error && <div className="error">{error}</div>}
-      {success && <div className="success">{success}</div>}
+        {error && <div className="error">{error}</div>}
+        {success && <div className="success">{success}</div>}
 
-      <label>
-        Full Name:
-        <input
-          type="text"
-          name="full_name"
-          value={form.full_name}
-          onChange={handleChange}
-          disabled={!editMode}
-        />
-      </label>
+        <label>
+          Full Name:
+          <input
+            type="text"
+            name="full_name"
+            value={form.full_name}
+            onChange={handleChange}
+            disabled={!editMode}
+          />
+        </label>
 
-      <label>
-        Username:
-        <input
-          type="text"
-          name="username"
-          value={form.username}
-          onChange={handleChange}
-          disabled={!editMode}
-        />
-      </label>
+        <label>
+          Username:
+          <input
+            type="text"
+            name="username"
+            value={form.username}
+            onChange={handleChange}
+            disabled={!editMode}
+          />
+        </label>
 
-      <label>
-        Email:
-        <input
-          type="email"
-          name="email"
-          value={form.email}
-          onChange={handleChange}
-          disabled={!editMode}
-        />
-      </label>
+        <label>
+          Email:
+          <input
+            type="email"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+            disabled={!editMode}
+          />
+        </label>
 
-      <label>
-        Phone:
-        <input
-          type="tel"
-          name="phone"
-          value={form.phone}
-          onChange={handleChange}
-          disabled={!editMode}
-        />
-      </label>
+        <label>
+          Phone:
+          <input
+            type="tel"
+            name="phone"
+            value={form.phone}
+            onChange={handleChange}
+            disabled={!editMode}
+          />
+        </label>
 
-      <label>
-        New Password:
-        <input
-          type="password"
-          name="password"
-          value={form.password}
-          onChange={handleChange}
-          disabled={!editMode}
-        />
-      </label>
+        <label>
+          New Password:
+          <input
+            type="password"
+            name="password"
+            value={form.password}
+            onChange={handleChange}
+            disabled={!editMode}
+          />
+        </label>
 
-      <label>
-        Confirm Password:
-        <input
-          type="password"
-          name="confirmPassword"
-          value={form.confirmPassword}
-          onChange={handleChange}
-          disabled={!editMode}
-        />
-      </label>
+        <label>
+          Confirm Password:
+          <input
+            type="password"
+            name="confirmPassword"
+            value={form.confirmPassword}
+            onChange={handleChange}
+            disabled={!editMode}
+          />
+        </label>
 
-      {!editMode ? (
-        <button onClick={() => setEditMode(true)}>Edit</button>
-      ) : (
-        <>
-          <button onClick={handleSave}>Save</button>
-          <button onClick={() => {
-            setEditMode(false);
-            setForm({ ...user, confirmPassword: user.password });
-            setError('');
-            setSuccess('');
-          }}>Cancel</button>
-        </>
-      )}
+        {!editMode ? (
+          <button onClick={() => setEditMode(true)}>Edit</button>
+        ) : (
+          <>
+            <button onClick={handleSave}>Save</button>
+            <button onClick={() => {
+              setEditMode(false);
+              setForm({ 
+                full_name: user.full_name,
+                username: user.username,
+                email: user.email,
+                phone: user.phone,
+                password: user.password,
+                confirmPassword: user.password
+              });
+              setError('');
+              setSuccess('');
+            }}>Cancel</button>
+          </>
+        )}
+      </div>
     </div>
   );
 }
