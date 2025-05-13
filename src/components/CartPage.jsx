@@ -109,7 +109,7 @@ export default function CartPage() {
                 <button 
                 onClick={() => {
                   if (item.quantity < item.sum_of) {
-                    updateQuantity(item.product_id, item.product_type, item.quantity + 1)
+                    updateQuantity(item.product_id, item.product_type, item.quantity + 1);
                   } else {
                     setModalData({
                       title: 'Stock Limit',
