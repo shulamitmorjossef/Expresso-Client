@@ -176,6 +176,9 @@ const Register = () => {
           </div>
         </form>
       </div>
+      <button className="back-button" onClick={() => navigate(-1)}>
+      Back
+     </button>
     </div>
   );
 };

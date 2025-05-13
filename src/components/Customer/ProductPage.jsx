@@ -44,7 +44,13 @@ const CoffeeMachine = () => {
       <p><strong>Color:</strong> {machine.color}</p>
       <p><strong>Capacity:</strong> {machine.capacity} cups</p>
       <p><strong>Price:</strong> {machine.price}₪</p>
+
+    <button className="back-button" onClick={() => navigate('/AdminHome')}>
+      Back
+    </button>
+
     </div>
+
   );
 };
 

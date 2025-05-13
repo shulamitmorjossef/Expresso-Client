@@ -3,8 +3,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import baseUrl from '../../../config';
 import "../../styles/CustomerCount.css";
+import { useNavigate } from 'react-router-dom';
+
 
 export default function CustomerCount() {
+  const navigate = useNavigate();
+
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [count, setCount] = useState(null);
@@ -73,6 +77,9 @@ export default function CustomerCount() {
             : 'No customers purchased in selected period.'}
         </p>
       )}
+      <button className="back-button" onClick={() => navigate('/StatisticsPage')}>
+      Back
+    </button>
     </div>
   );
 }

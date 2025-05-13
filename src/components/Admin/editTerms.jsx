@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import baseUrl from '../../config';
 import '../styles/editTerms.css';  
+import { useNavigate } from 'react-router-dom';
 
 export default function EditTerms() {
+  const navigate = useNavigate();
   const [terms, setTerms] = useState({
     title: '',
     section1: '',
@@ -97,6 +99,9 @@ export default function EditTerms() {
           <button onClick={() => setEditMode(false)}>Cancel</button>
         </>
       )}
+      <button className="back-button" onClick={() => navigate('/AdminHome')}>
+        Back
+      </button>
     </div>
   );
 }

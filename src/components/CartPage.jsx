@@ -174,6 +174,9 @@ export default function CartPage() {
           />
         )}
       </div>
+      <button className="back-button" onClick={() => navigate(-1)}>
+      Back
+     </button>
     </div>
   );
 }

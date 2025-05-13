@@ -3,8 +3,12 @@ import axios from 'axios';
 import baseUrl from '../../config';
 import '../DeliveryForm.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function PersonalAreaCustomer() {
+  const navigate = useNavigate();
+  
   const [user, setUser] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [form, setForm] = useState({
@@ -170,6 +174,9 @@ export default function PersonalAreaCustomer() {
           </div>
         )}
       </div>
+      <button className="back-button" onClick={() => navigate('/CustomerHome')}>
+      Back
+    </button>
     </div>
   );
 }

@@ -26,6 +26,9 @@ export default function CatalogPage() {
       <h3>Milk Frothers</h3>
     </div>
   </div>
+  <button className="back-button" onClick={() => navigate('/AdminHome')}>
+    Back
+  </button>
 </div>
   );
 }

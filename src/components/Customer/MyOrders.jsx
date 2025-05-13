@@ -3,8 +3,11 @@ import baseUrl from '../../config';
 import '../DeliveryForm.css';
 import OrderInfoModal from './OrderInfoModal';
 import ModalMessage from '../ModalMessage'; 
+import { useNavigate } from 'react-router-dom';
 
 export default function MyOrders() {
+
+  const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [modalOrderId, setModalOrderId] = useState(null);
   const [error, setError] = useState('');
@@ -115,6 +118,9 @@ export default function MyOrders() {
           />
         )}
       </div>
+      <button className="back-button" onClick={() => navigate('/CustomerHome')}>
+      Back
+    </button>
     </div>
   );
 }

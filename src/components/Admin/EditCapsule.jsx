@@ -199,6 +199,9 @@ export default function EditCapsule() {
           {isSubmitting ? 'Saving...' : 'Save Changes'}
         </button>
       </form>
+      <button className="back-button" onClick={() => navigate('/CapsuleCatalog')}>
+      Back
+     </button>
     </div>
   );
 }
