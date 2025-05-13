@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import baseUrl from '../../../config';       
-import '../../styles/BestSellers.css';     
+import baseUrl from '../../../config';
+import '../../styles/BestSellers.css';
 
 export default function BestSellers() {
   const [startDate, setStartDate] = useState('');
@@ -18,6 +18,7 @@ export default function BestSellers() {
       setError('Please select both dates.');
       return;
     }
+
     if (new Date(startDate) > new Date(endDate)) {
       setError('Invalid date range.');
       return;
@@ -34,8 +35,11 @@ export default function BestSellers() {
         setError(response.data.message);
       } else {
         setResults(response.data);
+        console.log('raw products:', response.data);
+
       }
     } catch (err) {
+      console.error(err);
       setError('Server error');
     } finally {
       setLoading(false);
@@ -75,14 +79,16 @@ export default function BestSellers() {
         <ul className="results-list">
           {results.map((p, idx) => (
             <li key={idx} className="result-item">
-              {p.image_path &&
-                <img
-                  // src={p.image}
-                  src= {`data:image/jpeg;base64,${machine.image}`} 
-                  alt={p.name}
-                  className="product-thumb"
-                />
-              }
+              <img
+                src={
+                  p.image
+                    ? `data:image/${p.imageType || 'jpeg'};base64,${p.image}`
+                    : '/images/placeholder.png'
+                }
+                alt={p.name}
+                className="product-thumb"
+                onError={e => { e.currentTarget.src = '/images/placeholder.png'; }}
+              />
               <div className="product-info">
                 <span className="units-sold">{p.total_sold}</span>
                 <span className="product-name">{p.name}</span>
@@ -91,6 +97,7 @@ export default function BestSellers() {
           ))}
         </ul>
       )}
+
     </div>
   );
 }

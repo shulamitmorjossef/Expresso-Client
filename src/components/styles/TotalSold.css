@@ -2,17 +2,17 @@
     position: relative;
     min-height: 100vh;
     padding: 0;
-    background: url('/images/Statistics.png') center/cover no-repeat;
-    color: #fff;
+    background: url('/images/background.png') center/cover no-repeat;
+    color: #3c2e2a;
 }
 
-.total-sold-page::before {
+/* .total-sold-page::before {
     content: "";
     position: absolute;
     inset: 0;
     background: rgba(0, 0, 0, 0.6);
     z-index: 0;
-}
+} */
 
 .total-sold-page>* {
     position: relative;
@@ -50,7 +50,7 @@
 .filter-bar input[type="date"] {
     background: transparent;
     border: none;
-    color: #fff;
+    color: #3c2e2a;
     font-size: 1rem;
 }
 
@@ -79,13 +79,13 @@
     font-size: 1.5rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: #f9fafb;
+    color: #3c2e2a;
 }
 .total-sold-result {
     text-align: center;
     font-size: 2rem;
     font-weight: bold;
-    color: #fff;   
+    color: #3c2e2a;   
     margin-top: 2rem;
 }
 
