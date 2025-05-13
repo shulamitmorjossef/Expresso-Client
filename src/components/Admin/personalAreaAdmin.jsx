@@ -11,7 +11,8 @@ export default function PersonalAreaAdmin() {
     username: '',
     email: '',
     phone: '',
-    password: ''
+    password: '',
+    confirmPassword: ''
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -26,6 +27,7 @@ export default function PersonalAreaAdmin() {
         }
 
         const response = await axios.get(`${baseUrl}/get-user-details/${username}`);
+
         if (response.data.success) {
           const user = response.data.user;
           setUser(user);
@@ -34,7 +36,8 @@ export default function PersonalAreaAdmin() {
             username: user.username,
             email: user.email,
             phone: user.phone,
-            password: user.password
+            password: user.password,
+            confirmPassword: user.password
           });
         } else {
           setError('Failed to fetch user data');
@@ -44,6 +47,7 @@ export default function PersonalAreaAdmin() {
       }
     };
 
+
     fetchUserData();
   }, []);
 
@@ -51,7 +55,40 @@ export default function PersonalAreaAdmin() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const validatePassword = (password) => {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    return regex.test(password);
+  };
+
   const handleSave = () => {
+
+    if (form.password !== user.password) {
+      if (!validatePassword(form.password)) {
+        setError('Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.');
+        setSuccess('');
+        return;
+      }
+
+      if (form.password !== form.confirmPassword) {
+        setError('Passwords do not match.');
+        setSuccess('');
+        return;
+      }
+    }
+
+    const hasChanges = Object.keys(form).some(
+      key => key !== 'confirmPassword' && form[key] !== user[key]
+    );
+
+    if (!hasChanges) {
+      setError('No changes detected.');
+      setSuccess('');
+      return;
+    }
+
+    const confirmed = window.confirm("Are you sure you want to update your details?");
+    if (!confirmed) return;
+
     const username = localStorage.getItem('username');
     axios.put(`${baseUrl}/update-user-details/${username}`, form)
       .then(res => {
@@ -123,29 +160,41 @@ export default function PersonalAreaAdmin() {
           />
         </label>
 
-        <label>
-          Password:
-          <input
-            type="password"
-            name="password"
-            value={form.password}
-            onChange={handleChange}
-            disabled={!editMode}
-          />
-        </label>
+      <label>
+        New Password:
+        <input
+          type="password"
+          name="password"
+          value={form.password}
+          onChange={handleChange}
+          disabled={!editMode}
+        />
+      </label>
 
-        {!editMode ? (
-          <button onClick={() => setEditMode(true)}>Edit</button>
-        ) : (
-          <>
-            <button onClick={handleSave}>Save</button>
-            <button onClick={() => {
-              setEditMode(false);
-              setForm(user);
-            }}>Cancel</button>
-          </>
-        )}
-      </div>
+      <label>
+        Confirm Password:
+        <input
+          type="password"
+          name="confirmPassword"
+          value={form.confirmPassword}
+          onChange={handleChange}
+          disabled={!editMode}
+        />
+      </label>
+
+      {!editMode ? (
+        <button onClick={() => setEditMode(true)}>Edit</button>
+      ) : (
+        <>
+          <button onClick={handleSave}>Save</button>
+          <button onClick={() => {
+            setEditMode(false);
+            setForm({ ...user, confirmPassword: user.password });
+            setError('');
+            setSuccess('');
+          }}>Cancel</button>
+        </>
+      )}
     </div>
   );
 }

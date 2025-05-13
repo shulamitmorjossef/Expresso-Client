@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import '../styles/CatalogPage.css';
 import '../styles/Tables.css';
 import { Info, Pencil, Trash2, Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -56,60 +57,54 @@ export default function CoffeeCatalog() {
   };
 
   return (
-    <div className="catalog-page">
+    <div className="catalog-page coffee-machine-page">
       <div className="header-row">
-        <h2>Coffee Machine</h2>
-        <button onClick={handleAdd} className="add-button">
-          <Plus size={16} style={{ marginRight: 5 }} />
-          Add Coffee Machine
+        <h2 className="catalog-title">Coffee Machines</h2>
+        <button onClick={handleAdd} className="add-button large">
+          + Add Coffee Machine
         </button>
       </div>
-
-      <table className="product-table">
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {machines.map((machine) => (
-            <tr key={machine.id}>
-        <td>
-        <img 
-          src= {`data:image/jpeg;base64,${machine.image}`} 
-          alt={machine.name} 
-          width="50" 
-        />
-        </td>
-              <td>{machine.name}</td>
-              <td className="icon-cell">
-                <Info color="#8B4513" style={{ cursor: 'pointer' }} onClick={() => handleInfo(machine)} />
-                <Pencil color="#8B4513" style={{ marginLeft: 10, cursor: 'pointer' }} onClick={() => handleEdit(machine)} />
-                <Trash2 color="#8B4513" style={{ marginLeft: 10, cursor: 'pointer' }} onClick={() => handleDelete(machine.id)} />
-
-                <span style={{
-                  display: 'inline-block',
-                  marginLeft: 15,
-                  backgroundColor: '#f5f5f5',
-                  border: '1px solid #ccc',
-                  borderRadius: '6px',
-                  padding: '3px 8px',
-                  fontWeight: 'bold',
-                  fontSize: '13px',
-                  color: '#333',
-                  minWidth: '30px',
-                  textAlign: 'center'
-                }}>
-                  {machine.sum_of ?? 0}
-                </span>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
+  
+      <div className="table-container">
+        {machines.length === 0 ? (
+          <div className="no-products">No coffee machines found. Add your first one!</div>
+        ) : (
+          <table className="product-table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {machines.map((machine) => (
+                <tr key={machine.id}>
+                  <td>
+                    <img
+                      src={`data:image/jpeg;base64,${machine.image}`}
+                      alt={machine.name}
+                      width="50"
+                    />
+                  </td>
+                  <td>{machine.name}</td>
+                  <td className="icon-cell">
+                    <div className="icon-actions">
+                      <Info size={20} color="#8B4513" onClick={() => handleInfo(machine)} title="View Details" />
+                      <Pencil size={20} color="#8B4513" onClick={() => handleEdit(machine)} title="Edit" />
+                      <Trash2 size={20} color="#8B4513" onClick={() => handleDelete(machine.id)} title="Delete" />
+                      <span className="stock-box">
+                        {machine.sum_of ?? 0}
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+  
       {selectedProduct && (
         <InventoryModal
           product={selectedProduct}
@@ -119,4 +114,4 @@ export default function CoffeeCatalog() {
       )}
     </div>
   );
-}
+}  

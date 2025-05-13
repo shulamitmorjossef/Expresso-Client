@@ -6,13 +6,6 @@ import baseUrl from '../../config';
 import ProductModal from '../ProductModal';
 import ModalMessage from '../ModalMessage';
 
-const detectProductType = (item) => {
-  if (item.capacity && item.frothing_type) return 'milk_frothers';
-  if (item.capacity) return 'coffee_machines';
-  if (item.flavor) return 'capsules';
-  return 'unknown';
-};
-
 export default function CustomerHome() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -133,23 +126,24 @@ export default function CustomerHome() {
 
             {searchResults.length > 0 && (
               <ul className="search-dropdown">
-                {searchResults.map((item, idx) => {
-                  const correctedType = detectProductType(item);
-                  return (
-                    <li key={idx}>
-                      <div
-                        className="search-item"
-                        onClick={() => setSelectedProduct({ ...item, type: correctedType })}
-                      >
-                        <img src={item.image_path} alt={item.name} className="result-thumb" />
-                        <div className="result-info">
-                          <strong>{item.name}</strong>
-                          <span className="result-meta">({correctedType}) – ${item.price}</span>
-                        </div>
+                {searchResults.map((item, idx) => (
+                  <li key={idx}>
+                    <div
+                      className="search-item"
+                      onClick={() => setSelectedProduct(item)}
+                    >
+                      <img 
+                        src={`data:image/jpeg;base64,${item.image}`} 
+                        alt={item.name} 
+                        className="result-thumb" 
+                      />
+                      <div className="result-info">
+                        <strong>{item.name}</strong>
+                        <span className="result-meta">({item.type}) – ${item.price}</span>
                       </div>
-                    </li>
-                  );
-                })}
+                    </div>
+                  </li>
+                ))}
               </ul>
             )}
 
