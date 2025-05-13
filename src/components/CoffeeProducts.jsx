@@ -174,6 +174,9 @@ export default function CoffeeProducts() {
       <button className="back-button" onClick={() => navigate(-1)}>
       Back
      </button>
+     <button className="cart-button" onClick={() => navigate('/CartPage')}>
+        <FaShoppingCart className="cart-icon" />
+      </button>
     </div>
   );
 }

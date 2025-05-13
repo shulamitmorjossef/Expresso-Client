@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { FaSearch, FaBars } from 'react-icons/fa';
+import { FaSearch, FaBars, FaShoppingCart } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/CustomerHome.css';
 import baseUrl from '../../config';
 import ProductModal from '../ProductModal';
 import ModalMessage from '../ModalMessage';
+// import { FaShoppingCart } from 'react-icons/fa';
+
 
 export default function CustomerHome() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -192,6 +194,9 @@ export default function CustomerHome() {
           actionText={modalInfo.actionText}
         />
       )}
+      <button className="cart-button" onClick={() => navigate('/CartPage')}>
+      <FaShoppingCart className="cart-icon" />
+    </button>
     </div>
   );
 }
@@ -205,6 +210,9 @@ function CategoryCard({ src, label }) {
     >
       <img src={src} alt={label} className="category-image" />
       <p className="category-label">{label}</p>
+
+    
+
     </div>
   );
 }
