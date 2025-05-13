@@ -56,57 +56,53 @@ export default function FrotherCatalog() {
   };
 
   return (
-    <div className="catalog-page">
+    <div className="catalog-page frother-page">
       <div className="header-row">
-        <h2>Frothers</h2>
-        <button onClick={handleAdd} className="add-button">
-          <Plus size={16} style={{ marginRight: 5 }} />
-          Add Frother
+        <h2 className="catalog-title">Milk Frothers</h2>
+        <button onClick={handleAdd} className="add-button large">
+          + Add Frother
         </button>
       </div>
 
-      <table className="product-table">
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {frothers.map((frother) => (
-            <tr key={frother.id}>
-              <td><img src={`data:image/jpeg;base64,${frother.image}`} 
-              alt={frother.name} 
-              width="50" 
-              />
-              </td>
-              <td>{frother.name}</td>
-              <td className="icon-cell">
-                <Info color="#8B4513" style={{ cursor: 'pointer' }} onClick={() => handleInfo(frother)} />
-                <Pencil color="#8B4513" style={{ marginLeft: 10, cursor: 'pointer' }} onClick={() => handleEdit(frother)} />
-                <Trash2 color="#8B4513" style={{ marginLeft: 10, cursor: 'pointer' }} onClick={() => handleDelete(frother.id)} />
-
-                <span style={{
-                  display: 'inline-block',
-                  marginLeft: 15,
-                  backgroundColor: '#f5f5f5',
-                  border: '1px solid #ccc',
-                  borderRadius: '6px',
-                  padding: '3px 8px',
-                  fontWeight: 'bold',
-                  fontSize: '13px',
-                  color: '#333',
-                  minWidth: '30px',
-                  textAlign: 'center'
-                }}>
-                  {frother.sum_of ?? 0}
-                </span>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="table-container">
+        {frothers.length === 0 ? (
+          <div className="no-products">No frothers found. Add your first one!</div>
+        ) : (
+          <table className="product-table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {frothers.map((frother) => (
+                <tr key={frother.id}>
+                  <td>
+                    <img
+                      src={`data:image/jpeg;base64,${frother.image}`}
+                      alt={frother.name}
+                      width="50"
+                    />
+                  </td>
+                  <td>{frother.name}</td>
+                  <td className="icon-cell">
+                    <div className="icon-actions">
+                      <Info size={20} color="#8B4513" onClick={() => handleInfo(frother)} title="View Details" />
+                      <Pencil size={20} color="#8B4513" onClick={() => handleEdit(frother)} title="Edit" />
+                      <Trash2 size={20} color="#8B4513" onClick={() => handleDelete(frother.id)} title="Delete" />
+                      <span className="stock-box">
+                        {frother.sum_of ?? 0}
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
 
       {selectedProduct && (
         <InventoryModal

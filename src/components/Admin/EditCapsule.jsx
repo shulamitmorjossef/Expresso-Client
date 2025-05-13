@@ -3,14 +3,15 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { create, test, enforce } from 'vest';
 import baseUrl from '../../config';
+import '../styles/EditCapsule.css';
 
 const suite = create((data = {}, field) => {
   test('name', 'Name is required', () => {
     enforce(data.name).isNotEmpty();
   });
-  test('name', 'Name must contain only letters (max 30)', () => {
+  test('name', 'Name must contain only English letters (max 30)', () => {
     if (data.name && data.name.trim()) {
-      enforce(data.name).matches(/^[\p{L}\s]{1,30}$/u);
+      enforce(data.name).matches(/^[A-Za-z\s\-']{1,30}$/u);
       enforce(data.name.length).lessThanOrEquals(30);
     }
   });
@@ -20,7 +21,7 @@ const suite = create((data = {}, field) => {
   });
   test('flavor', 'Flavor must contain only letters (max 30)', () => {
     if (data.flavor && data.flavor.trim()) {
-      enforce(data.flavor).matches(/^[\p{L}\s]{1,30}$/u);
+      enforce(data.flavor).matches(/^[A-Za-z\s\-']{1,30}$/u);
       enforce(data.flavor.length).lessThanOrEquals(30);
     }
   });
@@ -75,7 +76,6 @@ export default function EditCapsule() {
   const [existingImage, setExistingImage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
- 
   const [validationResult, setValidationResult] = useState(suite.get());
 
   useEffect(() => {
@@ -87,8 +87,8 @@ export default function EditCapsule() {
           net_weight_grams: res.data.net_weight_grams?.toString() || '',
           price: res.data.price?.toString() || '',
         };
-        console.log('Loaded capsule data:', data);
         setForm(data);
+        setExistingImage(data.image_url);
         setValidationResult(suite(data));
       })
       .catch(err => {
@@ -104,7 +104,7 @@ export default function EditCapsule() {
   };
 
   const handleImageChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
+    if (e.target.files?.[0]) {
       setNewImage(e.target.files[0]);
     }
   };
@@ -129,18 +129,17 @@ export default function EditCapsule() {
       formData.append('net_weight_grams', form.net_weight_grams);
       formData.append('price', form.price);
       formData.append('ingredients', form.ingredients);
-
       if (newImage) {
         formData.append('image', newImage);
-      } 
+      }
 
       await axios.put(`${baseUrl}/update-capsule/${id}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
-        });
+      });
 
-        alert('Capsule updated successfully');
-        navigate('/CapsuleCatalog');
-      } catch (err) {
+      alert('Capsule updated successfully');
+      navigate('/CapsuleCatalog');
+    } catch (err) {
       console.error('Update failed:', err);
       setError(err.response?.data?.message || 'Failed to update capsule.');
     } finally {
@@ -152,103 +151,47 @@ export default function EditCapsule() {
   const hasFieldErrors = (field) => validationResult.hasErrors(field);
 
   return (
-    <form className="edit-form" onSubmit={handleSubmit} encType="multipart/form-data">
-      <h2>Edit Capsule</h2>
-      {error && <div className="error-message">{error}</div>}
+    <div className="form-background">
+      <form className="edit-capsule-form" onSubmit={handleSubmit} encType="multipart/form-data">
+        <h2>Edit Capsule</h2>
 
-      <label>Name:</label>
-      <input type="text" value={form.name} onChange={e => handleChange('name', e.target.value)} className={hasFieldErrors('name') ? 'invalid' : ''} />
-      {hasFieldErrors('name') && <div className="error">{getFieldErrors('name')[0]}</div>}
+        {error && <div className="error-message">{error}</div>}
 
-      <label>Flavor:</label>
-      <input type="text" value={form.flavor} onChange={e => handleChange('flavor', e.target.value)} className={hasFieldErrors('flavor') ? 'invalid' : ''} />
-      {hasFieldErrors('flavor') && <div className="error">{getFieldErrors('flavor')[0]}</div>}
+        <label>Name:</label>
+        <input type="text" value={form.name} onChange={e => handleChange('name', e.target.value)} className={hasFieldErrors('name') ? 'invalid' : ''} />
+        {hasFieldErrors('name') && <div className="error">{getFieldErrors('name')[0]}</div>}
 
-      <label>Quantity per Package:</label>
-      <input type="text" value={form.quantity_per_package} onChange={e => handleChange('quantity_per_package', e.target.value)} className={hasFieldErrors('quantity_per_package') ? 'invalid' : ''} />
-      {hasFieldErrors('quantity_per_package') && <div className="error">{getFieldErrors('quantity_per_package')[0]}</div>}
+        <label>Flavor:</label>
+        <input type="text" value={form.flavor} onChange={e => handleChange('flavor', e.target.value)} className={hasFieldErrors('flavor') ? 'invalid' : ''} />
+        {hasFieldErrors('flavor') && <div className="error">{getFieldErrors('flavor')[0]}</div>}
 
-      <label>Net Weight (grams):</label>
-      <input type="text" value={form.net_weight_grams} onChange={e => handleChange('net_weight_grams', e.target.value)} className={hasFieldErrors('net_weight_grams') ? 'invalid' : ''} />
-      {hasFieldErrors('net_weight_grams') && <div className="error">{getFieldErrors('net_weight_grams')[0]}</div>}
+        <label>Quantity per Package:</label>
+        <input type="text" value={form.quantity_per_package} onChange={e => handleChange('quantity_per_package', e.target.value)} className={hasFieldErrors('quantity_per_package') ? 'invalid' : ''} />
+        {hasFieldErrors('quantity_per_package') && <div className="error">{getFieldErrors('quantity_per_package')[0]}</div>}
 
-      <label>Price:</label>
-      <input type="text" value={form.price} onChange={e => handleChange('price', e.target.value)} className={hasFieldErrors('price') ? 'invalid' : ''} />
-      {hasFieldErrors('price') && <div className="error">{getFieldErrors('price')[0]}</div>}
+        <label>Net Weight (grams):</label>
+        <input type="text" value={form.net_weight_grams} onChange={e => handleChange('net_weight_grams', e.target.value)} className={hasFieldErrors('net_weight_grams') ? 'invalid' : ''} />
+        {hasFieldErrors('net_weight_grams') && <div className="error">{getFieldErrors('net_weight_grams')[0]}</div>}
 
-      <label>Ingredients:</label>
-      <input type="text" value={form.ingredients} onChange={e => handleChange('ingredients', e.target.value)} className={hasFieldErrors('ingredients') ? 'invalid' : ''} />
-      {hasFieldErrors('ingredients') && <div className="error">{getFieldErrors('ingredients')[0]}</div>}
+        <label>Price:</label>
+        <input type="text" value={form.price} onChange={e => handleChange('price', e.target.value)} className={hasFieldErrors('price') ? 'invalid' : ''} />
+        {hasFieldErrors('price') && <div className="error">{getFieldErrors('price')[0]}</div>}
 
-      <label>Current Image:</label><br />
-      {form.existingImage && <img src={existingImage} alt="capsule" width="100" />}
+        <label>Ingredients:</label>
+        <input type="text" value={form.ingredients} onChange={e => handleChange('ingredients', e.target.value)} className={hasFieldErrors('ingredients') ? 'invalid' : ''} />
+        {hasFieldErrors('ingredients') && <div className="error">{getFieldErrors('ingredients')[0]}</div>}
 
-      <label>Change Image:</label>
-      <input 
-      type="file" 
-      accept="image/*" 
-      onChange={handleImageChange}
-       />
-      {newImage && <div className="preview">New image: {newImage.name}</div>}
+        <label>Current Image:</label><br />
+        {existingImage && <img src={existingImage} alt="capsule" width="100" />}
 
-      <button type="submit" disabled={isSubmitting} className={isSubmitting ? 'submitting' : ''}>
-        {isSubmitting ? 'Saving...' : '💾 Save Changes'}
-      </button>
+        <label>Change Image:</label>
+        <input type="file" accept="image/*" onChange={handleImageChange} />
+        {newImage && <div className="preview">New image: {newImage.name}</div>}
 
-      <style>{`
-        .edit-form {
-          padding: 20px;
-          max-width: 400px;
-        }
-        .edit-form label {
-          font-weight: bold;
-          display: block;
-          margin-top: 15px;
-        }
-        .edit-form input {
-          width: 100%;
-          padding: 6px;
-          margin-top: 4px;
-        }
-        .edit-form button {
-          margin-top: 20px;
-          padding: 8px 16px;
-          background-color: #4285f4;
-          color: white;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          font-weight: bold;
-        }
-        .edit-form button:hover {
-          background-color: #3367d6;
-        }
-        .edit-form button.submitting {
-          background-color: #cccccc;
-          cursor: not-allowed;
-        }
-        .error {
-          color: red;
-          font-size: 0.85em;
-          margin-top: 4px;
-        }
-        .error-message {
-          background-color: #ffebee;
-          color: #d32f2f;
-          padding: 10px;
-          border-radius: 4px;
-          margin-bottom: 15px;
-          border-left: 4px solid #d32f2f;
-        }
-        .invalid {
-          border: 1px solid red;
-        }
-        .preview {
-          margin-top: 10px;
-          font-size: 0.9em;
-          color: #555;
-        }
-      `}</style>
-    </form>
+        <button type="submit" disabled={isSubmitting} className={isSubmitting ? 'submitting' : ''}>
+          {isSubmitting ? 'Saving...' : 'Save Changes'}
+        </button>
+      </form>
+    </div>
   );
 }

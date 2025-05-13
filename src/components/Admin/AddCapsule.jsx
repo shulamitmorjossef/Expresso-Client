@@ -9,55 +9,72 @@ const suite = create((data = {}, field) => {
   test('name', 'Name is required', () => {
     enforce(data.name).isNotEmpty();
   });
-  test('name', 'Name must contain only letters (max 30)', () => {
+  test('name', 'Name must contain only English letters (max 30)', () => {
     if (data.name && data.name.trim()) {
-      enforce(data.name).matches(/^[\p{L}\s]{1,30}$/u);
-      enforce(data.name.length).lessThanOrEquals(30);
+      enforce(data.name).matches(/^[A-Za-z\s\-']{1,30}$/u);
     }
   });
 
   test('flavor', 'Flavor is required', () => {
     enforce(data.flavor).isNotEmpty();
   });
-  test('flavor', 'Flavor must contain only letters (max 30)', () => {
+  test('flavor', 'Flavor must contain only English letters (max 30)', () => {
     if (data.flavor && data.flavor.trim()) {
-      enforce(data.flavor).matches(/^[\p{L}\s]{1,30}$/u);
-      enforce(data.flavor.length).lessThanOrEquals(30);
+      enforce(data.flavor).matches(/^[A-Za-z\s\-']{1,30}$/u);
     }
   });
 
   test('quantity_per_package', 'Quantity is required', () => {
     enforce(data.quantity_per_package).isNotEmpty();
   });
-  test('quantity_per_package', 'Quantity must be between 1 and 20', () => {
-    const value = Number(data.quantity_per_package);
-    enforce(!isNaN(value)).equals(true);
-    enforce(value).greaterThanOrEquals(1).lessThanOrEquals(20);
+  test('quantity_per_package', 'Quantity must be a number between 1 and 20', () => {
+    try {
+      const value = Number(data.quantity_per_package);
+      if (isNaN(value)) throw new Error();
+      enforce(value).greaterThanOrEquals(1);
+      enforce(value).lessThanOrEquals(20);
+    } catch {
+      throw new Error("Quantity must be a number between 1 and 20");
+    }
   });
 
   test('net_weight_grams', 'Weight is required', () => {
     enforce(data.net_weight_grams).isNotEmpty();
   });
-  test('net_weight_grams', 'Weight must be between 1 and 500 grams', () => {
-    const value = Number(data.net_weight_grams);
-    enforce(!isNaN(value)).equals(true);
-    enforce(value).greaterThanOrEquals(1).lessThanOrEquals(500);
+  test('net_weight_grams', 'Weight must be a number between 1 and 500 grams', () => {
+    try {
+      const value = Number(data.net_weight_grams);
+      if (isNaN(value)) throw new Error();
+      enforce(value).greaterThanOrEquals(1);
+      enforce(value).lessThanOrEquals(500);
+    } catch {
+      throw new Error("Weight must be a number between 1 and 500 grams");
+    }
   });
 
   test('price', 'Price is required', () => {
     enforce(data.price).isNotEmpty();
   });
   test('price', 'Price must be a number greater than 0', () => {
-    const value = Number(data.price);
-    enforce(!isNaN(value)).equals(true);
-    enforce(value).greaterThan(0);
+    try {
+      const value = Number(data.price);
+      if (isNaN(value)) throw new Error();
+      enforce(value).greaterThan(0);
+    } catch {
+      throw new Error("Price must be a number greater than 0");
+    }
   });
 
   test('ingredients', 'Ingredients are required', () => {
     enforce(data.ingredients).isNotEmpty();
   });
-  test('ingredients', 'Ingredients must be up to 200 characters', () => {
-    enforce(data.ingredients.length).lessThanOrEquals(200);
+  
+  test('ingredients', 'Ingredients must include at least one English letter and contain only valid characters', () => {
+    const value = data.ingredients;
+    if (value && value.trim()) {
+      enforce(value).matches(/[A-Za-z]/);
+      enforce(value).matches(/^[A-Za-z0-9\s.,()\-'"!&%:;]+$/);
+    }
   });
 });
 
@@ -80,8 +97,8 @@ export default function AddCapsule() {
   const handleChange = (field, value) => {
     const updated = { ...form, [field]: value };
     setForm(updated);
-    const result = suite(updated, field);
-    setValidationResult(result);
+    suite(updated, field);
+    setValidationResult(suite.get());
   };
 
   const handleImageChange = (e) => {
@@ -94,7 +111,8 @@ export default function AddCapsule() {
     e.preventDefault();
     setError('');
     setSuccess('');
-    const result = suite(form);
+    suite(form);
+    const result = suite.get();
     setValidationResult(result);
 
     if (result.hasErrors()) {
@@ -105,43 +123,20 @@ export default function AddCapsule() {
     try {
       setIsSubmitting(true);
       const formData = new FormData();
-      formData.append('name', form.name);
-      formData.append('flavor', form.flavor);
-      formData.append('quantity_per_package', form.quantity_per_package);
-      formData.append('net_weight_grams', form.net_weight_grams);
-      formData.append('price', form.price);
-      formData.append('ingredients', form.ingredients);
-      if (image) {
-        formData.append('image', image);
-      }
+      Object.entries(form).forEach(([key, value]) => formData.append(key, value));
+      if (image) formData.append('image', image);
 
-      try {
-        const response = await axios.post(`${baseUrl}/add-capsule`, formData, {
-          headers: { 'Content-Type': 'multipart/form-data' }
-        });
-        setSuccess('Capsule added successfully!');
-        setForm({
-          name: '', flavor: '', quantity_per_package: '',
-          net_weight_grams: '', price: '', ingredients: '',
-        });
-        setTimeout(() => navigate('/CapsuleCatalog'), 1500);
-      } catch (formDataErr) {
-        const jsonData = {
-          name: form.name,
-          flavor: form.flavor,
-          quantity_per_package: Number(form.quantity_per_package),
-          net_weight_grams: Number(form.net_weight_grams),
-          price: Number(form.price),
-          ingredients: form.ingredients
-        };
-        const response = await axios.post(`${baseUrl}/add-capsule`, jsonData);
-        setSuccess('Capsule added successfully!');
-        setForm({
-          name: '', flavor: '', quantity_per_package: '',
-          net_weight_grams: '', price: '', ingredients: '',
-        });
-        setTimeout(() => navigate('/CapsuleCatalog'), 1500);
-      }
+      await axios.post(`${baseUrl}/add-capsule`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+
+      setSuccess('Capsule added successfully!');
+      setForm({
+        name: '', flavor: '', quantity_per_package: '',
+        net_weight_grams: '', price: '', ingredients: '',
+      });
+      setImage(null);
+      setTimeout(() => navigate('/CapsuleCatalog'), 1500);
     } catch (err) {
       console.error('Failed to add capsule:', err);
       setError(err.response?.data?.message || 'Failed to add capsule. Please try again.');
@@ -160,48 +155,26 @@ export default function AddCapsule() {
         {error && <div className="error-message">{error}</div>}
         {success && <div className="success-message">{success}</div>}
 
-        <label>Name:</label>
-        <input type="text" value={form.name} 
-          onChange={e => handleChange('name', e.target.value)} 
-          className={hasFieldErrors('name') ? 'invalid' : ''}
-          placeholder="Enter capsule name"
-        />
-        {hasFieldErrors('name') && <div className="error">{getFieldErrors('name')[0]}</div>}
-
-        <label>Flavor:</label>
-        <input type="text" value={form.flavor} 
-          onChange={e => handleChange('flavor', e.target.value)} 
-          className={hasFieldErrors('flavor') ? 'invalid' : ''} 
-        />
-        {hasFieldErrors('flavor') && <div className="error">{getFieldErrors('flavor')[0]}</div>}
-
-        <label>Quantity per Package:</label>
-        <input type="text" value={form.quantity_per_package} 
-          onChange={e => handleChange('quantity_per_package', e.target.value)} 
-          className={hasFieldErrors('quantity_per_package') ? 'invalid' : ''} 
-        />
-        {hasFieldErrors('quantity_per_package') && <div className="error">{getFieldErrors('quantity_per_package')[0]}</div>}
-
-        <label>Net Weight (grams):</label>
-        <input type="text" value={form.net_weight_grams} 
-          onChange={e => handleChange('net_weight_grams', e.target.value)} 
-          className={hasFieldErrors('net_weight_grams') ? 'invalid' : ''} 
-        />
-        {hasFieldErrors('net_weight_grams') && <div className="error">{getFieldErrors('net_weight_grams')[0]}</div>}
-
-        <label>Price:</label>
-        <input type="text" value={form.price} 
-          onChange={e => handleChange('price', e.target.value)} 
-          className={hasFieldErrors('price') ? 'invalid' : ''} 
-        />
-        {hasFieldErrors('price') && <div className="error">{getFieldErrors('price')[0]}</div>}
-
-        <label>Ingredients:</label>
-        <input type="text" value={form.ingredients} 
-          onChange={e => handleChange('ingredients', e.target.value)} 
-          className={hasFieldErrors('ingredients') ? 'invalid' : ''} 
-        />
-        {hasFieldErrors('ingredients') && <div className="error">{getFieldErrors('ingredients')[0]}</div>}
+        {[
+          { name: 'name', label: 'Name', placeholder: 'Enter capsule name' },
+          { name: 'flavor', label: 'Flavor', placeholder: 'Enter capsule flavor' },
+          { name: 'quantity_per_package', label: 'Quantity per Package', placeholder: 'Enter quantity (1-20)' },
+          { name: 'net_weight_grams', label: 'Net Weight (grams)', placeholder: 'Enter net weight (1-500 g)' },
+          { name: 'price', label: 'Price', placeholder: 'Enter price (must be > 0)' },
+          { name: 'ingredients', label: 'Ingredients', placeholder: 'Enter ingredients (max 200 characters)' },
+        ].map(({ name, label, placeholder }) => (
+          <div key={name}>
+            <label>{label}:</label>
+            <input
+              type="text"
+              placeholder={placeholder}
+              value={form[name]}
+              onChange={e => handleChange(name, e.target.value)}
+              className={hasFieldErrors(name) ? 'invalid' : ''}
+            />
+            {hasFieldErrors(name) && <div className="error">{getFieldErrors(name)[0]}</div>}
+          </div>
+        ))}
 
         <label>Capsule Image:</label>
         <input type="file" accept="image/*" onChange={handleImageChange} />

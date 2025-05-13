@@ -26,6 +26,7 @@ export default function InventoryModal({ product, onClose, onUpdateStock }) {
         <button className="close-button" onClick={onClose}>×</button>
 
         <div className="modal-body">
+
           <img src={`data:image/jpeg;base64,${product.image}`} alt={product.name} className="modal-image" />
           <div className="modal-details">
             <h2>{product.name}</h2>
