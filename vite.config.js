@@ -5,13 +5,9 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   server: {
-<<<<<<< HEAD
-    open: true,
-    // open: 'https://expresso-client.onrender.com',
-=======
-   //  open: true,
+    // open: true,
     open: 'https://expresso-client.onrender.com',
->>>>>>> 6bbdfdcae0aa2d831ad982cd2e451e54d14de90f
+
 
   }
 });

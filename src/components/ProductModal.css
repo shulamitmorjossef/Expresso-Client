@@ -1,81 +1,112 @@
+/* Modal Overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  right: 0;
+  bottom: 0;
   background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 9999;
 }
 
+/* Modal Content */
 .modal-content {
-  background: white;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 600px;
-  padding: 20px;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+  width: 400px;
+  max-width: 90%;
   position: relative;
+  overflow: hidden;
+  text-align: center;
 }
 
+/* Close Button */
 .close-button {
   position: absolute;
-  top: 10px;
-  right: 15px;
+  top: 16px;
+  right: 16px;
   font-size: 24px;
-  border: none;
   background: none;
+  border: none;
   cursor: pointer;
+  color: #999;
+  transition: color 0.2s;
 }
 
-.modal-body {
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
+.close-button:hover {
+  color: #333;
 }
 
+/* Modal Image */
 .modal-image {
   width: 200px;
   height: auto;
-  object-fit: contain;
+  margin-bottom: 20px;
+  border-radius: 8px;
 }
 
+/* Modal Details */
 .modal-details h2 {
-  margin-top: 0;
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 10px;
 }
 
+.modal-details p {
+  font-size: 18px;
+  color: #555;
+  margin: 5px 0;
+}
+
+/* Quantity Section */
 .quantity-section {
-  margin: 10px 0;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
+  margin: 20px 0 10px;
 }
 
 .quantity-section button {
-  width: 30px;
-  height: 30px;
-  font-size: 18px;
+  width: 40px;
+  height: 40px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+.quantity-section button:hover {
+  background-color: #ddd;
+}
+
+.quantity-section span {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Add to Cart Button */
 .add-button {
-  background-color: #a0522d;
-  color: white;
-  padding: 10px 16px;
+  background-color: #d35400;
+  color: #fff;
+  padding: 10px 30px;
+  font-size: 18px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  font-weight: bold;
+  transition: background-color 0.3s;
+  margin-top: 10px;
 }
 
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 24px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  color: #6f4e37; 
+.add-button:hover {
+  background-color: #e67e22;
 }

@@ -241,8 +241,8 @@ export default function Capsules() {
     } catch (err) {
       console.error('Error adding to cart:', err);
       setModalData({
-        title: 'Error',
-        message: 'Something went wrong.',
+        title: 'Oops',
+        message: 'The product is not available in the quantity you wish to add.',
         onClose: () => setModalData(null),
       });
     }
