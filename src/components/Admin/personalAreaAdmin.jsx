@@ -47,7 +47,6 @@ export default function PersonalAreaAdmin() {
       }
     };
 
-
     fetchUserData();
   }, []);
 
@@ -61,7 +60,6 @@ export default function PersonalAreaAdmin() {
   };
 
   const handleSave = () => {
-
     if (form.password !== user.password) {
       if (!validatePassword(form.password)) {
         setError('Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.');
@@ -160,41 +158,49 @@ export default function PersonalAreaAdmin() {
           />
         </label>
 
-      <label>
-        New Password:
-        <input
-          type="password"
-          name="password"
-          value={form.password}
-          onChange={handleChange}
-          disabled={!editMode}
-        />
-      </label>
+        <label>
+          New Password:
+          <input
+            type="password"
+            name="password"
+            value={form.password}
+            onChange={handleChange}
+            disabled={!editMode}
+          />
+        </label>
 
-      <label>
-        Confirm Password:
-        <input
-          type="password"
-          name="confirmPassword"
-          value={form.confirmPassword}
-          onChange={handleChange}
-          disabled={!editMode}
-        />
-      </label>
+        <label>
+          Confirm Password:
+          <input
+            type="password"
+            name="confirmPassword"
+            value={form.confirmPassword}
+            onChange={handleChange}
+            disabled={!editMode}
+          />
+        </label>
 
-      {!editMode ? (
-        <button onClick={() => setEditMode(true)}>Edit</button>
-      ) : (
-        <>
-          <button onClick={handleSave}>Save</button>
-          <button onClick={() => {
-            setEditMode(false);
-            setForm({ ...user, confirmPassword: user.password });
-            setError('');
-            setSuccess('');
-          }}>Cancel</button>
-        </>
-      )}
+        {!editMode ? (
+          <button onClick={() => setEditMode(true)}>Edit</button>
+        ) : (
+          <>
+            <button onClick={handleSave}>Save</button>
+            <button onClick={() => {
+              setEditMode(false);
+              setForm({ 
+                full_name: user.full_name,
+                username: user.username,
+                email: user.email,
+                phone: user.phone,
+                password: user.password,
+                confirmPassword: user.password
+              });
+              setError('');
+              setSuccess('');
+            }}>Cancel</button>
+          </>
+        )}
+      </div>
     </div>
   );
 }
