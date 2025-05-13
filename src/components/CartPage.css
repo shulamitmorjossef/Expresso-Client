@@ -147,6 +147,7 @@
     transform: scale(1.1);
   }
   
+<<<<<<< HEAD
   .back-button {
   position: fixed; 
   top: 20px;
@@ -164,3 +165,15 @@
 .back-button:hover {
   background-color: #472c18;
 }
+=======
+  .terms-link {
+    color: #3c2e2a;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .terms-link:hover {
+    text-decoration: underline;
+  }
+  
+>>>>>>> 7b97f486234daed7d47838c51fc7de6cd267e6e8

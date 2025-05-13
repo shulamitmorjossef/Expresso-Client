@@ -62,21 +62,29 @@ export default function PersonalAreaCustomer() {
     const newErrors = {};
     const { full_name, username, email, phone, password } = form;
 
+    // Validate full name
     if (!full_name) newErrors.full_name = 'Full name is required';
+
+    // Validate username
     if (!username) newErrors.username = 'Username is required';
 
+    // Validate email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email) newErrors.email = 'Email is required';
     else if (!emailRegex.test(email)) newErrors.email = 'Invalid email address';
 
-    const phoneRegex = /^[0-9]{9,}$/;
+    // Validate phone number
+    const phoneRegex = /^[0-9]{9,}$/; // Make sure phone is at least 9 digits
     if (!phone) newErrors.phone = 'Phone number is required';
     else if (!phoneRegex.test(phone)) newErrors.phone = 'Phone must be at least 9 digits and numbers only';
 
-    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-    if (!password) newErrors.password = 'Password is required';
-    else if (!passwordRegex.test(password))
-      newErrors.password = 'Password must be at least 8 characters, include an uppercase letter and a special character';
+    // Validate password (optional field)
+    if (password) {
+      const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+      if (!passwordRegex.test(password)) {
+        newErrors.password = 'Password must be at least 8 characters, include an uppercase letter and a special character';
+      }
+    }
 
     return newErrors;
   };
