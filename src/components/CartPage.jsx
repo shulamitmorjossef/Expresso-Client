@@ -88,7 +88,8 @@ export default function CartPage() {
       setShowWarning(true);
       return;
     }
-    window.location.href = '/DeliveryForm';
+    // window.location.href = '/DeliveryForm';
+    navigate('/DeliveryForm');
   };
 
   return (
