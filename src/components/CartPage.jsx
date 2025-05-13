@@ -6,6 +6,8 @@ import ModalMessage from '../components/ModalMessage';
 import { Trash2 } from 'lucide-react';
 
 export default function CartPage() {
+  const [modalData, setModalData] = useState(null);
+
   const [cartItems, setCartItems] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
   const [agreed, setAgreed] = useState(false);
@@ -104,8 +106,31 @@ export default function CartPage() {
               <div className="quantity-controls">
                 <button onClick={() => updateQuantity(item.product_id, item.product_type, item.quantity - 1)}>-</button>
                 <span>{item.quantity}</span>
-                <button onClick={() => updateQuantity(item.product_id, item.product_type, item.quantity + 1)}>+</button>
+                <button 
+                onClick={() => {
+                  if (item.quantity < item.sum_of) {
+                    updateQuantity(item.product_id, item.product_type, item.quantity + 1)
+                  } else {
+                    setModalData({
+                      title: 'Stock Limit',
+                      message: 'You have reached the maximum available stock.',
+                      actionText: 'OK',
+                      onAction: () => setModalData(null),
+                    });
+                  }
+                }}>+</button>
               </div>
+              {modalData && (
+                  <ModalMessage
+                    title={modalData.title}
+                    message={modalData.message}
+                    actionText={modalData.actionText}
+                    onClose={() => setModalData(null)}
+                    onAction={modalData.onAction}
+                  />
+                )}
+ 
+
               <p><strong>Total: ${(item.quantity * parseFloat(item.price)).toFixed(2)}</strong></p>
             </div>
             <button className="delete-btn" onClick={() => handleDelete(item.product_id, item.product_type)}>

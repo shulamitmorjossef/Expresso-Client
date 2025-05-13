@@ -1,3 +1,4 @@
+
 .cart-container {
     max-width: 500px;
     margin: 30px auto;
@@ -7,6 +8,7 @@
     box-shadow: 0 0 10px #ddd;
     font-family: sans-serif;
   }
+  
   
   .cart-item {
     display: flex;
