@@ -162,7 +162,7 @@ export default function PaymentForm() {
 
         {showModal && (
           <ModalMessage
-            title="✅ Order Confirmed!"
+            title="Order Confirmed!"
             message={`Your order #${orderId} has been placed successfully.`}
             onClose={() => setShowModal(false)}
             redirectTo="/CustomerHome" 
@@ -181,6 +181,9 @@ export default function PaymentForm() {
           />
         )}
       </div>
+      <button className="back-button" onClick={() => navigate(-1)}>
+      Back
+     </button>
     </div>
   );
 }

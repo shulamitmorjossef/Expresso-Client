@@ -205,6 +205,9 @@ export default function EditCoffeeMachine() {
           {isSubmitting ? 'Saving...' : 'Save Changes'}
         </button>
       </form>
+      <button className="back-button" onClick={() => navigate('/CoffeeCatalog')}>
+      Back
+     </button>
     </div>
   );
 }

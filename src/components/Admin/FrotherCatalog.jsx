@@ -111,6 +111,9 @@ export default function FrotherCatalog() {
           onUpdateStock={handleUpdateStock}
         />
       )}
+      <button className="back-button" onClick={() => navigate('/CatalogPage')}>
+      Back
+    </button>
     </div>
   );
 }

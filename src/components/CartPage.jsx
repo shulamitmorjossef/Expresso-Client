@@ -6,6 +6,8 @@ import ModalMessage from '../components/ModalMessage';
 import { Trash2 } from 'lucide-react';
 
 export default function CartPage() {
+  const [modalData, setModalData] = useState(null);
+
   const [cartItems, setCartItems] = useState([]);
   const [subtotal, setSubtotal] = useState(0);
   const [agreed, setAgreed] = useState(false);
@@ -86,7 +88,8 @@ export default function CartPage() {
       setShowWarning(true);
       return;
     }
-    window.location.href = '/DeliveryForm';
+    // window.location.href = '/DeliveryForm';
+    navigate('/DeliveryForm');
   };
 
   return (
@@ -104,8 +107,31 @@ export default function CartPage() {
               <div className="quantity-controls">
                 <button onClick={() => updateQuantity(item.product_id, item.product_type, item.quantity - 1)}>-</button>
                 <span>{item.quantity}</span>
-                <button onClick={() => updateQuantity(item.product_id, item.product_type, item.quantity + 1)}>+</button>
+                <button 
+                onClick={() => {
+                  if (item.quantity < item.sum_of) {
+                    updateQuantity(item.product_id, item.product_type, item.quantity + 1);
+                  } else {
+                    setModalData({
+                      title: 'Stock Limit',
+                      message: 'You have reached the maximum available stock.',
+                      actionText: 'OK',
+                      onAction: () => setModalData(null),
+                    });
+                  }
+                }}>+</button>
               </div>
+              {modalData && (
+                  <ModalMessage
+                    title={modalData.title}
+                    message={modalData.message}
+                    actionText={modalData.actionText}
+                    onClose={() => setModalData(null)}
+                    onAction={modalData.onAction}
+                  />
+                )}
+ 
+
               <p><strong>Total: ${(item.quantity * parseFloat(item.price)).toFixed(2)}</strong></p>
             </div>
             <button className="delete-btn" onClick={() => handleDelete(item.product_id, item.product_type)}>
@@ -121,7 +147,6 @@ export default function CartPage() {
         </div>
         <input className="coupon-input" placeholder="Enter coupon code" />
         <button className="apply-btn">Apply</button>
-
         <div className="terms">
           <input
             type="checkbox"
@@ -129,8 +154,13 @@ export default function CartPage() {
             checked={agreed}
             onChange={() => setAgreed(!agreed)}
           />
-          <label htmlFor="agree">I agree to the terms and conditions</label>
+          <label htmlFor="agree">
+            I agree to the
+            <a href="/Terms" className="terms-link"> Terms and Conditions</a>
+          </label>
         </div>
+
+        
 
         <button className="continue-btn" onClick={handleContinue}>Continue</button>
 
@@ -148,6 +178,9 @@ export default function CartPage() {
           />
         )}
       </div>
+      <button className="back-button" onClick={() => navigate(-1)}>
+      Back
+     </button>
     </div>
   );
 }

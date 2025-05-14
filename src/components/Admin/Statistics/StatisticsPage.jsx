@@ -1,8 +1,12 @@
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import "../../styles/StatisticsPage.css";
+import { useNavigate } from 'react-router-dom';
+
+
 
 export default function StatisticsPage() {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
 
   return (
@@ -42,6 +46,9 @@ export default function StatisticsPage() {
       <div className="statistics-page__content">
         <Outlet />
       </div>
+      <button className="back-button" onClick={() => navigate('/AdminHome')}>
+      Back
+    </button>
     </div>
   );
 }

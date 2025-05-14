@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { create, test, enforce } from 'vest';
 import baseUrl from '../../config';
-import '../styles/AddMilkFrother.css'; // <-- הקובץ המעוצב
+import '../styles/AddMilkFrother.css'; 
 
 const suite = create((data = {}, field) => {
   test('name', 'Name is required', () => {
@@ -201,9 +201,12 @@ export default function AddMilkFrother() {
           disabled={isSubmitting}
           className={isSubmitting ? 'submitting' : ''}
         >
-          {isSubmitting ? 'Saving...' : 'Add Milk Frother'}
+          {isSubmitting ? 'Saving...' : ' ➕ Add Milk Frother'}
         </button>
       </form>
+      <button className="back-button" onClick={() => navigate('/FrotherCatalog')}>
+      Back
+     </button>
     </div>
   );
 }

@@ -5,6 +5,7 @@ import { create, test, enforce } from 'vest';
 import baseUrl from '../../config';
 import '../styles/EditMilkFrother.css';
 
+
 const suite = create((data = {}, field) => {
   test('name', 'Name is required', () => {
     enforce(data.name).isNotEmpty();
@@ -212,6 +213,9 @@ export default function EditFrother() {
           {isSubmitting ? 'Saving...' : 'Save Changes'}
         </button>
       </form>
+      <button className="back-button" onClick={() => navigate('/FrotherCatalog')}>
+      Back
+     </button>
     </div>
   );
 }

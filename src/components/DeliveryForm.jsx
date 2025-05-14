@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './DeliveryForm.css';
 import ModalMessage from '../components/ModalMessage'; 
+import { useNavigate } from 'react-router-dom';
+
 
 export default function DeliveryForm() {
+  const navigate = useNavigate();
+  
   const [form, setForm] = useState({
     city: '',
     street: '',
@@ -89,8 +93,7 @@ export default function DeliveryForm() {
           )}
         </form>
 
-        {/* חלונית שגיאה */}
-        {showModal && (
+\        {showModal && (
           <ModalMessage
             title="Form Incomplete"
             message="Please complete the form correctly before continuing."
@@ -100,6 +103,9 @@ export default function DeliveryForm() {
           />
         )}
       </div>
+      <button className="back-button" onClick={() => navigate(-1)}>
+      Back
+     </button>
     </div>
   );
 }

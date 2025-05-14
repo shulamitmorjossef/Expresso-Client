@@ -136,6 +136,10 @@ export default function CapsuleCatalog() {
           onUpdateStock={handleUpdateStock}
         />
       )}
+      <button className="back-button" onClick={() => navigate('/CatalogPage')}>
+      Back
+     </button>
+      
     </div>
   );
 }

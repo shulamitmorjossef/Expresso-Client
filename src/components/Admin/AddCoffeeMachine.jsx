@@ -176,9 +176,12 @@ export default function AddCoffeeMachine() {
         <input type="file" accept="image/*" onChange={handleImageChange} />
 
         <button type="submit" disabled={isSubmitting} className={isSubmitting ? 'submitting' : ''}>
-          {isSubmitting ? 'Saving...' : 'Add Coffee Machine'}
+          {isSubmitting ? 'Saving...' :' ➕ Add Coffee Machine'}
         </button>
       </form>
+      <button className="back-button" onClick={() => navigate('/CoffeeCatalog')}>
+      Back
+     </button>
     </div>
   );
 }

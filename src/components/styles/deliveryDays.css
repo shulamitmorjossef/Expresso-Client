@@ -1,4 +1,4 @@
-
+/* 
 .calendar-container {
   max-width: 800px;
   margin: 30px auto;
@@ -117,4 +117,149 @@ h2 {
 
 .unavailable-table button:hover {
   background-color: #472c18;
+} */
+
+
+.calendar-container {
+  max-width: 800px;
+  margin: 30px auto;
+  background: #fffaf5;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #ddd;
+  font-family: sans-serif;
+  background-image: url('/images/background-beans.png'); 
+  background-size: cover; 
+  background-position: center;
+  background-attachment: fixed; 
+  
 }
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.nav-button {
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-button:hover {
+  color: #5a351e;
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: #3c2e2a;
+}
+
+.days-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.day-name {
+  padding: 10px;
+  background-color: #f4e0c3;
+  border-radius: 5px;
+  color: #3c2e2a;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cell:hover {
+  background-color: #e3b59f;
+}
+
+.cell.available {
+  background-color: #f9f9f9;
+}
+
+.cell.unavailable {
+  background-color: #f3d7d7;
+  color: #777;
+}
+
+.cell.disabled {
+  background-color: #e0e0e0;
+  color: #b0b0b0;
+}
+
+.unavailable-table {
+  margin-top: 30px;
+  border-top: 2px solid #ccc;
+  padding-top: 20px;
+}
+
+.unavailable-table h3 {
+  text-align: center;
+  color: #5a351e;
+}
+
+.unavailable-table ul {
+  list-style-type: none;
+  /* padding: 0; */
+}
+
+.unavailable-table li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.unavailable-table button {
+  background-color: #5a351e;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.unavailable-table button:hover {
+  background-color: #472c18;
+}
+
+  .back-button {
+  position: fixed; 
+  top: 20px;
+  left: 20px;
+  background-color: #5a351e;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  z-index: 1000; 
+}
+
+.back-button:hover {
+  background-color: #472c18;
+}
+

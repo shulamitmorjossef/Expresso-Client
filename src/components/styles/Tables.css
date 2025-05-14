@@ -122,7 +122,6 @@ td:first-child {
   justify-content: center;
 }
 
-/* ✅ רספונסיביות */
 @media (max-width: 768px) {
   .table-container {
     width: 90%;
@@ -145,4 +144,21 @@ td:first-child {
   .catalog-title {
     font-size: 36px;
   }
+}
+  .back-button {
+  position: fixed; 
+  top: 20px;
+  left: 20px;
+  background-color: #5a351e;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  z-index: 1000; 
+}
+
+.back-button:hover {
+  background-color: #472c18;
 }
