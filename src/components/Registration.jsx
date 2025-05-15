@@ -1,113 +1,165 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import './styles/Registration.css';
 import baseUrl from '../config';
 
 const Register = () => {
+  const [formData, setFormData] = useState({
+    fullName: '',
+    username: '',
+    email: '',
+    phone: '',
+    birthday: '',
+    password: '',
+    confirmPassword: '',
+    userType: 'customer',
+    managerCode: '',
+  });
+
+  const [errorMessage, setErrorMessage] = useState("");
   const [isHovered, setIsHovered] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const navigate = useNavigate();
 
-  const formik = useFormik({
-    initialValues: {
-      fullName: '',
-      username: '',
-      email: '',
-      phone: '',
-      birthday: '',
-      password: '',
-      confirmPassword: '',
-      userType: 'customer',
-      managerCode: '',
-    },
-    validationSchema: Yup.object({
-      fullName: Yup.string().required('Full Name is required'),
-      username: Yup.string().required('Username is required'),
-      email: Yup.string().email('Invalid email address').required('Email is required'),
-      phone: Yup.string().matches(/^[0-9]{10}$/, 'Phone must be 10 digits').required('Phone is required'),
-      birthday: Yup.date().required('Birthday is required'),
-      password: Yup.string()
-        .min(8, 'Must be at least 8 characters')
-        .matches(/[A-Z]/, 'Must contain an uppercase letter')
-        .matches(/[^A-Za-z0-9]/, 'Must contain a symbol')
-        .required('Password is required'),
-      confirmPassword: Yup.string()
-        .oneOf([Yup.ref('password')], 'Passwords must match')
-        .required('Confirm your password'),
-      userType: Yup.string().required(),
-      managerCode: Yup.string().when('userType', {
-        is: 'manager',
-        then: Yup.string().required('Manager code is required'),
-      }),
-    }),
-    onSubmit: async (values) => {
-      try {
-        const response = await fetch(`${baseUrl}/register`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(values),
-        });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
-        if (!response.ok) throw new Error('Registration failed');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        const result = await response.json();
-        console.log('Registered successfully!', result);
+    const password = formData.password;
+    const errors = [];
 
-        setShowSuccessPopup(true);
-        setTimeout(() => {
-          setShowSuccessPopup(false);
-          navigate('/');
-        }, 3000); // 3 שניות תצוגה ואז מעבר לדף הבית
-      } catch (error) {
-        console.error('Registration error:', error.message);
-        setErrorMessage('An error occurred during registration. Please try again.');
+    // Validate password requirements
+    if (password.length < 8) errors.push("at least 8 characters");
+    if (!/[A-Z]/.test(password)) errors.push("one uppercase letter");
+    if (!/[^A-Za-z0-9]/.test(password)) errors.push("one symbol (e.g. @, #, $, etc.)");
+
+    if (errors.length > 0) {
+      setErrorMessage("Password must contain:\n- " + errors.join("\n- "));
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      setErrorMessage("Passwords do not match.");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${baseUrl}/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        setErrorMessage(result.message || "Registration failed. Please try again.");
+        return;
       }
-    },
-  });
+
+      console.log('Registered successfully!', result);
+      navigate("/");
+    } catch (error) {
+      console.error('Registration error:', error);
+      setErrorMessage("An error occurred during registration. Please try again.");
+    }
+  };
 
   return (
     <div className="register-container">
       <div className="register-card">
         <h2 className="register-title">Register</h2>
-        <form onSubmit={formik.handleSubmit} className="register-form">
-          <input type="text" name="fullName" placeholder="Full Name" {...formik.getFieldProps('fullName')} className="register-input" />
-          {formik.touched.fullName && formik.errors.fullName && <div className="error-message">{formik.errors.fullName}</div>}
-
-          <input type="text" name="username" placeholder="Username" {...formik.getFieldProps('username')} className="register-input" />
-          {formik.touched.username && formik.errors.username && <div className="error-message">{formik.errors.username}</div>}
-
-          <input type="email" name="email" placeholder="Email" {...formik.getFieldProps('email')} className="register-input" />
-          {formik.touched.email && formik.errors.email && <div className="error-message">{formik.errors.email}</div>}
-
-          <input type="tel" name="phone" placeholder="Phone" {...formik.getFieldProps('phone')} className="register-input" />
-          {formik.touched.phone && formik.errors.phone && <div className="error-message">{formik.errors.phone}</div>}
-
-          <input type="date" name="birthday" {...formik.getFieldProps('birthday')} className="register-input" />
-          {formik.touched.birthday && formik.errors.birthday && <div className="error-message">{formik.errors.birthday}</div>}
-
-          <input type="password" name="password" placeholder="Password" {...formik.getFieldProps('password')} className="register-input" />
-          {formik.touched.password && formik.errors.password && <div className="error-message">{formik.errors.password}</div>}
-
-          <input type="password" name="confirmPassword" placeholder="Confirm Password" {...formik.getFieldProps('confirmPassword')} className="register-input" />
-          {formik.touched.confirmPassword && formik.errors.confirmPassword && <div className="error-message">{formik.errors.confirmPassword}</div>}
+        <form onSubmit={handleSubmit} className="register-form">
+          <input
+            type="text"
+            name="fullName"
+            placeholder="Full Name"
+            onChange={handleChange}
+            required
+            className="register-input"
+          />
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            onChange={handleChange}
+            required
+            className="register-input"
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            onChange={handleChange}
+            required
+            className="register-input"
+          />
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Phone"
+            onChange={handleChange}
+            required
+            className="register-input"
+          />
+          <input
+            type="date"
+            name="birthday"
+            onChange={handleChange}
+            required
+            className="register-input"
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={handleChange}
+            required
+            className="register-input"
+            title="Password must be at least 8 characters, include one uppercase letter and one symbol."
+          />
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            onChange={handleChange}
+            required
+            className="register-input"
+          />
 
           <label className="radio-label">
-            <input type="radio" name="userType" value="customer" checked={formik.values.userType === 'customer'} onChange={formik.handleChange} />
+            <input
+              type="radio"
+              name="userType"
+              value="customer"
+              checked={formData.userType === 'customer'}
+              onChange={handleChange}
+            />
             Customer
           </label>
           <label className="radio-label">
-            <input type="radio" name="userType" value="manager" checked={formik.values.userType === 'manager'} onChange={formik.handleChange} />
+            <input
+              type="radio"
+              name="userType"
+              value="manager"
+              checked={formData.userType === 'manager'}
+              onChange={handleChange}
+            />
             Manager
           </label>
 
-          {formik.values.userType === 'manager' && (
-            <>
-              <input type="text" name="managerCode" placeholder="Manager Code" {...formik.getFieldProps('managerCode')} className="register-input" />
-              {formik.touched.managerCode && formik.errors.managerCode && <div className="error-message">{formik.errors.managerCode}</div>}
-            </>
+          {formData.userType === 'manager' && (
+            <input
+              type="text"
+              name="managerCode"
+              placeholder="Manager Code"
+              onChange={handleChange}
+              className="register-input"
+              required
+            />
           )}
 
           <div className="submit-container">
@@ -124,16 +176,9 @@ const Register = () => {
           </div>
         </form>
       </div>
-
-      <button className="back-button" onClick={() => navigate(-1)}>Back</button>
-
-      {showSuccessPopup && (
-        <div className="popup-overlay">
-          <div className="popup-message">
-            ✅ Successfully registered.
-          </div>
-        </div>
-      )}
+      <button className="back-button" onClick={() => navigate(-1)}>
+      Back
+     </button>
     </div>
   );
 };
