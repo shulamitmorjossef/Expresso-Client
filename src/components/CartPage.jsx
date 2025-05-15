@@ -155,8 +155,16 @@ export default function CartPage() {
             onChange={() => setAgreed(!agreed)}
           />
           <label htmlFor="agree">
-            I agree to the
-            <a href="/Terms" className="terms-link"> Terms and Conditions</a>
+            {/* I agree to the
+            <a href="/Terms" className="terms-link"> Terms and Conditions</a> */}
+             I agree to the{''}
+            <button 
+                className="terms-link" 
+                onClick={() => navigate('/Terms')}
+            >
+              Terms and Conditions
+            </button>
+          
           </label>
         </div>
 

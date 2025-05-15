@@ -164,7 +164,7 @@
 .back-button:hover {
   background-color: #472c18;
 }
-  .terms-link {
+  /* .terms-link {
     color: #3c2e2a;
     text-decoration: none;
     font-weight: bold;
@@ -172,5 +172,18 @@
   
   .terms-link:hover {
     text-decoration: underline;
-  }
+  } */
   
+.terms-link {
+    background: none;
+    border: none;
+    color: #472c18;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    font-size: inherit;
+}
+
+.terms-link:hover {
+    color: darkblue;
+}
