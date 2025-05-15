@@ -105,3 +105,7 @@ export default function EditTerms() {
     </div>
   );
 }
+
+
+
+
