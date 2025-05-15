@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
+import ModalMessage from '../ModalMessage';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   User,
   List,
@@ -21,6 +23,9 @@ import '../styles/AdminHome.css';
 export default function AdminHome() {
   const [catalogOpen, setCatalogOpen] = useState(false);
   const [statsOpen, setStatsOpen] = useState(false);
+  const navigate = useNavigate();
+  const [modalData, setModalData] = useState(null);
+  
 
   const handleLogout = () => {
     localStorage.clear();
@@ -29,7 +34,6 @@ export default function AdminHome() {
 
   return (
     <div className="outer-container">
-      <div className="overlay"></div>
 
       <div className="content-wrapper">
         {/* Top Navbar */}
@@ -38,7 +42,7 @@ export default function AdminHome() {
             <ul className="nav-list">
               <li>
                 <Link to="/PersonalAreaAdmin">
-                  <User size={20} /> <span>Edit Account</span>
+                  <User size={20} /> <span>Account</span>
                 </Link>
               </li>
 
@@ -121,6 +125,37 @@ export default function AdminHome() {
               </li>
 
               <li>
+                <Link to="#"
+                    className="dropdown-link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setModalData({
+                        title: "Coming Soon",
+                        message: "Reviews page coming soon!",
+                        actionText: "OK",
+                        onAction: () => setModalData(null),
+                      });
+                    }}>
+                  <Star size={20} /> <span>Reviews</span>
+                </Link>
+              </li>
+
+              <li>
+                <Link to="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setModalData({
+                        title: "Coming Soon",
+                        message: "Specials page coming soon!",
+                        actionText: "OK",
+                        onAction: () => setModalData(null),
+                      });
+                    }} >
+                  <span>Specials</span>
+                </Link>
+              </li>
+
+              <li>
                 <Link to="/EditTerms">
                   <FileText size={20} /> <span>Terms</span>
                 </Link>
@@ -137,37 +172,49 @@ export default function AdminHome() {
 
         {/* Main Content */}
         <main className="main-content">
-          {/* Search */}
-          <div className="search-container">
-            <input type="text" placeholder="Search..." className="search-input" />
-            <FaSearch className="search-icon" />
-          </div>
+          <br />
+          <br />
+          <br />
+          <br />
+
 
           {/* Categories */}
-          <h2 className="categories-title">Categories</h2>
           <div className="categories-container">
-            <CategoryCard src="/images/coffee.png" label="Coffee Machines" />
-            <CategoryCard src="/images/capsules.png" label="Capsules" />
-            <CategoryCard src="/images/milkfrothers.png" label="Accessories" />
+            <CategoryCard src="/images/coffee.png" onClick={() => navigate('/CoffeeCatalog')}label="Coffee Machines" />
+            <CategoryCard src="/images/capsules.png" onClick={() => navigate('/CapsuleCatalog')} label="Capsules" />
+            <CategoryCard src="/images/milkfrothers.png" onClick={() => navigate('/FrotherCatalog')} label="Accessories" />
           </div>
         </main>
+          <br />
+          <br />
+          <br />
+
 
         <footer className="footer">
           <Link to="/Terms" className="footer-link">Terms & Conditions</Link>
           <Link to="/About" className="footer-link" style={{ marginLeft: '20px' }}>About</Link>
         </footer>
       </div>
+            {modalData && (
+              <ModalMessage
+                title={modalData.title}
+                message={modalData.message}
+                onClose={modalData.onAction}
+                onAction={modalData.onAction}
+                actionText={modalData.actionText}
+              />
+            )}
     </div>
   );
 }
 
-function CategoryCard({ src, label }) {
+function CategoryCard({ src, label, onClick }) {
   return (
-    <div className="category-card">
-      <div className="category-box">
+    // <div className="category-card">
+      <div className="category-box" onClick={onClick}>
         <img src={src} alt={label} className="category-image" />
         <p className="category-label">{label}</p>
       </div>
-    </div>
+    // </div>
   );
 }

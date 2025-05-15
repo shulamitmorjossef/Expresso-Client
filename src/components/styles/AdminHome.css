@@ -6,17 +6,13 @@
   overflow: hidden;
   width: 100%;
 }
-
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4);
-  z-index: 0;
-}
-
+  .dropdown-link {
+    display: block;
+    padding: 15px 30px;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+  }
 .content-wrapper {
   position: relative;
   z-index: 2;
@@ -77,28 +73,6 @@
   text-align: center;
 }
 
-.search-container {
-  position: relative;
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto 40px;
-}
-
-.search-input {
-  width: 100%;
-  padding: 10px 40px 10px 15px;
-  border-radius: 25px;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.search-icon {
-  position: absolute;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #888;
-}
 
 .categories-title {
   color: white;
@@ -111,24 +85,62 @@
   justify-content: center;
   flex-wrap: wrap;
   gap: 40px;
-}
-
-.category-card {
-  width: 280px;
-  text-align: center;
-  transition: transform 0.3s, box-shadow 0.3s;
-  cursor: pointer;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .category-image {
-  border-radius: 10px;
+  border-radius: 100px;
+}
+
+.category-card {
+  background-color: white;
+  border-radius: 24px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+  width: 260px; /* הקטנת הרוחב */
+  height: 360px; /* הקטנת הגובה */
+  padding: 20px 15px; /* הקטנת הפדינג */
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+.category-box {
+  background-color: rgb(251, 245, 238);
+  border-radius: 24px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+  width: 240px; 
+  height: 320px; 
+  padding: 20px 15px; 
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* מרכז את התמונה אנכית */
+  align-items: center; /* מרכז את התמונה אופקית */
+}
+
+.category-image {
+  width: 100%;
+  height: auto;
+  /* object-fit: contain; מבטיח שהיחס יישמר */
+  border-radius: 12px;
+  margin-bottom: 10px;
+  transition: transform 0.3s ease;
 }
 
 .category-label {
-  margin-top: 10px;
+  margin-top: 0px;
   font-weight: bold;
-  color: white;
+  color: rgb(170, 90, 90);
 }
+
 
 @media (min-width: 1025px) {
   .categories-container {
@@ -137,17 +149,17 @@
 }
 
 .footer {
-  width: 100%;
+  width: 20%;
   text-align: center;
-  padding: 20px;
+  padding: 0px;
   margin-top: 40px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgb(251, 240, 229);
   border-radius: 10px;
 }
 
 .footer-link {
   text-decoration: none;
-  color: white;
+  color: #5c4033;
   font-size: 14px;
 }
 
@@ -217,3 +229,18 @@
 .dropdown-submenu li:hover {
   background-color: #5c4033;
 }
+
+
+  .dropdown-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .dropdown-link {
+    display: block;
+    padding: 15px 30px;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+  }

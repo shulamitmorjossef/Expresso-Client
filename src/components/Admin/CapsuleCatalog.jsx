@@ -314,7 +314,7 @@ export default function CapsuleCatalog() {
         />
       )}
 
-      <button className="back-button" onClick={() => navigate('/CatalogPage')}>
+      <button className="back-button" onClick={() => navigate(-1)}>
         Back
       </button>
 

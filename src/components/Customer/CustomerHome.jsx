@@ -5,6 +5,13 @@ import '../styles/CustomerHome.css';
 import baseUrl from '../../config';
 import ProductModal from '../ProductModal';
 import ModalMessage from '../ModalMessage';
+import {
+  User,
+  List,
+  Percent,
+  LogOut,
+  Star
+} from 'lucide-react';
 // import { FaShoppingCart } from 'react-icons/fa';
 
 
@@ -15,6 +22,8 @@ export default function CustomerHome() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [modalInfo, setModalInfo] = useState(null);
   const navigate = useNavigate();
+  // const [modalData, setModalData] = useState(null);
+  
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
@@ -85,27 +94,75 @@ export default function CustomerHome() {
 
   return (
     <div className="outer-container">
-      <div className="overlay"></div>
+
       <div className="content-wrapper">
-        <header className="header">
-          <button onClick={toggleMenu} className="menu-button">
-            <FaBars color="white" />
-          </button>
-          {menuOpen && (
-            <nav className="dropdown-menu">
-              <ul>
-                <li><Link to="/PersonalAreaCustomer" className="dropdown-link">Edit Account Details</Link></li>
-                <li><Link to="/MyOrders" className="dropdown-link">My Orders</Link></li>
-                <li><Link to="/CartPage" className="dropdown-link">Shopping Cart</Link></li>
-                <li><Link to="#" className="dropdown-link">Coupons</Link></li>
-                <li><Link to="#" className="dropdown-link">Reviews</Link></li>
-                <li><Link to="/" className="dropdown-link" onClick={handleLogout}>LogOut</Link></li>
-              </ul>
-            </nav>
-          )}
+
+        <header className="admin-navbar">
+          <nav>
+            <ul className="nav-list">
+              <li>
+                <Link to="/PersonalAreaCustomer">
+                  <User size={20} /> <span>Edit Account Details</span>
+                </Link>
+              </li>
+
+              <li>
+                <Link to="/MyOrders">
+                  <List size={20} /> <span>My Orders</span>
+                </Link>
+              </li>
+
+              <li>
+                <Link to="/CartPage">
+                  <FaShoppingCart size={20} /> <span>Shopping Cart</span>
+                </Link>
+              </li>
+
+              <li>
+                <Link to="#"
+                 className="dropdown-link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setModalInfo({
+                        title: "Coming Soon",
+                        message: "Coupons page coming soon!",
+                        actionText: "OK",
+                        onAction: () => setModalInfo(null),
+                      });
+                    }}>
+                  <Percent size={20} /> <span>Coupons</span>
+                </Link>
+              </li>
+
+              <li>
+                <Link to="#"
+                    className="dropdown-link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setModalInfo({
+                        title: "Coming Soon",
+                        message: "Reviews page coming soon!",
+                        actionText: "OK",
+                        onAction: () => setModalInfo(null),
+                      });
+                    }}>
+                  <Star size={20} /> <span>Reviews</span>
+                </Link>
+              </li>
+
+              <li>
+                <Link to="/" onClick={handleLogout}>
+                  <LogOut size={20} /> <span>LogOut</span>
+                </Link>
+              </li>
+
+            </ul>
+          </nav>
         </header>
 
-        <main className="main">
+        <main className="main-content">
+          <br />
+
           <div className="search-wrapper">
             <div className="search-container">
               <input
@@ -156,7 +213,7 @@ export default function CustomerHome() {
 
           <h2 className="categories-title">Categories</h2>
           <div className="categories-container">
-            <Link to="/CoffeeProducts" className="category-card-link">
+            {/* <Link to="/CoffeeProducts" className="category-card-link">
               <CategoryCard src="/images/coffee.png" label="Coffee Machines" />
             </Link>
             <Link to="/Capsules" className="category-card-link">
@@ -164,7 +221,11 @@ export default function CustomerHome() {
             </Link>
             <Link to="/MilkFrothers" className="category-card-link">
               <CategoryCard src="/images/milkfrothers.png" label="Milk Frothers" />
-            </Link>
+            </Link> */}
+            <CategoryCard src="/images/coffee.png" onClick={() => navigate('/CoffeeProducts')}label="Coffee Machines" />
+            <CategoryCard src="/images/capsules.png" onClick={() => navigate('/Capsules')} label="Capsules" />
+            <CategoryCard src="/images/milkfrothers.png" onClick={() => navigate('/MilkFrothers')} label="Accessories" />
+          
           </div>
         </main>
 
@@ -201,18 +262,29 @@ export default function CustomerHome() {
   );
 }
 
-function CategoryCard({ src, label }) {
-  return (
-    <div
-      className="category-card"
-      onMouseEnter={e => e.currentTarget.classList.add('hover')}
-      onMouseLeave={e => e.currentTarget.classList.remove('hover')}
-    >
-      <img src={src} alt={label} className="category-image" />
-      <p className="category-label">{label}</p>
+// function CategoryCard({ src, label }) {
+//   return (
+//     <div
+//       className="category-card"
+//       onMouseEnter={e => e.currentTarget.classList.add('hover')}
+//       onMouseLeave={e => e.currentTarget.classList.remove('hover')}
+//     >
+//       <img src={src} alt={label} className="category-image" />
+//       <p className="category-label">{label}</p>
 
     
 
-    </div>
+//     </div>
+//   );
+// }
+
+function CategoryCard({ src, label, onClick }) {
+  return (
+    // <div className="category-card">
+      <div className="category-box" onClick={onClick}>
+        <img src={src} alt={label} className="category-image" />
+        <p className="category-label">{label}</p>
+      </div>
+    // </div>
   );
 }

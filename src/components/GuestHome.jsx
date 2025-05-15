@@ -5,6 +5,14 @@ import './styles/GuestHome.css';
 import baseUrl from '../config';
 import ProductModal from './ProductModal';
 import ModalMessage from './ModalMessage';
+import {
+  User,
+  List,
+  Percent,
+  LogOut,
+  Star,
+  LogIn
+} from 'lucide-react';
 
 export default function GuestHome() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -33,17 +41,16 @@ export default function GuestHome() {
 
   return (
     <div className="outer-container">
-      <div className="overlay"></div>
-      <div className="content-wrapper">
-        <header className="header">
-          <button onClick={toggleMenu} className="menu-button">
-            <FaBars color="white" />
-          </button>
 
-          {menuOpen && (
-            <nav className="dropdown-menu">
-              <ul>
-                <li><Link to="/Login" className="dropdown-link">Login</Link></li>
+      <div className="content-wrapper">
+
+       <header className="admin-navbar">
+          <nav>
+            <ul className="nav-list">
+                <li><Link to="/Login" 
+                className="dropdown-link">
+                <LogIn size={20} /> <span>Login</span>
+                  </Link></li>
                 <li><Link to="/Registration" className="dropdown-link">Register</Link></li>
                 <li>
                   <Link
@@ -58,14 +65,17 @@ export default function GuestHome() {
                         onAction: () => setModalData(null),
                       });
                     }}
-                  >Reviews</Link>
+                  >
+                  <Star size={20} /> <span>Reviews</span>
+                  </Link>
                 </li>
-              </ul>
-            </nav>
-          )}
-        </header>
 
-        <main className="main">
+            </ul>
+          </nav>
+        </header>
+        <main className="main-content">
+          <br />
+
           <div className="search-wrapper">
             <div className="search-container">
               <input
@@ -90,15 +100,18 @@ export default function GuestHome() {
               <ul className="search-dropdown">
                 {searchResults.map((item, idx) => (
                   <li key={idx}>
-                    <div className="search-item" onClick={() => setSelectedProduct(item)}>
-                    <img 
-                          src={item.image ? `data:image/jpeg;base64,${item.image}` : '/images/placeholder.jpg'} 
-                          alt={item.name} 
-                          className="result-thumb" 
-                        />
+                    <div
+                      className="search-item"
+                      onClick={() => setSelectedProduct(item)}
+                    >
+                      <img 
+                        src={`data:image/jpeg;base64,${item.image}`} 
+                        alt={item.name} 
+                        className="result-thumb" 
+                      />
                       <div className="result-info">
                         <strong>{item.name}</strong>
-                        <span className="result-meta">({item.type}) – {item.price}₪</span>
+                        <span className="result-meta">({item.type}) – ${item.price}</span>
                       </div>
                     </div>
                   </li>
@@ -113,15 +126,10 @@ export default function GuestHome() {
 
           <h2 className="categories-title">Categories</h2>
           <div className="categories-container">
-            <Link to="/CoffeeProducts" className="category-card-link">
-              <CategoryCard src="/images/coffee.png" label="Coffee Machines" />
-            </Link>
-            <Link to="/capsules" className="category-card-link">
-              <CategoryCard src="/images/capsules.png" label="Capsules" />
-            </Link>
-            <Link to="/MilkFrothers" className="category-card-link">
-              <CategoryCard src="/images/milkfrothers.png" label="Milk Frothers" />
-            </Link>
+           <CategoryCard src="/images/coffee.png" onClick={() => navigate('/CoffeeProducts')}label="Coffee Machines" />
+            <CategoryCard src="/images/capsules.png" onClick={() => navigate('/Capsules')} label="Capsules" />
+            <CategoryCard src="/images/milkfrothers.png" onClick={() => navigate('/MilkFrothers')} label="Accessories" />
+          
           </div>
         </main>
 
@@ -163,21 +171,31 @@ export default function GuestHome() {
   );
 }
 
-function CategoryCard({ src, label }) {
+// function CategoryCard({ src, label }) {
+//   return (
+//     <div
+//       className="category-card"
+//       onMouseEnter={e => {
+//         e.currentTarget.style.transform = 'scale(1.05)';
+//         e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
+//       }}
+//       onMouseLeave={e => {
+//         e.currentTarget.style.transform = 'scale(1)';
+//         e.currentTarget.style.boxShadow = 'none';
+//       }}
+//     >
+//       <img src={src} alt={label} width="150" className="category-image" />
+//       <p className="category-label">{label}</p>
+//     </div>
+//   );
+// }
+function CategoryCard({ src, label, onClick }) {
   return (
-    <div
-      className="category-card"
-      onMouseEnter={e => {
-        e.currentTarget.style.transform = 'scale(1.05)';
-        e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
-      }}
-      onMouseLeave={e => {
-        e.currentTarget.style.transform = 'scale(1)';
-        e.currentTarget.style.boxShadow = 'none';
-      }}
-    >
-      <img src={src} alt={label} width="150" className="category-image" />
-      <p className="category-label">{label}</p>
-    </div>
+    // <div className="category-card">
+      <div className="category-box" onClick={onClick}>
+        <img src={src} alt={label} className="category-image" />
+        <p className="category-label">{label}</p>
+      </div>
+    // </div>
   );
 }
