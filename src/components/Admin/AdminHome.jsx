@@ -182,7 +182,7 @@ export default function AdminHome() {
           <div className="categories-container">
             <CategoryCard src="/images/coffee.png" onClick={() => navigate('/CoffeeCatalog')}label="Coffee Machines" />
             <CategoryCard src="/images/capsules.png" onClick={() => navigate('/CapsuleCatalog')} label="Capsules" />
-            <CategoryCard src="/images/milkfrothers.png" onClick={() => navigate('/FrotherCatalog')} label="Accessories" />
+            <CategoryCard src="/images/milkfrothers.png" onClick={() => navigate('/FrotherCatalog')} label="Milk frothers" />
           </div>
         </main>
           <br />
