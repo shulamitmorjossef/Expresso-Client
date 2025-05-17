@@ -93,7 +93,7 @@ export default function DeliveryForm() {
           )}
         </form>
 
-\        {showModal && (
+        {showModal && (
           <ModalMessage
             title="Form Incomplete"
             message="Please complete the form correctly before continuing."
