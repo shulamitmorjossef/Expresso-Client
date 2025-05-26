@@ -243,7 +243,7 @@ export default function CustomerHome() {
 
             <CategoryCard src="/images/coffee.png" onClick={() => navigate('/CoffeeProducts')}label="Coffee Machines" />
             <CategoryCard src="/images/capsules.png" onClick={() => navigate('/Capsules')} label="Capsules" />
-            <CategoryCard src="/images/milkfrothers.png" onClick={() => navigate('/MilkFrothers')} label="Accessories" />
+            <CategoryCard src="/images/milkfrothers.png" onClick={() => navigate('/MilkFrothers')} label="Milk frothers" />
           
           </div>
         </main>
