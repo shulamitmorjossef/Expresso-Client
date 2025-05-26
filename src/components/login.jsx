@@ -28,7 +28,13 @@ export default function Login() {
       if (token) localStorage.setItem('token', token);
 
       if (user_type === 'manager') navigate('/AdminHome');
-      else if (user_type === 'customer') navigate('/CustomerHome');
+      else if (user_type === 'customer'){
+
+          localStorage.setItem('justLoggedIn', 'true');
+
+          navigate('/CustomerHome');
+        }
+      // } navigate('/CustomerHome');
       else setError('Unknown user type');
     } catch (err) {
       setError(

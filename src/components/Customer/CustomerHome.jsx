@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaSearch, FaBars, FaShoppingCart } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/CustomerHome.css';
@@ -12,7 +12,7 @@ import {
   LogOut,
   Star
 } from 'lucide-react';
-// import { FaShoppingCart } from 'react-icons/fa';
+import axios from 'axios'; 
 
 
 export default function CustomerHome() {
@@ -92,6 +92,43 @@ export default function CustomerHome() {
     }
   };
 
+
+  useEffect(() => {
+  const userId = localStorage.getItem('userId');
+  const justLoggedIn = localStorage.getItem('justLoggedIn');
+
+
+  const checkBirthdayCoupon = async () => {
+    try {
+      const couponRes = await axios.post(`${baseUrl}/generate-birthday-coupon`, {
+        user_id: userId,
+      });
+
+      if (
+        couponRes.status === 201 &&
+        couponRes.data.message === "Birthday coupon created!" &&
+        justLoggedIn === 'true'
+
+      ) {
+        setModalInfo({
+          title: "Happy Birthday!",
+          message: "You've received a birthday coupon!",
+          actionText: "Nice!",
+          onAction: () => setModalInfo(null),
+        });
+      localStorage.setItem('justLoggedIn', 'false');
+
+      }
+    } catch (err) {
+      console.error("Birthday coupon check failed:", err);
+    }
+  };
+
+  if (userId) {
+    checkBirthdayCoupon();
+  }
+}, []);
+
   return (
     <div className="outer-container">
 
@@ -119,17 +156,7 @@ export default function CustomerHome() {
               </li>
 
               <li>
-                <Link to="#"
-                 className="dropdown-link"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setModalInfo({
-                        title: "Coming Soon",
-                        message: "Coupons page coming soon!",
-                        actionText: "OK",
-                        onAction: () => setModalInfo(null),
-                      });
-                    }}>
+                <Link to="/UserCoupons">
                   <Percent size={20} /> <span>Coupons</span>
                 </Link>
               </li>
@@ -213,15 +240,7 @@ export default function CustomerHome() {
 
           <h2 className="categories-title">Categories</h2>
           <div className="categories-container">
-            {/* <Link to="/CoffeeProducts" className="category-card-link">
-              <CategoryCard src="/images/coffee.png" label="Coffee Machines" />
-            </Link>
-            <Link to="/Capsules" className="category-card-link">
-              <CategoryCard src="/images/capsules.png" label="Capsules" />
-            </Link>
-            <Link to="/MilkFrothers" className="category-card-link">
-              <CategoryCard src="/images/milkfrothers.png" label="Milk Frothers" />
-            </Link> */}
+
             <CategoryCard src="/images/coffee.png" onClick={() => navigate('/CoffeeProducts')}label="Coffee Machines" />
             <CategoryCard src="/images/capsules.png" onClick={() => navigate('/Capsules')} label="Capsules" />
             <CategoryCard src="/images/milkfrothers.png" onClick={() => navigate('/MilkFrothers')} label="Accessories" />

@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+.delivery-form-container {
+  max-width: 500px;
+  margin: 30px auto;
+  background: #fffaf5;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #ddd;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.delivery-form-container h2 {
+  text-align: center;
+  color: #3c2e2a;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #3c2e2a;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background-color: #fdfdfd;
+}
+
+input:disabled {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.error {
+  color: red;
+  font-size: 0.95em;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.loading-text {
+  text-align: center;
+  color: #5a351e;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.page-with-background {
+  min-height: 100vh;
+  padding: 40px;
+  background-image: url('/images/background-beans.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: #fffaf5;
+}
+
+.back-button {
+  position: fixed; 
+  top: 20px;
+  left: 20px;
+  background-color: #5a351e;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  z-index: 1000; 
+}
+
+.back-button:hover {
+  background-color: #472c18;
+}
+.coupon-list {
+  list-style-type: none !important;
+  padding-left: 0 !important;
+  margin: 0;
+}
