@@ -131,16 +131,7 @@ export default function AdminHome() {
               </li>
 
               <li>
-                <Link to="#"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setModalData({
-                        title: "Coming Soon",
-                        message: "Specials page coming soon!",
-                        actionText: "OK",
-                        onAction: () => setModalData(null),
-                      });
-                    }} >
+                <Link to="/Specials">
                   <span>Specials</span>
                 </Link>
               </li>

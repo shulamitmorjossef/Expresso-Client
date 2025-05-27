@@ -91,7 +91,7 @@ export default function CartPage() {
       .catch(err => console.error('Error removing item:', err));
   };
 
-const handleApplyCoupon = async () => {
+  const handleApplyCoupon = async () => {
   if (!couponCode) return;
 
   try {
@@ -144,7 +144,7 @@ const handleApplyCoupon = async () => {
       onAction: () => setModalData(null),
     });
   }
-};
+  };
 
 
   const handleContinue = () => {
@@ -202,17 +202,6 @@ const handleApplyCoupon = async () => {
           <span>Subtotal:</span>
           <strong>${subtotal}</strong>
         </div>
-
-        {/* <input
-          className="coupon-input"
-          placeholder="Enter coupon code"
-          value={couponCode}
-          onChange={(e) => setCouponCode(e.target.value)}
-          disabled={couponApplied}
-        />
-        <button className="apply-btn" onClick={handleApplyCoupon} disabled={couponApplied}>
-          {couponApplied ? "Coupon Applied" : "Apply"}
-        </button> */}
 
         <div className="coupon-area">
         <input
