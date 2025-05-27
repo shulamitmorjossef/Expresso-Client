@@ -1,0 +1,111 @@
+.price-periods-container {
+  max-width: 600px;
+  margin: 30px auto;
+  background: #fffaf5;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #ddd;
+  font-family: sans-serif;
+}
+
+.price-periods-container h2 {
+  text-align: center;
+  color: #3c2e2a;
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.form input {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.form input:invalid {
+  border-color: red;
+}
+
+.form button {
+  padding: 10px 20px;
+  background-color: #5a351e;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  max-width: 250px;
+  margin: 0 auto;
+  transition: background-color 0.3s;
+}
+
+.form button:hover {
+  background-color: #472c18;
+}
+
+.price-periods-container h3 {
+  color: #3c2e2a;
+  margin-bottom: 10px;
+}
+
+.price-periods-container ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.price-periods-container li {
+  padding: 10px;
+  background-color: #f3e9e4;
+  border-radius: 5px;
+  margin-bottom: 8px;
+  color: #3c2e2a;
+  font-weight: bold;
+}
+.edit-btn {
+  background-color: #eee;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.edit-btn:hover {
+  background-color: #ddd;
+}
+.periods-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.period-item {
+  background-color: #f2f2f2;
+  padding: 10px 15px;
+  margin: 5px;
+  border-radius: 8px;
+  width: 300px;
+  text-align: center;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.existing-periods-title {
+  text-align: center;
+}
+

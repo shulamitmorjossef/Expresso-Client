@@ -40,6 +40,7 @@ export default function UserCoupons() {
 
       <div className="delivery-form-container">
         <h2>My Coupons</h2>
+        <h3>Happy Birthday! 🎉 Enjoy 25% off</h3>
 
         {loading && <p className="loading-text">Loading coupons...</p>}
         {error && <p className="error">{error}</p>}
