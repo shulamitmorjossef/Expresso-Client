@@ -162,19 +162,10 @@ export default function CustomerHome() {
               </li>
 
               <li>
-                <Link to="#"
-                    className="dropdown-link"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setModalInfo({
-                        title: "Coming Soon",
-                        message: "Reviews page coming soon!",
-                        actionText: "OK",
-                        onAction: () => setModalInfo(null),
-                      });
-                    }}>
-                  <Star size={20} /> <span>Reviews</span>
-                </Link>
+              <Link to="/ShowReviews" className="dropdown-link">
+                <Star size={20} /> <span>Reviews</span>
+              </Link>
+
               </li>
 
               <li>
