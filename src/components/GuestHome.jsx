@@ -53,21 +53,10 @@ export default function GuestHome() {
                   </Link></li>
                 <li><Link to="/Registration" className="dropdown-link">Register</Link></li>
                 <li>
-                  <Link
-                    to="#"
-                    className="dropdown-link"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setModalData({
-                        title: "Coming Soon",
-                        message: "Reviews page coming soon!",
-                        actionText: "OK",
-                        onAction: () => setModalData(null),
-                      });
-                    }}
-                  >
+                <Link to="/ShowReviews" className="dropdown-link">
                   <Star size={20} /> <span>Reviews</span>
-                  </Link>
+                </Link>
+
                 </li>
 
             </ul>

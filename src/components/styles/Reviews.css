@@ -1,0 +1,138 @@
+.reviews-page,
+.write-review-page {
+  position: relative;
+  min-height: 100vh;
+  padding: 0;
+  background: url('/images/background-beans.png') center/cover no-repeat;
+  color: #3c2e2a;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.reviews-page > *,
+.write-review-page > * {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: 2rem;
+}
+
+.reviews-page h2,
+.write-review-page h3 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.reviews-list {
+  margin-top: 20px;
+  max-width: 600px;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.review-item {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #3c2e2a;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  text-align: left;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+textarea {
+    width: 100%;
+    max-width: 700px; 
+    height: 180px;    
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    resize: none;
+  }
+  
+
+button {
+  background-color: #5a351e;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #472c18;
+}
+
+.write-review-card {
+    background-color: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+    margin-top: 3rem;
+  }
+  
+  .reviews-page {
+    position: relative;
+    min-height: 100vh;
+    padding: 0;
+    background: url('/images/background-beans.png') center/cover no-repeat;
+    color: #3c2e2a;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 3rem;
+  }
+  
+  .reviews-page h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .centered-button {
+    background-color: #5a351e;
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 30px;
+    transition: background-color 0.3s;
+  }
+  
+  .centered-button:hover {
+    background-color: #472c18;
+  }
+  
+  .reviews-list {
+    width: 100%;
+    max-width: 700px;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .review-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    width: 100%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-size: 17px;
+    text-align: left;
+  }
+  
