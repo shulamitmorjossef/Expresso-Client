@@ -38,6 +38,7 @@ import MyOrders from './components//Customer/MyOrders';
 import UserCoupons from './components/Customer/userCoupons.jsx';
 import ShowReviews from './components/Customer/ShowReviews.jsx';
 import WriteReview from './components/Customer/WriteReview.jsx';
+import ManagerReviews from './components/Admin/ManagerReviews';
 
 
 
@@ -83,6 +84,8 @@ function App() {
       <Route path="/UserCoupons" element={<UserCoupons />} />
       <Route path="/ShowReviews" element={<ShowReviews />} />
       <Route path="/WriteReview" element={<WriteReview />} />
+      <Route path="/ManagerReviews" element={<ManagerReviews />} />
+
 
       
 

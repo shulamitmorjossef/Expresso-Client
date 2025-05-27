@@ -30,7 +30,7 @@ export default function WriteReview() {
         <textarea
           value={reviewText}
           onChange={(e) => setReviewText(e.target.value)}
-          placeholder="Share your review — choose your words wisely :)"
+          placeholder="Share your review - choose your words wisely :)"
         />
         <button onClick={handleSend}>Send Review</button>
       </div>

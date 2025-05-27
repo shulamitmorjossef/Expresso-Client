@@ -125,19 +125,9 @@ export default function AdminHome() {
               </li>
 
               <li>
-                <Link to="#"
-                    className="dropdown-link"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setModalData({
-                        title: "Coming Soon",
-                        message: "Reviews page coming soon!",
-                        actionText: "OK",
-                        onAction: () => setModalData(null),
-                      });
-                    }}>
-                  <Star size={20} /> <span>Reviews</span>
-                </Link>
+              <Link to="/ManagerReviews">
+               <Star size={20} /> <span>Reviews</span>
+              </Link>
               </li>
 
               <li>
