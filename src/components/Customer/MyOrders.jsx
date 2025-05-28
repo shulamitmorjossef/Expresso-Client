@@ -236,18 +236,17 @@ export default function MyOrders() {
           failed.push(`${product.product_name} (requested: ${product.quantity})`);
         }
       }
-  
       let message = '';
       if (success.length > 0) {
-        message += `✔️ Fully added:\n${success.map(s => `• ${s}`).join('\n')}\n\n`;
+        message += `\nFully added:\n${success.map(s => `• ${s}`).join('\n')}\n`;
       }
       if (partial.length > 0) {
-        message += `⚠️ Partially added:\n${partial.map(p => `• ${p}`).join('\n')}\n\n`;
+        message += `\nPartially added:\n${partial.map(p => `• ${p}`).join('\n')}\n`;
       }
       if (failed.length > 0) {
-        message += `❌ Not added:\n${failed.map(f => `• ${f}`).join('\n')}`;
+        message += `\nNot added:\n${failed.map(f => `• ${f}`).join('\n')}`;
       }
-  
+      
       setModalInfo({
         title: 'Reorder Summary',
         message: message.trim(),

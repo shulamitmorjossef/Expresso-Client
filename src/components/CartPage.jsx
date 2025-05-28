@@ -223,22 +223,23 @@ export default function CartPage() {
       </div>
 
 
-        <div className="terms">
-          <input
-            type="checkbox"
-            id="agree"
-            checked={agreed}
-            onChange={() => setAgreed(!agreed)}
-          />
+      <div className="terms">
           <label htmlFor="agree">
+            <input
+              type="checkbox"
+              id="agree"
+              checked={agreed}
+              onChange={() => setAgreed(!agreed)}
+            />
             I agree to the{' '}
-            <button className="terms-link" onClick={() => navigate('/Terms')}>
+            <a className="terms-link" href="/Terms">
               Terms and Conditions
-            </button>
+            </a>
           </label>
+
+          <button className="continue-btn" onClick={handleContinue}>Continue</button>
         </div>
 
-        <button className="continue-btn" onClick={handleContinue}>Continue</button>
 
         {showWarning && (
           <ModalMessage
