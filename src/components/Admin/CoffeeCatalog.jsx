@@ -154,7 +154,7 @@ export default function CoffeeCatalog() {
         />
       )}
 
-      <button className="back-button" onClick={() => navigate(-1)}>
+      <button className="back-button" onClick={() => navigate('/CatalogPage')}>
         Back
       </button>
 

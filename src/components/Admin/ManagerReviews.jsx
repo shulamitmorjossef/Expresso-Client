@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import baseUrl from '../../config';
 import '../styles/ManagerReviews.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function ManagerReviews() {
   const [reviews, setReviews] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`${baseUrl}/reviews`)
@@ -32,6 +34,9 @@ export default function ManagerReviews() {
           <p>No reviews available.</p>
         )}
       </div>
+        <button className="back-button" onClick={() => navigate('/AdminHome')}>
+          Back
+        </button>
     </div>
   );
 }

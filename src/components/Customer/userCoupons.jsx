@@ -58,6 +58,9 @@ export default function UserCoupons() {
           ))}
         </ul>
       </div>
+        <button className="back-button" onClick={() => navigate('/CustomerHome')}>
+          Back
+        </button>
     </div>
   );
 }

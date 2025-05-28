@@ -39,6 +39,9 @@ export default function ShowReviews() {
           <p>No reviews yet. Be the first!</p>
         )}
       </div>
+        <button className="back-button" onClick={() => navigate('/CustomerHome')}>
+          Back
+        </button>
     </div>
   );
 }
