@@ -40,17 +40,17 @@ export default function UserCoupons() {
 
       <div className="delivery-form-container">
         <h2>My Coupons</h2>
-        <h3>Happy Birthday! 🎉 Enjoy 25% off</h3>
 
         {loading && <p className="loading-text">Loading coupons...</p>}
         {error && <p className="error">{error}</p>}
         {!loading && coupons.length === 0 && (
-          <p className="error">You have no coupons yet.</p>
+          <p >You have no coupons yet.</p>
         )}
 
         <ul className="coupon-list">
           {coupons.map((coupon, index) => (
             <li key={index} className="coupon-item">
+              <h3>Happy Birthday! 🎉 Enjoy 25% off</h3>
               <strong>{coupon.title}</strong><br />
               Code: <span className="code">{coupon.codename}</span><br />
               Discount: <span className="discount">{coupon.discount_percent || coupon.amount}%</span>
