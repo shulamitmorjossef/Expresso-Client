@@ -29,7 +29,31 @@
     box-shadow: 0 3px 10px rgba(0,0,0,0.1);
     font-size: 16px;
     color: #3c2e2a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
+
+  .delete-btn {
+    background: none;
+    border: none;
+    color: #b22c2c;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    -webkit-tap-highlight-color: transparent; /* זה מוריד את הכתם */
+  }
+  
+  .delete-btn:hover {
+    transform: scale(1.2);
+    background: none;
+  }
+  
+  .delete-btn:focus {
+    outline: none;
+    box-shadow: none;
+    background: none;
+  }  
+
   .back-button {
   position: fixed;
   top: 20px;
