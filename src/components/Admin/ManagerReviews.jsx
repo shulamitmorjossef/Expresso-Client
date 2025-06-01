@@ -63,10 +63,20 @@ export default function ManagerReviews() {
         {reviews.length > 0 ? (
           reviews.map((rev) => (
             <div key={rev.id} className="manager-review-card">
-              <span>{rev.content}</span>
-              <button className="delete-btn" onClick={() => handleDeleteClick(rev.id)}>
-                <Trash2 size={18} />
-              </button>
+              <div className="review-header">
+                <strong>{rev.username || "Anonymous"}</strong>
+              </div>
+
+              <p className="review-content">"{rev.content}"</p>
+
+              <div className="review-footer">
+                <div className="review-date">
+                  {new Date(rev.created_at).toLocaleDateString()}
+                </div>
+                <button className="delete-btn" onClick={() => handleDeleteClick(rev.id)}>
+                  <Trash2 size={18} />
+                </button>
+              </div>
             </div>
           ))
         ) : (

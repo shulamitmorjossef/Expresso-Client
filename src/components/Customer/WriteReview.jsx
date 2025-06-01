@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/Reviews.css';
@@ -10,10 +10,30 @@ export default function WriteReview() {
   const [modalData, setModalData] = useState(null);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const username = localStorage.getItem('username');
+    if (!username) {
+      setModalData({
+        title: "Login Required",
+        message: "You must be logged in to write a review.",
+        actionText: "Go to Login",
+        onAction: () => {
+          setModalData(null);
+          navigate('/Login');
+        }
+      });
+    }
+  }, []);
+
   const handleSend = async () => {
     if (!reviewText.trim()) return;
+
+    const username = localStorage.getItem('username');
     try {
-      await axios.post(`${baseUrl}/reviews`, { content: reviewText });
+      await axios.post(`${baseUrl}/reviews`, { 
+        content: reviewText,
+        username: username
+      });
       setModalData({
         title: "Success",
         message: "Your review has been submitted successfully!",
