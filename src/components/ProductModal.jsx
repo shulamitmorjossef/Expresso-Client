@@ -41,7 +41,7 @@ export default function ProductModal({ product, onClose, onAddToCart }) {
             {product.type === 'coffee_machines' && (
               <>
                 <p>Color: {product.color}</p>
-                <p>Capacity: {product.capacity} cups</p>
+                <p>Capacity:{product.capacity}ml</p>
               </>
             )}
             {product.type === 'capsules' && (
