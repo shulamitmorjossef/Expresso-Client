@@ -117,7 +117,6 @@
   background-color: #472c18;
 }
 
-/* ✅ תקנון + כפתור באותה שורה */
 .terms {
   display: flex;
   align-items: center;
