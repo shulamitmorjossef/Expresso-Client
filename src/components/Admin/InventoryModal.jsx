@@ -35,7 +35,7 @@ export default function InventoryModal({ product, onClose, onUpdateStock }) {
             {product.type === 'coffee_machine' && (
               <>
                 <p>Color: {product.color}</p>
-                <p>Capacity: {product.capacity} cups</p>
+                <p>Capacity: {product.capacity}ml</p>
               </>
             )}
             {product.type === 'capsule' && (
