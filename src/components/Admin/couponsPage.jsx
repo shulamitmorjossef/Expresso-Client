@@ -228,7 +228,7 @@ export default function AdminCoupons() {
                 ))}
             </ul>
 
-            <button className="back-button" onClick={() => navigate('/CouponsPage')}>
+            <button className="back-button" onClick={() => navigate('/AdminHome')}>
                 Back
             </button>
 
