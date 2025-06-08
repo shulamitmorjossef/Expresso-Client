@@ -223,7 +223,7 @@ export default function PricePeriodsPage() {
               {p.percentage_change > 0 ? '+' : ''}
               {p.percentage_change}%
             </span>
-            <button className="delete-btn" onClick={() => {
+            <button className="edit--btn" onClick={() => {
               setStartDate(p.start_date.slice(0, 10));
               setEndDate(p.end_date.slice(0, 10));
               setPercent(p.percentage_change);
@@ -232,7 +232,7 @@ export default function PricePeriodsPage() {
             }}>
               Edit
             </button>
-            <button className="delete-btn" onClick={() => handleDelete(p.id)}>
+            <button className="edit-btn" onClick={() => handleDelete(p.id)}>
               Delete
             </button>
           </li>
