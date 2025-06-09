@@ -126,3 +126,49 @@
 .back-button:hover {
   background-color: #472c18;
 }
+
+.delete-btn {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.delete-btn:hover {
+  background-color: #c9302c;
+}
+
+.price-periods-container li {
+  padding: 10px;
+  background-color: #f3e9e4;
+  border-radius: 5px;
+  margin-bottom: 8px;
+  color: #3c2e2a;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-btn, .delete-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  transition: transform 0.2s;
+}
+
+.edit-btn:hover, .delete-btn:hover {
+  transform: scale(1.2);
+}
+
